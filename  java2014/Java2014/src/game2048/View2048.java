@@ -21,12 +21,17 @@ import view.View;
 public class View2048 extends Observable implements View, Runnable {
 	
 	private Board board ;
+	private final int boardSize;
+	
 	Display display;
 	Shell shell;
-
 	private int keyPresed;
 	
-
+	public View2048(int boardSize) {
+		super();
+		this.boardSize = boardSize;
+	}
+	
 	private void initComponents() {
 		display = new Display();
 		shell = new Shell(display);
@@ -50,8 +55,8 @@ public class View2048 extends Observable implements View, Runnable {
 				1, 1));
 
 		board = new Board(shell, SWT.BORDER);
-		int [][] temp = {{0,0,0,0},{0,0,1,0},{0,0,0,0},{0,0,1,0}};
 		//TODO set arry  
+		int [][] temp = {{0,0,0,0},{0,0,1,0},{0,0,0,0},{0,0,1,0}};
 		board.setBoardData(temp);
 		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		
@@ -146,7 +151,12 @@ public class View2048 extends Observable implements View, Runnable {
 	}
 	
 
-	
+	private int[][] setNewFeaalds(int[][] data){
+		int [][] newData=null;
+		
+		
+		return newData;
+	}
 	
 	public int getKeyPresed() {
 		return keyPresed;
@@ -155,6 +165,5 @@ public class View2048 extends Observable implements View, Runnable {
 	public void setKeyPresed(int keyPresed) {
 		this.keyPresed = keyPresed;
 	}
-
 
 }

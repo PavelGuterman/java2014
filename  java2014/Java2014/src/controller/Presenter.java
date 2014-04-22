@@ -17,7 +17,6 @@ public class Presenter implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("de");
 		if (o == ui) {
 			System.out.println("ui command");
 			switch (ui.getUserCommand()) {
@@ -40,10 +39,7 @@ public class Presenter implements Observer {
 			// ui.dispayData(mod.getData());
 
 		}else{
-			System.out.println("mod command");
 			ui.dispayData(mod.getData());
-			
 		}
-
 	}
 }
