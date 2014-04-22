@@ -1,13 +1,20 @@
 package game2048;
 
-import model.Model;
-import controller.Presenter;
+import java.util.Observable;
 
-public class Model2048 extends Presenter implements Model {
+import model.Model;
+
+public class Model2048 extends Observable implements Model {
 
 	@Override
 	public void moveUp() {
 		// TODO Auto-generated method stub
+		
+		System.out.println("dennis");
+		
+		
+		setChanged();
+		notifyObservers();
 
 	}
 
@@ -31,8 +38,8 @@ public class Model2048 extends Presenter implements Model {
 
 	@Override
 	public int[][] getData() {
-		// TODO Auto-generated method stub
-		return null;
+		int [][] temp = {{0,0,0,0},{0,0,2,0},{0,0,0,0},{0,0,1,0}};
+		return temp;
 	}
 
 }
