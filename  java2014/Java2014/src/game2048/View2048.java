@@ -24,7 +24,7 @@ public class View2048 extends Observable implements View,Runnable {
 		display = new Display();
 		shell = new Shell(display);
 		shell.setLayout(new GridLayout(2, false));
-		shell.setSize(400, 300);
+		shell.setSize(450, 300);
 		shell.setText("---2048---");
 		
 		Menu bar = new Menu(shell, SWT.BAR);
@@ -42,7 +42,7 @@ public class View2048 extends Observable implements View,Runnable {
 		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,1,1));
 		
 		Board board = new Board(shell, SWT.BORDER);
-		board.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 2));
+		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 
 		Button restartButton = new Button(shell, SWT.PUSH);
 		restartButton.setText("RESTART");
@@ -75,15 +75,15 @@ public class View2048 extends Observable implements View,Runnable {
 
 	@Override
 	public int getUserCommand() {
-		shell.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent k_e){
-				switch(k_e.keyCode){
-				case SWT.ARROW_UP:
-					
-					break;
-				}
-			}
-		});
+//		shell.addKeyListener(new KeyAdapter() {
+//			public void keyPressed(KeyEvent k_e){
+//				switch(k_e.keyCode){
+//				case SWT.ARROW_UP:
+//					
+//					break;
+//				}
+//			}
+//		});
 		return 0;
 	}
 	
