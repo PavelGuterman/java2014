@@ -6,13 +6,13 @@ import model.Model;
 
 public class Model2048 extends Observable implements Model {
 
+	private int[][] data;
+	private int [][] oneStepBeforeData;
+	
 	@Override
 	public void moveUp() {
-		// TODO Auto-generated method stub
-		
-		System.out.println("dennis");
-		
-		
+		oneStepBeforeData=data;
+		// TODO -set new data
 		setChanged();
 		notifyObservers();
 
@@ -20,26 +20,33 @@ public class Model2048 extends Observable implements Model {
 
 	@Override
 	public void moveDown() {
-		// TODO Auto-generated method stub
-
+		oneStepBeforeData=data;
+		// TODO -set new data
+		setChanged();
+		notifyObservers();
 	}
 
 	@Override
 	public void moveRight() {
-		// TODO Auto-generated method stub
+		oneStepBeforeData=data;
+		// TODO -set new data
+		setChanged();
+		notifyObservers();
 
 	}
 
 	@Override
 	public void moveLeft() {
-		// TODO Auto-generated method stub
-
+		oneStepBeforeData=data;
+		// TODO -set new data
+		setChanged();
+		notifyObservers();
 	}
 
 	@Override
 	public int[][] getData() {
-		int [][] temp = {{0,0,0,0},{0,0,2,0},{0,0,0,0},{0,0,1,0}};
-		return temp;
+		
+		return data;
 	}
 
 }
