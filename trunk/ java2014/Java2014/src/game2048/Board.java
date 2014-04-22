@@ -24,10 +24,10 @@ public class Board extends Canvas {
 				int cell = Math.min(maxX,maxY)/5;;
 				int pad = 5;
 				GC gc = e.gc;
-				gc.setForeground(getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+				//gc.setForeground(getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 				//gc.setLineWidth(10);
 				e.gc.drawRoundRectangle(0, 0, maxX, maxY, 5, 5);
-				e.gc.fillRoundRectangle(0, 0, maxX, maxY, 5, 5);
+				//e.gc.fillRoundRectangle(0, 0, maxX, maxY, 5, 5);
 				for(int i = 0; i < 4; i++){
 					for(int j = 0; j<4; j++){
 						e.gc.drawRoundRectangle(pad+(pad+cell)*i, pad+(pad+cell)*j, cell, cell,14,14);
