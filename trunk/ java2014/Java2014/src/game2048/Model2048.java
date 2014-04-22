@@ -45,8 +45,11 @@ public class Model2048 extends Observable implements Model {
 
 	@Override
 	public int[][] getData() {
-		
 		return data;
+	}
+	
+	public int[][] getDataStepBefore() {
+		return oneStepBeforeData;
 	}
 
 }
