@@ -1,5 +1,6 @@
 package controller;
 
+import java.lang.reflect.Method;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -20,6 +21,9 @@ public class Presenter implements Observer {
 		if (o == ui) {
 			System.out.println("ui command");
 			switch (ui.getUserCommand()) {
+			case 0://start game 
+				ui.dispayData(mod.getData());
+				break;
 			case 1:
 				mod.moveUp();
 				break;
@@ -32,11 +36,19 @@ public class Presenter implements Observer {
 			case 4:
 				mod.moveRight();
 				break;
-
+			case 10: // undo pressed
+				int[][] step=mod.popStepBefore();
+				if(step!=null){
+					ui.dispayData(step);
+				}
+				break;	
+			case 11: // undo pressed
+				mod.restartgame();
+				ui.dispayData(mod.getData());
+				break;		
 			default:
 				break;
 			}
-			// ui.dispayData(mod.getData());
 
 		}else{
 			ui.dispayData(mod.getData());

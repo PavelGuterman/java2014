@@ -6,4 +6,7 @@ public interface Model {
 	void moveRight();
 	void moveLeft();
 	int[][] getData();
+	
+	int[][] popStepBefore(); //to save and return steps before
+	void restartgame(); // to restart the game 
 }

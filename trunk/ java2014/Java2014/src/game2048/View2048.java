@@ -6,6 +6,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -16,22 +18,23 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
+import controller.Presenter;
 import view.View;
 
 public class View2048 extends Observable implements View, Runnable {
-	
-	private Board board ;
+
+	private Board board;
 	private final int boardSize;
-	
+
 	Display display;
 	Shell shell;
 	private int keyPresed;
-	
+
 	public View2048(int boardSize) {
 		super();
 		this.boardSize = boardSize;
 	}
-	
+
 	private void initComponents() {
 		display = new Display();
 		shell = new Shell(display);
@@ -53,13 +56,26 @@ public class View2048 extends Observable implements View, Runnable {
 		undoButton.setText("UNDO");
 		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
 				1, 1));
+		undoButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setKeyPresed(10);
+				setChanged();
+				notifyObservers();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
 
 		board = new Board(shell, SWT.BORDER);
-		//TODO set arry  
-		int [][] temp = {{0,0,0,0},{0,0,1,0},{0,0,0,0},{0,0,1,0}};
+		int[][] temp = { { 0 }, { 0 } };
 		board.setBoardData(temp);
 		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
-		
+
 		board.addKeyListener(new KeyListener() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -99,7 +115,6 @@ public class View2048 extends Observable implements View, Runnable {
 					break;
 				}
 
-				
 			}
 		});
 
@@ -107,6 +122,20 @@ public class View2048 extends Observable implements View, Runnable {
 		restartButton.setText("RESTART");
 		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false,
 				false, 1, 1));
+		restartButton.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				setKeyPresed(11);
+				setChanged();
+				notifyObservers();
+
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
 
 		Button loadButton = new Button(shell, SWT.PUSH);
 		loadButton.setText("LAOD");
@@ -119,6 +148,10 @@ public class View2048 extends Observable implements View, Runnable {
 				1, 1));
 
 		shell.open();
+
+		setKeyPresed(0);
+		setChanged();
+		notifyObservers();
 	}
 
 	@Override
@@ -147,17 +180,15 @@ public class View2048 extends Observable implements View, Runnable {
 			}
 		}
 		display.dispose();
-		
-	}
-	
 
-	private int[][] setNewFeaalds(int[][] data){
-		int [][] newData=null;
-		
-		
+	}
+
+	private int[][] setNewFeaalds(int[][] data) {
+		int[][] newData = null;
+
 		return newData;
 	}
-	
+
 	public int getKeyPresed() {
 		return keyPresed;
 	}
