@@ -9,12 +9,32 @@ import model.Model;
 public class Model2048 extends Observable implements Model {
 
 	private int[][] data;
-	private int [][] oneStepBeforeData;
+	private Stack<int[][]> stepsDataHistorry;
 	
+	private final int boardSize;
+	
+	public Model2048(int boardSize) {
+		super();
+		this.boardSize=boardSize;
+		data = new int [boardSize][boardSize];
+		stepsDataHistorry = new Stack<int[][]>();
+		
+		restartgame();
+	}
+
+
 	public void inputNewNumberToData(){
+		/*
+		 *  // Draw Location and number
+		 */
+		
+		int[][] tmpHistory = new int [boardSize][boardSize];
+		System.arraycopy(data, 0, tmpHistory, 0, boardSize);
+		stepsDataHistorry.push(tmpHistory );
+		
 		Stack<String> stack = new Stack<String>();
-		for (int i = 0; i < data.length; i++) {
-			for (int j = 0; j < data[i].length; j++) {
+		for (int i = 0; i < boardSize; i++) {
+			for (int j = 0; j < boardSize; j++) {
 				if (data[i][j] == 0) {
 					stack.push(i + "," + j);
 				}
@@ -22,24 +42,22 @@ public class Model2048 extends Observable implements Model {
 		}
 		Random rn = new Random();
 		int answer = rn.nextInt(stack.size());
+		
 		int [] strAnser={Integer.parseInt(stack.get(answer).split(",")[0]),Integer.parseInt(stack.get(answer).split(",")[1])};
 		
-		data[strAnser[0]][strAnser[1]]=2;	
+		data[strAnser[0]][strAnser[1]]= Math.random() < 0.9 ? 2 :4 ;	
 	}
 	
 	
 	@Override
 	public void moveUp() {
-		oneStepBeforeData=data;
 		// TODO -set new data
 		setChanged();
 		notifyObservers();
-
 	}
 
 	@Override
 	public void moveDown() {
-		oneStepBeforeData=data;
 		// TODO -set new data
 		setChanged();
 		notifyObservers();
@@ -47,7 +65,6 @@ public class Model2048 extends Observable implements Model {
 
 	@Override
 	public void moveRight() {
-		oneStepBeforeData=data;
 		// TODO -set new data
 		setChanged();
 		notifyObservers();
@@ -56,7 +73,6 @@ public class Model2048 extends Observable implements Model {
 
 	@Override
 	public void moveLeft() {
-		oneStepBeforeData=data;
 		// TODO -set new data
 		setChanged();
 		notifyObservers();
@@ -67,8 +83,28 @@ public class Model2048 extends Observable implements Model {
 		return data;
 	}
 	
-	public int[][] getDataStepBefore() {
-		return oneStepBeforeData;
+	@Override
+	public int[][] popStepBefore() {
+		if(stepsDataHistorry.size()>0){
+			return stepsDataHistorry.pop();
+		}else{
+			return null;
+		}
+	}
+
+
+	@Override
+	public void restartgame() {
+		for (int i = 0; i < boardSize; i++) {
+			for (int j = 0; j < boardSize; j++) {
+				data[i][j] = 0;
+			}
+		}
+		stepsDataHistorry.clear();
+		
+		inputNewNumberToData();
+		inputNewNumberToData();
+		
 	}
 
 }
