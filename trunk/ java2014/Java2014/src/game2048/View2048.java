@@ -1,5 +1,7 @@
 package game2048;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 
 import org.eclipse.swt.SWT;
@@ -8,6 +10,7 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -25,6 +28,7 @@ public class View2048 extends Observable implements View, Runnable {
 
 	private Board board;
 	private final int boardSize;
+	 
 
 	Display display;
 	Shell shell;
@@ -39,8 +43,20 @@ public class View2048 extends Observable implements View, Runnable {
 		display = new Display();
 		shell = new Shell(display);
 		shell.setLayout(new GridLayout(2, false));
-		shell.setSize(450, 300);
+		shell.setSize(300, 300);
 		shell.setText("---2048---");
+		HashMap<String , Image> tiles = new HashMap<>();
+		tiles.put("2",new Image(display,"src/game2048/Tile2.jpg"));
+		tiles.put("4",new Image(display,"src/game2048/Tile4.jpg"));
+		tiles.put("8",new Image(display,"src/game2048/Tile8.jpg"));
+		tiles.put("16",new Image(display,"src/game2048/Tile16.jpg"));
+		tiles.put("32",new Image(display,"src/game2048/Tile32.jpg"));
+		tiles.put("64",new Image(display,"src/game2048/Tile64.jpg"));
+		tiles.put("128",new Image(display,"src/game2048/Tile128.jpg"));
+		tiles.put("256",new Image(display,"src/game2048/Tile256.jpg"));
+		tiles.put("512",new Image(display,"src/game2048/Tile512.jpg"));
+		tiles.put("1024",new Image(display,"src/game2048/Tile1024.jpg"));
+		tiles.put("2014",new Image(display,"src/game2048/Tile2048.jpg"));
 
 		Menu bar = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(bar);
@@ -74,7 +90,7 @@ public class View2048 extends Observable implements View, Runnable {
 		board = new Board(shell, SWT.BORDER);
 		int[][] temp = { { 0 }, { 0 } };
 		board.setBoardData(temp);
-		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
+		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 10));
 
 		board.addKeyListener(new KeyListener() {
 			@Override
