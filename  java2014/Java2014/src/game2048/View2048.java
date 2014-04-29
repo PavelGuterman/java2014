@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -221,8 +222,17 @@ public class View2048 extends Observable implements View, Runnable {
 		display.syncExec(new Runnable() {
 			@Override
 			public void run() {
+				System.out.println("messageString= "+messageString);
 				if (!messageString.isEmpty()) {
-					messageString = "";
+					MessageBox box = new MessageBox(shell,SWT.ICON_INFORMATION | SWT.OK);
+					box.setText("Game");
+					box.setMessage(messageString);
+					int ret = box.open();
+					if (ret==SWT.OK) {
+						System.out.println("DDDDDD11== "+messageString);
+						messageString = "";
+					}
+					System.out.println("DDDDDD== "+messageString);
 				} else {
 					board.setBoardData(data);
 					board.redraw();

@@ -57,8 +57,8 @@ public class Presenter implements Observer {
 			}
 
 		}else{
-			ui.dispayData(mod.getData());
 			ui.setMesegeString(mod.getMesegeString());
+			ui.dispayData(mod.getData());
 		}
 	}
 }
