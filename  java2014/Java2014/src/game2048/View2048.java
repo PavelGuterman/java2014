@@ -4,22 +4,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 
+import javax.xml.ws.handler.MessageContext.Scope;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.TextLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import controller.Presenter;
 import view.View;
@@ -28,12 +36,12 @@ public class View2048 extends Observable implements View, Runnable {
 
 	private Board board;
 	private final int boardSize;
-	 
-
+//	HashMap<String , Image> tiles;
 	Display display;
 	Shell shell;
 	private int keyPresed;
 
+	
 	public View2048(int boardSize) {
 		super();
 		this.boardSize = boardSize;
@@ -45,18 +53,18 @@ public class View2048 extends Observable implements View, Runnable {
 		shell.setLayout(new GridLayout(2, false));
 		shell.setSize(300, 300);
 		shell.setText("---2048---");
-		HashMap<String , Image> tiles = new HashMap<>();
-		tiles.put("2",new Image(display,"src/game2048/Tile2.jpg"));
-		tiles.put("4",new Image(display,"src/game2048/Tile4.jpg"));
-		tiles.put("8",new Image(display,"src/game2048/Tile8.jpg"));
-		tiles.put("16",new Image(display,"src/game2048/Tile16.jpg"));
-		tiles.put("32",new Image(display,"src/game2048/Tile32.jpg"));
-		tiles.put("64",new Image(display,"src/game2048/Tile64.jpg"));
-		tiles.put("128",new Image(display,"src/game2048/Tile128.jpg"));
-		tiles.put("256",new Image(display,"src/game2048/Tile256.jpg"));
-		tiles.put("512",new Image(display,"src/game2048/Tile512.jpg"));
-		tiles.put("1024",new Image(display,"src/game2048/Tile1024.jpg"));
-		tiles.put("2014",new Image(display,"src/game2048/Tile2048.jpg"));
+//		tiles = new HashMap<>();
+//		tiles.put("2",new Image(display,"src/Tile2.jpg"));
+//		tiles.put("4",new Image(display,"src/Tile4.jpg"));
+//		tiles.put("8",new Image(display,"src/Tile8.jpg"));
+//		tiles.put("16",new Image(display,"src/Tile16.jpg"));
+//		tiles.put("32",new Image(display,"src/Tile32.jpg"));
+//		tiles.put("64",new Image(display,"src/Tile64.jpg"));
+//		tiles.put("128",new Image(display,"src/Tile128.jpg"));
+//		tiles.put("256",new Image(display,"src/Tile256.jpg"));
+//		tiles.put("512",new Image(display,"src/Tile512.jpg"));
+//		tiles.put("1024",new Image(display,"src/Tile1024.jpg"));
+//		tiles.put("2014",new Image(display,"src/Tile2048.jpg"));
 
 		Menu bar = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(bar);
@@ -67,21 +75,35 @@ public class View2048 extends Observable implements View, Runnable {
 		MenuItem item = new MenuItem(submenu, SWT.PUSH);
 		item.setText("Save");
 		item.setText("Load");
+		
+		final TextLayout scoreDisplay = new TextLayout(display);
+		scoreDisplay.setText("SCORE");
+		Listener listener = new Listener() {
+			@Override
+			public void handleEvent (Event event) {
+				switch (event.type) {
+				case SWT.Paint:
+					scoreDisplay.draw(event.gc, 0, 200);
+					break;
+				case SWT.Resize:
+					scoreDisplay.setWidth(shell.getSize().x - 20);
+					break;
+				}
+			}
+		};
+		shell.addListener(SWT.Paint, listener);
+		shell.addListener(SWT.Resize, listener);
 
 		Button undoButton = new Button(shell, SWT.PUSH);
 		undoButton.setText("UNDO");
-		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
-				1, 1));
+		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,1, 2));
 		undoButton.addSelectionListener(new SelectionListener() {
-
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				setKeyPresed(10);
 				setChanged();
 				notifyObservers();
-
 			}
-
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
@@ -96,9 +118,7 @@ public class View2048 extends Observable implements View, Runnable {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				// System.out.println(arg0.keyCode);
-
 			}
-
 			@Override
 			public void keyPressed(KeyEvent key) {
 				switch (key.keyCode) {
@@ -126,28 +146,22 @@ public class View2048 extends Observable implements View, Runnable {
 					setChanged();
 					notifyObservers();
 					break;
-
 				default:
 					break;
 				}
-
 			}
 		});
-
 		Button restartButton = new Button(shell, SWT.PUSH);
 		restartButton.setText("RESTART");
 		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false,
 				false, 1, 1));
 		restartButton.addSelectionListener(new SelectionListener() {
-
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				setKeyPresed(11);
 				setChanged();
 				notifyObservers();
-
 			}
-
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
@@ -178,6 +192,7 @@ public class View2048 extends Observable implements View, Runnable {
 			public void run() {
 				board.setBoardData(data);
 				board.redraw();
+				
 			}
 		});
 	}
@@ -195,6 +210,7 @@ public class View2048 extends Observable implements View, Runnable {
 				display.sleep();
 			}
 		}
+		
 		display.dispose();
 
 	}
