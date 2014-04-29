@@ -57,68 +57,170 @@ public class Model2048 extends Observable implements Model {
 	@Override
 	public void moveUp() {
 
-		for (int i = 0; i < data.length; i++) {
-			LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
-			LinkedList<Integer> fullIndex = new LinkedList<Integer>();
-			int tmpFull = 0;
-			for (int j = 0; j < data.length; j++) {
-				if (isEmpty(data[i][j])) {
-					emptyIndex.add(j);
+		@Override
+		public void moveUp() {
+			for (int i = 0; i < data.length; i++) {
+				LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
+				LinkedList<Integer> fullIndex = new LinkedList<Integer>();
+				int tmpFull = 0;
+				for (int j = 0; j < data.length; j++) {
+					if (isEmpty(data[i][j])) {
+						emptyIndex.add(j);
+						continue;
+					}
+					fullIndex.add(j);
+				}
+				if(emptyIndex.size() == data.length){
 					continue;
 				}
-				fullIndex.add(j);
-			}
-			if(emptyIndex.size() == data.length){
-				continue;
-			}
-			while(!fullIndex.isEmpty()){
-				tmpFull = fullIndex.poll();
-				if (fullIndex.size() >= 1  && data[i][tmpFull] == data[i][fullIndex.getFirst()]){
-					data[i][tmpFull] *=2;
-					data[i][fullIndex.poll()] = 0;
-					setMoveFlag(true);
+				while(!fullIndex.isEmpty()){
+					tmpFull = fullIndex.poll();
+					if (fullIndex.size() >= 1  && data[i][tmpFull] == data[i][fullIndex.getFirst()]){
+						data[i][tmpFull] *=2;
+						data[i][fullIndex.getFirst()] = 0;
+						emptyIndex.add(fullIndex.poll());
+						setMoveFlag(true);
+					}
+					if(!emptyIndex.isEmpty() && emptyIndex.getFirst() < tmpFull ){
+						data[i][emptyIndex.poll()] = data[i][tmpFull];
+						data[i][tmpFull] = 0;
+						emptyIndex.add(tmpFull);
+						setMoveFlag(true);
+					}
+					
+					
 				}
-				if(!emptyIndex.isEmpty() && emptyIndex.getFirst() < tmpFull ){
-					data[i][emptyIndex.poll()] = data[i][tmpFull];
-					data[i][tmpFull] = 0;
-					setMoveFlag(true);
-				}
-				
-				
 			}
+			if(getMoveFlag()){
+				inputNewNumberToData();
+				setMoveFlag(false);
+			}
+			setChanged();
+			notifyObservers();
 		}
-		if(getMoveFlag()){
-			inputNewNumberToData();
-			setMoveFlag(false);
+
+		@Override
+		public void moveDown() {
+			for (int i = 0; i < data.length; i++) {
+				LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
+				LinkedList<Integer> fullIndex = new LinkedList<Integer>();
+				int tmpFull = 0;
+				for (int j = data.length-1; j >= 0; j--) {
+					if (isEmpty(data[i][j])) {
+						emptyIndex.add(j);
+						continue;
+					}
+					fullIndex.add(j);
+				}
+				if(emptyIndex.size() == data.length){
+					continue;
+				}
+				while(!fullIndex.isEmpty()){
+					tmpFull = fullIndex.poll();
+					if (fullIndex.size() >= 1  && data[i][tmpFull] == data[i][fullIndex.getFirst()]){
+						data[i][tmpFull] *=2;
+						data[i][fullIndex.getFirst()] = 0;
+						emptyIndex.add(fullIndex.poll());
+						setMoveFlag(true);
+					}
+					if(!emptyIndex.isEmpty() && emptyIndex.getFirst() > tmpFull ){
+						data[i][emptyIndex.poll()] = data[i][tmpFull];
+						data[i][tmpFull] = 0;
+						emptyIndex.add(tmpFull);
+						setMoveFlag(true);
+					}
+					
+					
+				}
+			}
+			if(getMoveFlag()){
+				inputNewNumberToData();
+				setMoveFlag(false);
+			}
+			setChanged();
+			notifyObservers();
 		}
-		setChanged();
-		notifyObservers();
-	}
 
-	@Override
-	public void moveDown() {
-		for (int i = 0; i < data.length; i++) {
+		@Override
+		public void moveRight() {
+			for (int i = 0; i < data.length; i++) {
+				LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
+				LinkedList<Integer> fullIndex = new LinkedList<Integer>();
+				int tmpFull = 0;
+				for (int j = data.length-1; j >= 0; j--) {
+					if (isEmpty(data[j][i])) {
+						emptyIndex.add(j);
+						continue;
+					}
+					fullIndex.add(j);
+				}
+				if(emptyIndex.size() == data.length){
+					continue;
+				}
+				while(!fullIndex.isEmpty()){
+					tmpFull = fullIndex.poll();
+					if (fullIndex.size() >= 1  && data[tmpFull][i] == data[fullIndex.getFirst()][i]){
+						data[tmpFull][i] *=2;
+						data[fullIndex.getFirst()][i] = 0;
+						emptyIndex.add(fullIndex.poll());
+						setMoveFlag(true);
+					}
+					if(!emptyIndex.isEmpty() && emptyIndex.getFirst() > tmpFull ){
+						data[emptyIndex.poll()][i] = data[tmpFull][i];
+						data[tmpFull][i] = 0;
+						emptyIndex.add(tmpFull);
+						setMoveFlag(true);
+					}
+				}
+			}
+			if(getMoveFlag()){
+				inputNewNumberToData();
+				setMoveFlag(false);
+			}
+			setChanged();
+			notifyObservers();
 
 		}
-		inputNewNumberToData();
-		setChanged();
-		notifyObservers();
-	}
 
-	@Override
-	public void moveRight() {
-		// TODO -set new data
-		setChanged();
-		notifyObservers();
-
-	}
-
-	@Override
-	public void moveLeft() {
-		// TODO -set new data
-		setChanged();
-		notifyObservers();
-	}
+		@Override
+		public void moveLeft() {
+			for (int i = 0; i < data.length; i++) {
+				LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
+				LinkedList<Integer> fullIndex = new LinkedList<Integer>();
+				int tmpFull = 0;
+				for (int j = 0; j < data.length; j++) {
+					if (isEmpty(data[j][i])) {
+						emptyIndex.add(j);
+						continue;
+					}
+					fullIndex.add(j);
+				}
+				if(emptyIndex.size() == data.length){
+					continue;
+				}
+				while(!fullIndex.isEmpty()){
+					tmpFull = fullIndex.poll();
+					if (fullIndex.size() >= 1  && data[tmpFull][i] == data[fullIndex.getFirst()][i]){
+						data[tmpFull][i] *=2;
+						data[fullIndex.getFirst()][i] = 0;
+						emptyIndex.add(fullIndex.poll());
+						setMoveFlag(true);
+					}
+					if(!emptyIndex.isEmpty() && emptyIndex.getFirst() < tmpFull ){
+						data[emptyIndex.poll()][i] = data[tmpFull][i];
+						data[tmpFull][i] = 0;
+						emptyIndex.add(tmpFull);
+						setMoveFlag(true);
+					}
+				}
+			}
+			if(getMoveFlag()){
+				inputNewNumberToData();
+				setMoveFlag(false);
+			}
+			setChanged();
+			notifyObservers();
+		}
 
 	@Override
 	public int[][] getData() {
