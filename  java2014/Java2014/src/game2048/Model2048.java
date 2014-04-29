@@ -32,11 +32,7 @@ public class Model2048 extends Observable implements Model {
 		/*
 		 * // Draw Location and number
 		 */
-
-		int[][] tmpHistory = new int[boardSize][boardSize];
-		System.arraycopy(data, 0, tmpHistory, 0, boardSize);
-		stepsDataHistorry.push(tmpHistory);
-
+		// set new
 		Stack<String> stack = new Stack<String>();
 		for (int i = 0; i < boardSize; i++) {
 			for (int j = 0; j < boardSize; j++) {
@@ -54,8 +50,23 @@ public class Model2048 extends Observable implements Model {
 		data[strAnser[0]][strAnser[1]] = Math.random() < 0.9 ? 2 : 4;
 	}
 
+	private void setGameStepsStack() {
+		// TODO not work !!!
+		int[][] tmpHistory = new int[boardSize][boardSize]; // create new
+															// temperry
+		// System.arraycopy(data, 0, tmpHistory, 0, boardSize);//Not work
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[i].length; j++) {
+				tmpHistory[i][j] = data[i][j];
+			}
+		}
+
+		stepsDataHistorry.push(tmpHistory);
+	}
+
 	@Override
 	public void moveUp() {
+		setGameStepsStack();
 		for (int i = 0; i < data.length; i++) {
 			LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
 			LinkedList<Integer> fullIndex = new LinkedList<Integer>();
@@ -98,6 +109,7 @@ public class Model2048 extends Observable implements Model {
 
 	@Override
 	public void moveDown() {
+		setGameStepsStack();
 		for (int i = 0; i < data.length; i++) {
 			LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
 			LinkedList<Integer> fullIndex = new LinkedList<Integer>();
@@ -140,6 +152,7 @@ public class Model2048 extends Observable implements Model {
 
 	@Override
 	public void moveRight() {
+		setGameStepsStack();
 		for (int i = 0; i < data.length; i++) {
 			LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
 			LinkedList<Integer> fullIndex = new LinkedList<Integer>();
@@ -182,6 +195,7 @@ public class Model2048 extends Observable implements Model {
 
 	@Override
 	public void moveLeft() {
+		setGameStepsStack();
 		for (int i = 0; i < data.length; i++) {
 			LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
 			LinkedList<Integer> fullIndex = new LinkedList<Integer>();
@@ -221,6 +235,7 @@ public class Model2048 extends Observable implements Model {
 		notifyObservers();
 	}
 
+	
 	@Override
 	public int[][] getData() {
 		return data;
@@ -228,7 +243,7 @@ public class Model2048 extends Observable implements Model {
 
 	@Override
 	public int[][] popStepBefore() {
-		if (stepsDataHistorry.size() > 0) {
+		if (stepsDataHistorry.size() > 2) {
 			return stepsDataHistorry.pop();
 		} else {
 			return null;
@@ -246,6 +261,8 @@ public class Model2048 extends Observable implements Model {
 
 		inputNewNumberToData();
 		inputNewNumberToData();
+
+		System.out.println("S");
 
 	}
 
@@ -306,10 +323,13 @@ public class Model2048 extends Observable implements Model {
 	@Override
 	public void saveGame(String fileName) {
 		try {
-			SeaveAndLoadGame2048 saveGame2048 = new SeaveAndLoadGame2048(fileName);
+			SeaveAndLoadGame2048 saveGame2048 = new SeaveAndLoadGame2048(
+					fileName);
+			stepsDataHistorry.push(data);
 			saveGame2048.SaveGame(stepsDataHistorry);
+			stepsDataHistorry.pop();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			getMessageString = "Can't Save the game /n Error 1011";
 			e.printStackTrace();
 		}
 	}
@@ -317,7 +337,8 @@ public class Model2048 extends Observable implements Model {
 	@Override
 	public void loadGame(String fileName) {
 		try {
-			SeaveAndLoadGame2048 loadGame2048 = new SeaveAndLoadGame2048(fileName);
+			SeaveAndLoadGame2048 loadGame2048 = new SeaveAndLoadGame2048(
+					fileName);
 			Stack<int[][]> tmpStack = new Stack<int[][]>();
 			tmpStack = loadGame2048.LoadGame();
 			if (tmpStack.isEmpty()) {
