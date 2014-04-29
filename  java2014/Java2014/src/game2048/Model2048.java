@@ -1,5 +1,6 @@
 package game2048;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,11 +17,14 @@ public class Model2048 extends Observable implements Model {
 	private final int boardSize;
 	boolean flag;
 
+	private String getMessageString = "";
+
 	public Model2048(int boardSize) {
 		super();
 		this.boardSize = boardSize;
 		data = new int[boardSize][boardSize];
 		stepsDataHistorry = new Stack<int[][]>();
+
 		restartgame();
 	}
 
@@ -196,5 +200,47 @@ public class Model2048 extends Observable implements Model {
 
 	public boolean getMoveFlag() {
 		return flag;
+	}
+	
+	@Override
+	public void saveGame() {
+		try {
+			SeaveAndLoadGame2048 saveGame2048 = new SeaveAndLoadGame2048();
+			saveGame2048.SaveGame(stepsDataHistorry);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void loadGame() {
+		try {
+			SeaveAndLoadGame2048 loadGame2048 = new SeaveAndLoadGame2048();
+			Stack<int[][]> tmpStack = new Stack<int[][]>();
+			tmpStack=loadGame2048.LoadGame();
+			if (tmpStack.isEmpty()) {
+				getMessageString="No Save is found /n Error 1020";
+			}else{
+				stepsDataHistorry.clear();
+				stepsDataHistorry=tmpStack;
+				data=stepsDataHistorry.pop();
+			}
+			
+		} catch (IOException e) {
+			getMessageString="Can't Load the game /n Error 1010";
+			e.printStackTrace();
+		}
+		
+		setChanged();
+		notifyObservers();
+		
+	}
+
+	@Override
+	public String getMesegeString() {
+		String retMessage=getMessageString;
+		getMessageString="";
+		return retMessage;
 	}
 }
