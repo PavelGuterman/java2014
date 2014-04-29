@@ -231,7 +231,7 @@ public class Model2048 extends Observable implements Model {
 			getMessageString="Can't Load the game /n Error 1010";
 			e.printStackTrace();
 		}
-		
+		getMessageString="Loded";
 		setChanged();
 		notifyObservers();
 		
@@ -241,6 +241,7 @@ public class Model2048 extends Observable implements Model {
 	public String getMesegeString() {
 		String retMessage=getMessageString;
 		getMessageString="";
+		System.out.println("retMessage= "+retMessage);
 		return retMessage;
 	}
 }
