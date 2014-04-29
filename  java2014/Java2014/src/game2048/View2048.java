@@ -193,8 +193,8 @@ public class View2048 extends Observable implements View, Runnable {
 
 		Button saveButton = new Button(shell, SWT.PUSH);
 		saveButton.setText("SAVE");
-		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false,
-				false, 1, 1));
+		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
+				1, 1));
 		saveButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -208,7 +208,7 @@ public class View2048 extends Observable implements View, Runnable {
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 			}
 		});
-		
+
 		shell.open();
 
 		setKeyPresed(0);
@@ -217,26 +217,23 @@ public class View2048 extends Observable implements View, Runnable {
 	}
 
 	@Override
-	public void dispayData(final int[][] data) {
-		System.out.println("displayData");
+	public void dispayData(final int[][] data, String message) {
+		messageString = message;
 		display.syncExec(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("messageString= "+messageString);
 				if (!messageString.isEmpty()) {
-					MessageBox box = new MessageBox(shell,SWT.ICON_INFORMATION | SWT.OK);
+					MessageBox box = new MessageBox(shell, SWT.ICON_INFORMATION);
 					box.setText("Game");
 					box.setMessage(messageString);
 					int ret = box.open();
-					if (ret==SWT.OK) {
-						System.out.println("DDDDDD11== "+messageString);
+					if (ret == SWT.OK) {
+						System.out.println("OK");
 						messageString = "";
 					}
-					System.out.println("DDDDDD== "+messageString);
-				} else {
-					board.setBoardData(data);
-					board.redraw();
 				}
+				board.setBoardData(data);
+				board.redraw();
 
 			}
 		});
@@ -272,11 +269,6 @@ public class View2048 extends Observable implements View, Runnable {
 
 	public void setKeyPresed(int keyPresed) {
 		this.keyPresed = keyPresed;
-	}
-
-	@Override
-	public void setMesegeString(String message) {
-		messageString = message;
 	}
 
 }
