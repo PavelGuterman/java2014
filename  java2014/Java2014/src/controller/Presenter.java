@@ -47,10 +47,10 @@ public class Presenter implements Observer {
 				ui.dispayData(mod.getData(),"New Game");
 				break;
 			case 12: // load pressed
-				mod.loadGame();
+				mod.loadGame(ui.getFilePathToSave());
 				break;
 			case 13: // save pressed
-				mod.saveGame();
+				mod.saveGame(ui.getFilePathToSave());
 				break;		
 			default:
 				break;

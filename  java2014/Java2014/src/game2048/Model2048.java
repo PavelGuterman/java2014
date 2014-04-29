@@ -304,9 +304,9 @@ public class Model2048 extends Observable implements Model {
 	}
 
 	@Override
-	public void saveGame() {
+	public void saveGame(String fileName) {
 		try {
-			SeaveAndLoadGame2048 saveGame2048 = new SeaveAndLoadGame2048();
+			SeaveAndLoadGame2048 saveGame2048 = new SeaveAndLoadGame2048(fileName);
 			saveGame2048.SaveGame(stepsDataHistorry);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -315,9 +315,9 @@ public class Model2048 extends Observable implements Model {
 	}
 
 	@Override
-	public void loadGame() {
+	public void loadGame(String fileName) {
 		try {
-			SeaveAndLoadGame2048 loadGame2048 = new SeaveAndLoadGame2048();
+			SeaveAndLoadGame2048 loadGame2048 = new SeaveAndLoadGame2048(fileName);
 			Stack<int[][]> tmpStack = new Stack<int[][]>();
 			tmpStack = loadGame2048.LoadGame();
 			if (tmpStack.isEmpty()) {
