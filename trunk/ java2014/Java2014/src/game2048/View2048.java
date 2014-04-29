@@ -1,36 +1,25 @@
 package game2048;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Observable;
 
-import javax.xml.ws.handler.MessageContext.Scope;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.TextLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
-import controller.Presenter;
 import view.View;
 
 public class View2048 extends Observable implements View, Runnable {
@@ -42,6 +31,7 @@ public class View2048 extends Observable implements View, Runnable {
 	Shell shell;
 	private int keyPresed;
 	private String messageString = "";
+	private String saveFilePath;
 
 	public View2048(int boardSize) {
 		super();
@@ -180,7 +170,10 @@ public class View2048 extends Observable implements View, Runnable {
 		loadButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				System.out.println("load");
+				setFilePathToSave(SWT.LEAD);
+				if(saveFilePath==null || saveFilePath==""){
+					return;
+				}
 				setKeyPresed(12);
 				setChanged();
 				notifyObservers();
@@ -199,6 +192,10 @@ public class View2048 extends Observable implements View, Runnable {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				System.out.println("save");
+				setFilePathToSave(SWT.SAVE);
+				if(saveFilePath==null || saveFilePath==""){
+					return;
+				}
 				setKeyPresed(13);
 				setChanged();
 				notifyObservers();
@@ -218,7 +215,7 @@ public class View2048 extends Observable implements View, Runnable {
 
 	@Override
 	public void dispayData(final int[][] data, String message) {
-		messageString = message;
+		setMesegeString(message);
 		display.syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -229,7 +226,7 @@ public class View2048 extends Observable implements View, Runnable {
 					int ret = box.open();
 					if (ret == SWT.OK) {
 						System.out.println("OK");
-						messageString = "";
+						setMesegeString("");
 					}
 				}
 				board.setBoardData(data);
@@ -270,5 +267,29 @@ public class View2048 extends Observable implements View, Runnable {
 	public void setKeyPresed(int keyPresed) {
 		this.keyPresed = keyPresed;
 	}
+
+	@Override
+	public void setMesegeString(String message) {
+		messageString=message;
+		
+	}
+
+	@Override
+	public String getFilePathToSave() {
+		return saveFilePath;
+	}
+
+	@Override
+	public void setFilePathToSave(int type) {
+		FileDialog fd=new FileDialog(shell,type);
+		fd.setText("Select File");
+		fd.setFilterPath("C:/");
+		String[] filterExt = { "*.txt" };
+		fd.setFilterExtensions(filterExt);
+		saveFilePath= fd.open();
+
+		
+	}
+
 
 }

@@ -14,6 +14,8 @@ import java.util.Stack;
 
 public class SeaveAndLoadGame2048 {
 
+private final File saveFile ;	
+	
 //	public static void main(String[] args) throws IOException {
 //		int[][] tmp = { { 0, 0, 0, 2 }, { 0, 0, 4, 0 }, { 4, 36, 2, 0 },
 //				{ 0, 0, 0, 0 } };
@@ -38,14 +40,13 @@ public class SeaveAndLoadGame2048 {
 //		System.out.println("End");
 //	}
 
-	public SeaveAndLoadGame2048() throws IOException { // to load game
-		setFile();
+	public SeaveAndLoadGame2048(String strFileName) throws IOException { // to load game
+		saveFile = setFile(strFileName);
 	}
 
 	public void SaveGame(Stack<int[][]> stack) throws IOException {
 		
-		PrintWriter outputStream = new PrintWriter(new FileWriter(
-				"game2048.txt"));
+		PrintWriter outputStream = new PrintWriter(new FileWriter(saveFile));
 
 		for (int i = 0; i < stack.size(); i++) {
 			int[][] arry = stack.get(i);
@@ -67,8 +68,7 @@ public class SeaveAndLoadGame2048 {
 
 	public Stack<int[][]> LoadGame() throws FileNotFoundException {
 		Stack<int[][]> loadGamge = new Stack<int[][]>();
-		Scanner myScaner = new Scanner(new BufferedReader(new FileReader(
-				"game2048.txt")));
+		Scanner myScaner = new Scanner(new BufferedReader(new FileReader(saveFile)));
 		myScaner.useDelimiter("\n");
 		while (myScaner.hasNext()) {
 
@@ -94,8 +94,8 @@ public class SeaveAndLoadGame2048 {
 		return loadGamge;
 	}
 
-	private File setFile() throws IOException {
-		File file = new File("game2048.txt");
+	private File setFile(String fileString) throws IOException {
+		File file = new File(fileString);
 		if (file.exists()) {
 			System.out.println(file.getPath());
 		} else {

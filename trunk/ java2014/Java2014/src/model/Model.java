@@ -9,7 +9,7 @@ public interface Model {
 	
 	int[][] popStepBefore(); //to save and return steps before
 	void restartgame(); // to restart the game 
-	void saveGame(); // to save game 
-	void loadGame(); // to load game
+	void saveGame(String fileName); // to save game 
+	void loadGame(String fileName); // to load game
 	String getMesegeString(); //to transfer messages from model to view
 }
