@@ -8,9 +8,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Stack;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.List;
 
 public class SeaveAndLoadGame2048 {
 
@@ -44,12 +50,13 @@ private final File saveFile ;
 		saveFile = setFile(strFileName);
 	}
 
-	public void SaveGame(Stack<int[][]> stack) throws IOException {
+	public void SaveGame(Stack<int[][]> stack, Stack<Integer> stack2) throws IOException {
 		
 		PrintWriter outputStream = new PrintWriter(new FileWriter(saveFile));
 
 		for (int i = 0; i < stack.size(); i++) {
 			int[][] arry = stack.get(i);
+			int num = stack2.get(i);
 			for (int j = 0; j < arry.length; j++) {
 				for (int j2 = 0; j2 < arry[j].length; j2++) {
 					outputStream.print(arry[j][j2]);
@@ -61,13 +68,16 @@ private final File saveFile ;
 					outputStream.print("@@");
 				}
 			}
-			outputStream.print("\n");
+			outputStream.print("&&"+num+"\n");
 		}
 		outputStream.close();
 	}
 
-	public Stack<int[][]> LoadGame() throws FileNotFoundException {
+	public ArrayList LoadGame() throws FileNotFoundException {//Stack<int[][]>
+		ArrayList<Stack> arrList= new ArrayList<Stack>();
+		
 		Stack<int[][]> loadGamge = new Stack<int[][]>();
+		Stack<Integer> loadScore = new Stack<Integer>();
 		Scanner myScaner = new Scanner(new BufferedReader(new FileReader(saveFile)));
 		myScaner.useDelimiter("\n");
 		while (myScaner.hasNext()) {
@@ -77,7 +87,15 @@ private final File saveFile ;
 			String line = myScaner.next();
 			System.out.println(line);
 			
-			String[] srt_colum = line.split("@@");
+			String[] lineArr=line.split("&&");
+			try {
+				int tmpScore=Integer.parseInt(lineArr[1]);
+				loadScore.add(tmpScore);
+			} catch (NumberFormatException e) {
+				loadScore.add(0);
+			}
+			
+			String[] srt_colum = lineArr[0].split("@@");
 			int[][] arr = new int[srt_colum.length][srt_colum.length];
 			for (int i = 0; i < srt_colum.length; i++) {
 				String [] str_line = srt_colum[i].split(",");
@@ -91,7 +109,12 @@ private final File saveFile ;
 		}
 
 		myScaner.close();
-		return loadGamge;
+
+		
+		arrList.add(loadGamge);
+		arrList.add(loadScore);
+		
+		return arrList;
 	}
 
 	private File setFile(String fileString) throws IOException {

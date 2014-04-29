@@ -22,7 +22,7 @@ public class Presenter implements Observer {
 			System.out.println("ui command");
 			switch (ui.getUserCommand()) {
 			case 0://start game 
-				ui.dispayData(mod.getData(),"Ready to play");
+				ui.dispayData(mod.getData(),"Ready to play",mod.getScore());
 				break;
 			case 1:
 				mod.moveUp();
@@ -39,12 +39,12 @@ public class Presenter implements Observer {
 			case 10: // undo pressed
 				int[][] step=mod.popStepBefore();
 				if(step!=null){
-					ui.dispayData(step,"");
+					ui.dispayData(step,"",mod.getScore());
 				}
 				break;	
 			case 11: // restart pressed
 				mod.restartgame();
-				ui.dispayData(mod.getData(),"New Game");
+				ui.dispayData(mod.getData(),"New Game",mod.getScore());
 				break;
 			case 12: // load pressed
 				mod.loadGame(ui.getFilePathToSave());
@@ -58,7 +58,7 @@ public class Presenter implements Observer {
 
 		}else{
 			//ui.setMesegeString(mod.getMesegeString());
-			ui.dispayData(mod.getData(),mod.getMesegeString());
+			ui.dispayData(mod.getData(),mod.getMesegeString(),mod.getScore());
 		}
 	}
 }
