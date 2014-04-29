@@ -45,6 +45,12 @@ public class Presenter implements Observer {
 			case 11: // undo pressed
 				mod.restartgame();
 				ui.dispayData(mod.getData());
+				break;
+			case 12: // load pressed
+				mod.loadGame();
+				break;
+			case 13: // save pressed
+				mod.saveGame();
 				break;		
 			default:
 				break;
@@ -52,6 +58,7 @@ public class Presenter implements Observer {
 
 		}else{
 			ui.dispayData(mod.getData());
+			ui.setMesegeString(mod.getMesegeString());
 		}
 	}
 }
