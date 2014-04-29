@@ -29,9 +29,12 @@ public class View2048 extends Observable implements View, Runnable {
 	// HashMap<String , Image> tiles;
 	Display display;
 	Shell shell;
+	TextLayout scoreDisplay;
+
 	private int keyPresed;
 	private String messageString = "";
 	private String saveFilePath;
+	private int score = 0;
 
 	public View2048(int boardSize) {
 		super();
@@ -67,8 +70,8 @@ public class View2048 extends Observable implements View, Runnable {
 		item.setText("Save");
 		item.setText("Load");
 
-		final TextLayout scoreDisplay = new TextLayout(display);
-		scoreDisplay.setText("SCORE");
+		scoreDisplay = new TextLayout(display);
+		scoreDisplay.setText("SCORE ");
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
@@ -79,12 +82,14 @@ public class View2048 extends Observable implements View, Runnable {
 				case SWT.Resize:
 					scoreDisplay.setWidth(shell.getSize().x - 20);
 					break;
+				
 				}
 			}
 		};
+
 		shell.addListener(SWT.Paint, listener);
 		shell.addListener(SWT.Resize, listener);
-
+		
 		Button undoButton = new Button(shell, SWT.PUSH);
 		undoButton.setText("UNDO");
 		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
@@ -171,7 +176,7 @@ public class View2048 extends Observable implements View, Runnable {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				setFilePathToSave(SWT.LEAD);
-				if(saveFilePath==null || saveFilePath==""){
+				if (saveFilePath == null || saveFilePath == "") {
 					return;
 				}
 				setKeyPresed(12);
@@ -193,7 +198,7 @@ public class View2048 extends Observable implements View, Runnable {
 			public void widgetSelected(SelectionEvent arg0) {
 				System.out.println("save");
 				setFilePathToSave(SWT.SAVE);
-				if(saveFilePath==null || saveFilePath==""){
+				if (saveFilePath == null || saveFilePath == "") {
 					return;
 				}
 				setKeyPresed(13);
@@ -214,8 +219,9 @@ public class View2048 extends Observable implements View, Runnable {
 	}
 
 	@Override
-	public void dispayData(final int[][] data, String message) {
+	public void dispayData(final int[][] data, String message, int score) {
 		setMesegeString(message);
+		setScore(score);
 		display.syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -229,6 +235,8 @@ public class View2048 extends Observable implements View, Runnable {
 						setMesegeString("");
 					}
 				}
+				System.out.println("score= " + View2048.this.score);
+				scoreDisplay.setText("Score: " + View2048.this.score);
 				board.setBoardData(data);
 				board.redraw();
 
@@ -270,8 +278,8 @@ public class View2048 extends Observable implements View, Runnable {
 
 	@Override
 	public void setMesegeString(String message) {
-		messageString=message;
-		
+		messageString = message;
+
 	}
 
 	@Override
@@ -281,15 +289,15 @@ public class View2048 extends Observable implements View, Runnable {
 
 	@Override
 	public void setFilePathToSave(int type) {
-		FileDialog fd=new FileDialog(shell,type);
+		FileDialog fd = new FileDialog(shell, type);
 		fd.setText("Select File");
 		fd.setFilterPath("C:/");
 		String[] filterExt = { "*.txt" };
 		fd.setFilterExtensions(filterExt);
-		saveFilePath= fd.open();
-
-		
+		saveFilePath = fd.open();
 	}
 
-
+	public void setScore(int score) {
+		this.score = score;
+	}
 }

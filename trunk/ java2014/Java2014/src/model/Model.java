@@ -12,4 +12,5 @@ public interface Model {
 	void saveGame(String fileName); // to save game 
 	void loadGame(String fileName); // to load game
 	String getMesegeString(); //to transfer messages from model to view
+	int getScore();
 }
