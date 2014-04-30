@@ -58,7 +58,7 @@ public class View2048 extends Observable implements View, Runnable {
 		item.setText("Load");
 
 		scoreDisplay = new TextLayout(display);
-		scoreDisplay.setText("SCORE: "+score);
+		scoreDisplay.setText("SCORE: "+score+"$");
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
