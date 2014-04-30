@@ -45,20 +45,9 @@ public class View2048 extends Observable implements View, Runnable {
 		display = new Display();
 		shell = new Shell(display);
 		shell.setLayout(new GridLayout(2, false));
-		shell.setSize(300, 300);
+		shell.setSize(550, 500);
 		shell.setText("---2048---");
-		// tiles = new HashMap<>();
-		// tiles.put("2",new Image(display,"src/Tile2.jpg"));
-		// tiles.put("4",new Image(display,"src/Tile4.jpg"));
-		// tiles.put("8",new Image(display,"src/Tile8.jpg"));
-		// tiles.put("16",new Image(display,"src/Tile16.jpg"));
-		// tiles.put("32",new Image(display,"src/Tile32.jpg"));
-		// tiles.put("64",new Image(display,"src/Tile64.jpg"));
-		// tiles.put("128",new Image(display,"src/Tile128.jpg"));
-		// tiles.put("256",new Image(display,"src/Tile256.jpg"));
-		// tiles.put("512",new Image(display,"src/Tile512.jpg"));
-		// tiles.put("1024",new Image(display,"src/Tile1024.jpg"));
-		// tiles.put("2014",new Image(display,"src/Tile2048.jpg"));
+		
 
 		Menu bar = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(bar);
