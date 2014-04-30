@@ -10,40 +10,49 @@ import org.eclipse.swt.widgets.Composite;
 
 public class Tile extends Canvas {
 
-	private HashMap<String, Image> tiles; 
+	private HashMap<Integer, Image> tiles; 
 	private int vol;
 	
 	Tile(Composite parent, int style) {
 		super(parent, style);
 		tiles = new HashMap<>();
 		vol = 0;
-		
-		tiles.put("2",new Image(this.getDisplay(),"src/Tile2.jpg"));
-		tiles.put("4",new Image(this.getDisplay(),"src/Tile4.jpg"));
-		tiles.put("8",new Image(this.getDisplay(),"src/Tile8.jpg"));
-		tiles.put("16",new Image(this.getDisplay(),"src/Tile16.jpg"));
-		tiles.put("32",new Image(this.getDisplay(),"src/Tile32.jpg"));
-		tiles.put("64",new Image(this.getDisplay(),"src/Tile64.jpg"));
-		tiles.put("128",new Image(this.getDisplay(),"src/Tile128.jpg"));
-		tiles.put("256",new Image(this.getDisplay(),"src/Tile256.jpg"));
-		tiles.put("512",new Image(this.getDisplay(),"src/Tile512.jpg"));
-		tiles.put("1024",new Image(this.getDisplay(),"src/Tile1024.jpg"));
-		tiles.put("2014",new Image(this.getDisplay(),"src/Tile2048.jpg"));
+	
+		tiles.put(0,new Image(this.getDisplay(),"src/resource/Image/Tile0.jpg"));
+		tiles.put(2,new Image(this.getDisplay(),"src/resource/Image/Tile2.jpg"));
+		tiles.put(4,new Image(this.getDisplay(),"src/resource/Image/Tile4.jpg"));
+		tiles.put(8,new Image(this.getDisplay(),"src/resource/Image/Tile8.jpg"));
+		tiles.put(16,new Image(this.getDisplay(),"src/resource/Image/Tile16.jpg"));
+		tiles.put(32,new Image(this.getDisplay(),"src/resource/Image/Tile32.jpg"));
+		tiles.put(64,new Image(this.getDisplay(),"src/resource/Image/Tile64.jpg"));
+		tiles.put(128,new Image(this.getDisplay(),"src/resource/Image/Tile128.jpg"));
+		tiles.put(256,new Image(this.getDisplay(),"src/resource/Image/Tile256.jpg"));
+		tiles.put(512,new Image(this.getDisplay(),"src/resource/Image/Tile512.jpg"));
+		tiles.put(1024,new Image(this.getDisplay(),"src/resource/Image/Tile1024.jpg"));
+		tiles.put(2014,new Image(this.getDisplay(),"src/resource/Image/Tile2048.jpg"));
 		
 		addPaintListener(new PaintListener() {
 			
 			@Override
 			public void paintControl(PaintEvent e) {
 				
-				e.gc.drawImage(tiles.get(vol), x, y);
+				e.gc.drawImage(tiles.get(vol), 0, 0);
 				
 			}
 		});
 		 
 	}
 
-	public HashMap<String, Image> getTiles() {
+	public HashMap<Integer, Image> getTiles() {
 		return tiles;
+	}
+
+	public int getVol() {
+		return vol;
+	}
+
+	public void setVol(int vol) {
+		this.vol = vol;
 	}
 
 
