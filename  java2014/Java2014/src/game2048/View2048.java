@@ -25,16 +25,14 @@ import view.View;
 public class View2048 extends Observable implements View, Runnable {
 
 	private Board board;
+	private int score = 0;
 	private final int boardSize;
-	// HashMap<String , Image> tiles;
-	Display display;
-	Shell shell;
-	TextLayout scoreDisplay;
-
 	private int keyPresed;
 	private String messageString = "";
 	private String saveFilePath;
-	private int score = 0;
+	Display display;
+	Shell shell;
+	TextLayout scoreDisplay;
 
 	public View2048(int boardSize) {
 		super();
@@ -97,10 +95,7 @@ public class View2048 extends Observable implements View, Runnable {
 		});
 
 		board = new Board(shell, SWT.BORDER);
-		int[][] temp = { { 0 }, { 0 } };
-		board.setBoardData(temp);
 		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 10));
-
 		board.addKeyListener(new KeyListener() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
