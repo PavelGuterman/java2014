@@ -25,6 +25,7 @@ public class Board extends Composite {
 		N=4;
 		setLayout(new GridLayout(N, true));
 		
+		//System.out.println(this.getClientArea());
 		Tile tile[][] = new Tile[N][N];
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
