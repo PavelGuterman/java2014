@@ -29,11 +29,10 @@ public class Board extends Composite {
 		Tile tile[][] = new Tile[N][N];
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
-				
 				tile[i][j] = new Tile(this, SWT.BORDER);
 				tile[i][j].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));;
-				if(boardData == null){
-					tile[i][j].setVol(2);
+				if(getBoardData() == null){
+					tile[i][j].setVol(0);
 					continue;
 				}
 				tile[i][j].setVol(4);
