@@ -277,7 +277,7 @@ public class Model2048 extends Observable implements Model {
 
 		inputNewNumberToData();
 		inputNewNumberToData();
-
+		
 		System.out.println("Restart");
 
 	}
