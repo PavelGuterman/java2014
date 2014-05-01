@@ -94,7 +94,7 @@ public class View2048 extends Observable implements View, Runnable {
 			}
 		});
 
-		board = new Board(shell, SWT.BORDER,boardSize);
+		board = new Board(shell, SWT.BORDER);
 		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 10));
 		board.addKeyListener(new KeyListener() {
 			@Override
@@ -134,6 +134,7 @@ public class View2048 extends Observable implements View, Runnable {
 				}
 			}
 		});
+		
 		Button restartButton = new Button(shell, SWT.PUSH);
 		restartButton.setText("RESTART");
 		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false,
@@ -222,9 +223,13 @@ public class View2048 extends Observable implements View, Runnable {
 				System.out.println("score= " + View2048.this.score);
 				scoreDisplay.setText("Score: " + View2048.this.score);
 				board.setBoardData(data);
-				board.redraw();
+				for (int i = 0; i < data.length; i++) {
+					for (int j = 0; j < data.length; j++) {
+						board.tile[i][j].setVol(data[i][j]);
+					}
+				}
 				
-				board.setFocus();
+				//board.setFocus();
 
 			}
 		});

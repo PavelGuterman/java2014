@@ -5,10 +5,8 @@ import java.util.HashMap;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 public class Tile extends Canvas {
 
@@ -34,30 +32,22 @@ public class Tile extends Canvas {
 		addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
-				Canvas canvas = (Canvas) e.widget;
 				int oWidth = e.width;
 				int oHigth = e.height;
-				double oScale = oWidth/oHigth;
 				e.gc.drawImage(tiles.get(vol), 0, 0, tiles.get(vol).getBounds().width, 
 						tiles.get(vol).getBounds().height, 0, 0, oWidth, oHigth);
-				e.gc.drawImage(tiles.get(vol), 0, 0, tiles.get(vol).getBounds().width, 
-						tiles.get(vol).getBounds().height, 0, 0, oWidth, oHigth);
-				
 			}
 		});
 		 
 	}
-
-	public HashMap<Integer, Image> getTiles() {
-		return tiles;
-	}
-
+	
 	public int getVol() {
 		return vol;
 	}
 
 	public void setVol(int vol) {
 		this.vol = vol;
+		redraw();
 	}
 
 

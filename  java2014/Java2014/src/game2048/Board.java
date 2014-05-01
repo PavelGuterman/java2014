@@ -17,27 +17,22 @@ import org.eclipse.swt.widgets.Composite;
 public class Board extends Composite {
 	
 	private  int N;
-	HashMap<String , Image> tiles;
 	private int[][] boardData;
-
-	public Board(Composite parent, int style, int boardSize) {
+	public Tile tile[][];
+	
+	public Board(Composite parent, int style) {
 		super(parent, style);
-		N=boardSize;
+		N=4;
 		boardData=new int[N][N];
-		//System.out.println("sys---- "+boardData[1][1]);
+		System.out.println("sys---- "+boardData);
 		setLayout(new GridLayout(N, true));
 		
-		//System.out.println(this.getClientArea());
-		Tile tile[][] = new Tile[N][N];
+		tile = new Tile[N][N];
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				tile[i][j] = new Tile(this, SWT.BORDER);
 				tile[i][j].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				if(getBoardData() == null){
-					tile[i][j].setVol(0);
-					continue;
-				}
-				tile[i][j].setVol(boardData[i][j]);
+				tile[i][j].setVol(0);
 			}
 		}
 	}
