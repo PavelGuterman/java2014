@@ -26,7 +26,6 @@ public class View2048 extends Observable implements View, Runnable {
 
 	private Board board;
 	private int score = 0;
-	private final int boardSize;
 	private int keyPresed;
 	private String messageString = "";
 	private String saveFilePath;
@@ -36,7 +35,6 @@ public class View2048 extends Observable implements View, Runnable {
 
 	public View2048(int boardSize) {
 		super();
-		this.boardSize = boardSize;
 	}
 
 	private void initComponents() {
@@ -222,10 +220,10 @@ public class View2048 extends Observable implements View, Runnable {
 				}
 				System.out.println("score= " + View2048.this.score);
 				scoreDisplay.setText("Score: " + View2048.this.score);
-				board.setBoardData(data);
+				//board.setBoardData(data);
 				for (int i = 0; i < data.length; i++) {
 					for (int j = 0; j < data.length; j++) {
-						board.tile[i][j].setVol(data[i][j]);
+						board.tile[j][i].setVol(data[i][j]);
 					}
 				}
 				
@@ -251,12 +249,6 @@ public class View2048 extends Observable implements View, Runnable {
 
 		display.dispose();
 
-	}
-
-	private int[][] setNewFeaalds(int[][] data) {
-		int[][] newData = null;
-
-		return newData;
 	}
 
 	public int getKeyPresed() {

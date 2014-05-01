@@ -196,8 +196,6 @@ public class Model2048 extends Observable implements Model {
 		}
 		if (getMoveFlag()) {
 			inputNewNumberToData();
-			// TODO PASHA set score += ? !
-			score += 8;
 			setMoveFlag(false);
 		}
 		setChanged();
@@ -224,10 +222,13 @@ public class Model2048 extends Observable implements Model {
 			}
 			while (!fullIndex.isEmpty()) {
 				tmpFull = fullIndex.poll();
+				int localScore = data[tmpFull][i];
 				if (fullIndex.size() >= 1
 						&& data[tmpFull][i] == data[fullIndex.getFirst()][i]) {
-					data[tmpFull][i] *= 2;
+					localScore *= 2;
+					data[tmpFull][i] = localScore;
 					data[fullIndex.getFirst()][i] = 0;
+					score += localScore;
 					emptyIndex.add(fullIndex.poll());
 					setMoveFlag(true);
 				}
@@ -241,8 +242,6 @@ public class Model2048 extends Observable implements Model {
 		}
 		if (getMoveFlag()) {
 			inputNewNumberToData();
-			// TODO PASHA set score += ? !
-			score += 16;
 			setMoveFlag(false);
 		}
 		setChanged();
@@ -289,43 +288,6 @@ public class Model2048 extends Observable implements Model {
 		return false;
 	}
 
-	public void margeLine(int[] lineData) {
-
-		LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
-		LinkedList<Integer> fullIndex = new LinkedList<Integer>();
-		// int emptyIndex = 0;
-		for (int j = 0; j < data.length; j++) {
-			if (isEmpty(lineData[j])) {
-				emptyIndex.add(j);
-				continue;
-			}
-			fullIndex.add(j);
-			// if (!emptyIndex.isEmpty() && j < 3) {
-			// tmp = emptyIndex.poll();
-			// if (!isEmpty(lineData[j + 1])) {
-			// if (lineData[j] == lineData[j + 1]) {
-			// lineData[j] *= 2;
-			// lineData[j + 1] = 0;
-			// lineData[tmp] = lineData[j];
-			// }else{
-			// lineData[tmp] = lineData[j];
-			// lineData[tmp+1] = lineData[j+1];
-			// }
-			// }
-			// if(tmp>0 && lineData[tmp-1]==lineData[tmp]){
-			// lineData[tmp-1] *= 2;
-			// lineData[tmp] = 0;
-			// }
-			// lineData[tmp] = lineData[fullIndex.getLast()];
-			// lineData[j] = 0;
-			// }else{
-			// if (j!=0 && lineData[j] == lineData[j - 1]) {
-			// lineData[j - 1] *= 2;
-			// lineData[j] = 0;
-			// }
-			// }
-		}
-	}
 
 	public void setMoveFlag(boolean is_moved) {
 		flag = is_moved;
