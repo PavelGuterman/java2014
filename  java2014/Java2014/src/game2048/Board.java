@@ -20,9 +20,11 @@ public class Board extends Composite {
 	HashMap<String , Image> tiles;
 	private int[][] boardData;
 
-	public Board(Composite parent, int style) {
+	public Board(Composite parent, int style, int boardSize) {
 		super(parent, style);
-		N=4;
+		N=boardSize;
+		boardData=new int[N][N];
+		//System.out.println("sys---- "+boardData[1][1]);
 		setLayout(new GridLayout(N, true));
 		
 		//System.out.println(this.getClientArea());
@@ -30,12 +32,12 @@ public class Board extends Composite {
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				tile[i][j] = new Tile(this, SWT.BORDER);
-				tile[i][j].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));;
+				tile[i][j].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 				if(getBoardData() == null){
 					tile[i][j].setVol(0);
 					continue;
 				}
-				tile[i][j].setVol(4);
+				tile[i][j].setVol(boardData[i][j]);
 			}
 		}
 	}

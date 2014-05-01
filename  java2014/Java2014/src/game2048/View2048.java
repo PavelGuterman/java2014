@@ -94,7 +94,7 @@ public class View2048 extends Observable implements View, Runnable {
 			}
 		});
 
-		board = new Board(shell, SWT.BORDER);
+		board = new Board(shell, SWT.BORDER,boardSize);
 		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 10));
 		board.addKeyListener(new KeyListener() {
 			@Override
