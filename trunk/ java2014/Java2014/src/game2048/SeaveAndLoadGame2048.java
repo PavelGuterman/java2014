@@ -93,6 +93,10 @@ private final File saveFile ;
 				loadScore.add(tmpScore);
 			} catch (NumberFormatException e) {
 				loadScore.add(0);
+				return null;
+			}catch (ArrayIndexOutOfBoundsException e) {
+				loadScore.add(0);
+				return null;
 			}
 			
 			String[] srt_colum = lineArr[0].split("@@");
