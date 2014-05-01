@@ -223,6 +223,8 @@ public class View2048 extends Observable implements View, Runnable {
 				scoreDisplay.setText("Score: " + View2048.this.score);
 				board.setBoardData(data);
 				board.redraw();
+				
+				board.setFocus();
 
 			}
 		});
