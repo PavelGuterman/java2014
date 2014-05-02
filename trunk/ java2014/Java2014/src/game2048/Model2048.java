@@ -257,7 +257,8 @@ public class Model2048 extends Observable implements Model {
 	public int[][] popStepBefore() {
 		if (stepsDataHistorry.size() > 0) {
 			score=scoresDataHistorry.pop();
-			return stepsDataHistorry.pop();
+			data=stepsDataHistorry.pop();
+			return data;
 		} else {
 			return null;
 		}
@@ -318,28 +319,38 @@ public class Model2048 extends Observable implements Model {
 	@Override
 	public void loadGame(String fileName) {
 		try {
+			Stack<int[][]> tmpStack = new Stack<int[][]>();
+			Stack<int[][]> tmpScore = new Stack<int[][]>();
+
 			SeaveAndLoadGame2048 loadGame2048 = new SeaveAndLoadGame2048(
 					fileName);
-			ArrayList<Stack> arrList = loadGame2048.LoadGame();
+			ArrayList<Stack<int[][]>> arrList = loadGame2048.LoadGame();
 			
-			Stack<int[][]> tmpStack = new Stack<int[][]>();
-			Stack<Integer> tmpScore = new Stack<Integer>();
+			tmpStack=arrList.get(0);
+			tmpScore=arrList.get(1);
+			
+			
 			if (tmpStack.isEmpty()) {
 				getMessageString = "No Save is found /n Error 1020";
 			} else {
 				stepsDataHistorry.clear();
 				scoresDataHistorry.clear();
 				stepsDataHistorry = tmpStack;
-				scoresDataHistorry = tmpScore;
+				//scoresDataHistorry = tmpScore[0][0];
+				for (int i = 0; i < tmpScore.size(); i++) {
+					scoresDataHistorry.push(tmpScore.get(i)[0][0]);
+				}
 				data = stepsDataHistorry.pop();
 				score = scoresDataHistorry.pop();
+				getMessageString = "Loded";
 			}
 
 		} catch (IOException e) {
 			getMessageString = "Can't Load the game /n Error 1010";
 			e.printStackTrace();
+			
 		}
-		getMessageString = "Loded";
+		
 		setChanged();
 		notifyObservers();
 

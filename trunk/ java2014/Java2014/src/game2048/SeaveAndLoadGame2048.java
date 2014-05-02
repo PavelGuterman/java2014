@@ -20,38 +20,41 @@ import org.eclipse.swt.widgets.List;
 
 public class SeaveAndLoadGame2048 {
 
-private final File saveFile ;	
-	
-//	public static void main(String[] args) throws IOException {
-//		int[][] tmp = { { 0, 0, 0, 2 }, { 0, 0, 4, 0 }, { 4, 36, 2, 0 },
-//				{ 0, 0, 0, 0 } };
-//		int[][] tmp2 = { { 0, 4, 0, 2 }, { 0, 0, 4, 36 }, { 4, 36, 2, 0 },
-//				{ 0, 0, 0, 0 } };
-//		int[][] tmp3 = { { 0, 2, 0, 2 }, { 0, 8, 4, 0 }, { 4, 36, 2, 0 },
-//				{ 0, 126, 0, 0 } };
-//
-//		Stack<int[][]> tmpStack = new Stack<int[][]>();
-//		
-//		tmpStack.add(tmp);
-//		tmpStack.add(tmp2);
-//		tmpStack.add(tmp3);
-//
-//		SeaveAndLoadGame2048 game2048 = new SeaveAndLoadGame2048();
-//		//game2048.SaveGame(tmpStack);
-//		
-//		tmpStack.empty();
-//		
-//		tmpStack=game2048.LoadGame();
-//		System.out.println(tmpStack.isEmpty());
-//		System.out.println("End");
-//	}
+	private final File saveFile;
 
-	public SeaveAndLoadGame2048(String strFileName) throws IOException { // to load game
+	// public static void main(String[] args) throws IOException {
+	// int[][] tmp = { { 0, 0, 0, 2 }, { 0, 0, 4, 0 }, { 4, 36, 2, 0 },
+	// { 0, 0, 0, 0 } };
+	// int[][] tmp2 = { { 0, 4, 0, 2 }, { 0, 0, 4, 36 }, { 4, 36, 2, 0 },
+	// { 0, 0, 0, 0 } };
+	// int[][] tmp3 = { { 0, 2, 0, 2 }, { 0, 8, 4, 0 }, { 4, 36, 2, 0 },
+	// { 0, 126, 0, 0 } };
+	//
+	// Stack<int[][]> tmpStack = new Stack<int[][]>();
+	//
+	// tmpStack.add(tmp);
+	// tmpStack.add(tmp2);
+	// tmpStack.add(tmp3);
+	//
+	// SeaveAndLoadGame2048 game2048 = new SeaveAndLoadGame2048();
+	// //game2048.SaveGame(tmpStack);
+	//
+	// tmpStack.empty();
+	//
+	// tmpStack=game2048.LoadGame();
+	// System.out.println(tmpStack.isEmpty());
+	// System.out.println("End");
+	// }
+
+	public SeaveAndLoadGame2048(String strFileName) throws IOException { // to
+																			// load
+																			// game
 		saveFile = setFile(strFileName);
 	}
 
-	public void SaveGame(Stack<int[][]> stack, Stack<Integer> stack2) throws IOException {
-		
+	public void SaveGame(Stack<int[][]> stack, Stack<Integer> stack2)
+			throws IOException {
+
 		PrintWriter outputStream = new PrintWriter(new FileWriter(saveFile));
 
 		for (int i = 0; i < stack.size(); i++) {
@@ -68,17 +71,18 @@ private final File saveFile ;
 					outputStream.print("@@");
 				}
 			}
-			outputStream.print("&&"+num+"\n");
+			outputStream.print("&&" + num + "\n");
 		}
 		outputStream.close();
 	}
 
-	public ArrayList LoadGame() throws FileNotFoundException {//Stack<int[][]>
-		ArrayList<Stack> arrList= new ArrayList<Stack>();
-		
+	public ArrayList<Stack<int[][]>> LoadGame() throws FileNotFoundException {// Stack<int[][]>
+		ArrayList<Stack<int[][]>> arrList = new ArrayList<Stack<int[][]>>();
+
 		Stack<int[][]> loadGamge = new Stack<int[][]>();
-		Stack<Integer> loadScore = new Stack<Integer>();
-		Scanner myScaner = new Scanner(new BufferedReader(new FileReader(saveFile)));
+		Stack<int[][]> loadScore = new Stack<int[][]>();
+		Scanner myScaner = new Scanner(new BufferedReader(new FileReader(
+				saveFile)));
 		myScaner.useDelimiter("\n");
 		while (myScaner.hasNext()) {
 
@@ -86,38 +90,38 @@ private final File saveFile ;
 
 			String line = myScaner.next();
 			System.out.println(line);
-			
-			String[] lineArr=line.split("&&");
+
+			String[] lineArr = line.split("&&");
+			int[][] tmpScore = new int[1][1];
 			try {
-				int tmpScore=Integer.parseInt(lineArr[1]);
+				tmpScore[0][0] = Integer.parseInt(lineArr[1]);
 				loadScore.add(tmpScore);
 			} catch (NumberFormatException e) {
-				loadScore.add(0);
-				return null;
-			}catch (ArrayIndexOutOfBoundsException e) {
-				loadScore.add(0);
-				return null;
+				tmpScore[0][0] = 0;
+				loadScore.add(tmpScore);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				tmpScore[0][0] = 0;
+				loadScore.add(tmpScore);
 			}
-			
+
 			String[] srt_colum = lineArr[0].split("@@");
 			int[][] arr = new int[srt_colum.length][srt_colum.length];
 			for (int i = 0; i < srt_colum.length; i++) {
-				String [] str_line = srt_colum[i].split(",");
+				String[] str_line = srt_colum[i].split(",");
 				for (int j = 0; j < str_line.length; j++) {
-					arr[i][j]=Integer.parseInt(str_line[j]);
+					arr[i][j] = Integer.parseInt(str_line[j]);
 				}
-				
+
 			}
-			
+
 			loadGamge.push(arr);
 		}
 
 		myScaner.close();
 
-		
 		arrList.add(loadGamge);
 		arrList.add(loadScore);
-		
+
 		return arrList;
 	}
 
