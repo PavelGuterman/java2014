@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 import view.View;
 
@@ -60,6 +61,7 @@ public class View2048 extends Observable implements View, Runnable {
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
+				//System.out.println("event_____:::>> "+event.type);
 				switch (event.type) {
 				case SWT.Paint:
 					scoreDisplay.draw(event.gc, 0, 200);
@@ -71,7 +73,7 @@ public class View2048 extends Observable implements View, Runnable {
 				}
 			}
 		};
-
+		
 		shell.addListener(SWT.Paint, listener);
 		shell.addListener(SWT.Resize, listener);
 		

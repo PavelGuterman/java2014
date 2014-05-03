@@ -38,7 +38,7 @@ public class Tile extends Canvas {
 						tiles.get(vol).getBounds().height, 0, 0, oWidth, oHigth);
 			}
 		});
-		 
+		 parent.setFocus();
 	}
 	
 	public int getVol() {
@@ -48,6 +48,7 @@ public class Tile extends Canvas {
 	public void setVol(int vol) {
 		this.vol = vol;
 		redraw();
+	
 	}
 
 
