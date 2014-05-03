@@ -1,6 +1,9 @@
-package game2048;
+package gameMaze;
 
 import java.util.Observable;
+
+import game2048.Board2048;
+import game2048.View2048;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -19,13 +22,13 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
 import view.View;
 
-public class View2048 extends Observable implements View, Runnable {
+public class ViewMaze extends Observable implements View,Runnable {
+	
 
-	private Board2048 board;
+	private MazeBoard board;
 	private int score = 0;
 	private int keyPresed;
 	private String messageString = "";
@@ -35,7 +38,7 @@ public class View2048 extends Observable implements View, Runnable {
 	TextLayout scoreDisplay;
 	private final int bordSize;
 
-	public View2048(int boardSize) {
+	public ViewMaze(int boardSize) {
 		super();
 		this.bordSize=boardSize;
 	}
@@ -45,7 +48,7 @@ public class View2048 extends Observable implements View, Runnable {
 		shell = new Shell(display);
 		shell.setLayout(new GridLayout(2, false));
 		shell.setSize(550, 500);
-		shell.setText("---2048---");
+		shell.setText("---Maze---");
 		
 
 		Menu bar = new Menu(shell, SWT.BAR);
@@ -96,7 +99,7 @@ public class View2048 extends Observable implements View, Runnable {
 			}
 		});
 
-		board = new Board2048(shell, SWT.BORDER,bordSize);
+		board = new MazeBoard(shell, SWT.BORDER,bordSize);
 		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 10));
 		board.addKeyListener(new KeyListener() {
 			@Override
@@ -205,7 +208,7 @@ public class View2048 extends Observable implements View, Runnable {
 		setChanged();
 		notifyObservers();
 	}
-
+	
 	@Override
 	public void dispayData(final int[][] data, String message, int score) {
 		setMesegeString(message);
@@ -223,8 +226,8 @@ public class View2048 extends Observable implements View, Runnable {
 						setMesegeString("");
 					}
 				}
-				System.out.println("score= " + View2048.this.score);
-				scoreDisplay.setText("Score: " + View2048.this.score);
+				System.out.println("score= " + ViewMaze.this.score);
+				scoreDisplay.setText("Score: " + ViewMaze.this.score);
 				//board.setBoardData(data);
 				for (int i = 0; i < data.length; i++) {
 					for (int j = 0; j < data.length; j++) {
@@ -236,13 +239,9 @@ public class View2048 extends Observable implements View, Runnable {
 
 			}
 		});
-	}
 
-	@Override
-	public int getUserCommand() {
-		return keyPresed;
 	}
-
+	
 	@Override
 	public void run() {
 		initComponents();
@@ -251,17 +250,16 @@ public class View2048 extends Observable implements View, Runnable {
 				display.sleep();
 			}
 		}
-
 		display.dispose();
-
 	}
-
-	public int getKeyPresed() {
-		return keyPresed;
-	}
-
+	
 	public void setKeyPresed(int keyPresed) {
 		this.keyPresed = keyPresed;
+	}
+
+	@Override
+	public int getUserCommand() {
+		return keyPresed;
 	}
 
 	@Override
@@ -283,9 +281,11 @@ public class View2048 extends Observable implements View, Runnable {
 		String[] filterExt = { "*.txt" };
 		fd.setFilterExtensions(filterExt);
 		saveFilePath = fd.open();
-	}
 
+	}
+	
 	public void setScore(int score) {
 		this.score = score;
 	}
+
 }
