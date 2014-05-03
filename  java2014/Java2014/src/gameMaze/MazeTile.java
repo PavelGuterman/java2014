@@ -12,10 +12,12 @@ public class MazeTile extends Tile {
 	}
 	
 	protected void inishilizeHashMap() {
-		tiles.put(-1,new Image(this.getDisplay(),"src/resource/TileImage/wall.jpg"));
-		tiles.put(0,new Image(this.getDisplay(),"src/resource/TileImage/FreeTile.jpg"));
-		tiles.put(1,new Image(this.getDisplay(),"src/resource/TileImage/mouse.jpg"));
-		tiles.put(2,new Image(this.getDisplay(),"src/resource/TileImage/cheasse.jpg"));
-		tiles.put(3,new Image(this.getDisplay(),"src/resource/TileImage/coolMouse.jpg"));
+		super.inishilizeHashMap();
+		
+		tiles.put(0,new Image(this.getDisplay(),"src/resource/MazeImage/FreeTile.jpg"));
+		tiles.put(1,new Image(this.getDisplay(),"src/resource/MazeImage/mouse.jpg"));
+		tiles.put(2,new Image(this.getDisplay(),"src/resource/MazeImage/cheasse.jpg"));
+		tiles.put(3,new Image(this.getDisplay(),"src/resource/MazeImage/coolMouse.jpg"));
+		tiles.put(-1,new Image(this.getDisplay(),"src/resource/MazeImage/wall.jpg"));
 	}
 }
