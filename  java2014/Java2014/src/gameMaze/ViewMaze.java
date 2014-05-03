@@ -66,7 +66,6 @@ public class ViewMaze extends Observable implements View,Runnable {
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				//System.out.println("event_____:::>> "+event.type);
 				switch (event.type) {
 				case SWT.Paint:
 					scoreDisplay.draw(event.gc, 0, 200);
@@ -104,7 +103,6 @@ public class ViewMaze extends Observable implements View,Runnable {
 		board.addKeyListener(new KeyListener() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				// System.out.println(arg0.keyCode);
 			}
 
 			@Override
