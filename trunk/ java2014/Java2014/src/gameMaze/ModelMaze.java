@@ -7,29 +7,26 @@ import java.util.Stack;
 import model.Model;
 
 public class ModelMaze extends Observable implements Model {
-	
+
 	private int[][] data;
+	private int[] curState = new int[2];
 	private Stack<int[][]> stepsDataHistorry;
-	//private final int boardSize;
 	private int score = 0;
 	private Stack<Integer> scoresDataHistorry;
 	boolean flag;
-	
-	
-	
+	boolean youWin;
+	boolean youLose;
+	private String getMessageString = "";
 
-	
-	
 	public ModelMaze() {
 		super();
 		data = new int[4][4];
 		stepsDataHistorry = new Stack<int[][]>();
 		scoresDataHistorry = new Stack<Integer>();
-		
+
 		restartgame();
 	}
 
-	
 	public void inputNewNumberToData() {
 		/*
 		 * // Draw Location and number
@@ -43,39 +40,123 @@ public class ModelMaze extends Observable implements Model {
 				}
 			}
 		}
-		data[3][3]  = 1;
-		data[0][0]  = 2;
-		
-		
+		data[3][3] = 1;
+		setCurState(3, 3);
+		data[0][0] = 2;
+
 	}
-	
+
+	public int[] getCurState() {
+		return curState;
+	}
+
+	public void setCurState(int x, int y) {
+		this.curState[0] = x;
+		this.curState[1] = y;
+	}
+
 	@Override
 	public void moveUp() {
+		if (curState[1] == 0) {
+			return;
+		}
+		if (data[curState[0]][curState[1] - 1] == -1) {
+			return;
+		}
+		if (data[curState[0]][curState[1] - 1] == 2) {
+			data[curState[0]][curState[1] - 1] = 3;
+			data[curState[0]][curState[1]] = 0;
+			setCurState(curState[0], curState[1] - 1);
+			setChanged();
+			notifyObservers();
+			return;
+		}
+		data[curState[0]][curState[1] - 1] = 1;
+		data[curState[0]][curState[1]] = 0;
+		setCurState(curState[0], curState[1] - 1);
 		
-
+		setChanged();
+		notifyObservers();
+		
 	}
 
 	@Override
 	public void moveDown() {
-		// TODO Auto-generated method stub
+		if (curState[1] == 3) {
+			return;
+		}
+		if (data[curState[0]][curState[1] + 1] == -1) {
+			return;
+		}
+		if (data[curState[0]][curState[1] + 1] == 2) {
+			data[curState[0]][curState[1] + 1] = 3;
+			setCurState(curState[0], curState[1] + 1);
+			data[curState[0]][curState[1]] = 0;
+			setChanged();
+			notifyObservers();
+			return;
+		}
+		data[curState[0]][curState[1] + 1] = 1;
+		data[curState[0]][curState[1]] = 0;
+		setCurState(curState[0], curState[1] + 1);
+		
+		setChanged();
+		notifyObservers();
 
 	}
 
 	@Override
 	public void moveRight() {
-		// TODO Auto-generated method stub
+		if (curState[0] == 3) {
+			return;
+		}
+		if (data[curState[0] +1][curState[1] ] == -1) {
+			return;
+		}
+		if (data[curState[0] +1][curState[1] ] == 2) {
+			data[curState[0] +1][curState[1]] = 3;
+			data[curState[0]][curState[1]] = 0;
+			setCurState(curState[0]+ 1, curState[1] );
+			setChanged();
+			notifyObservers();
+			return;
+		}
+		data[curState[0]+1][curState[1] ] = 1;
+		data[curState[0]][curState[1]] = 0;
+		setCurState(curState[0]+ 1, curState[1] );
+		
+		setChanged();
+		notifyObservers();
 
 	}
 
 	@Override
 	public void moveLeft() {
-		// TODO Auto-generated method stub
+		if (curState[0] == 0) {
+			return;
+		}
+		if (data[curState[0] -1][curState[1] ] == -1) {
+			return;
+		}
+		if (data[curState[0] -1][curState[1] ] == 2) {
+			data[curState[0] -1][curState[1]] = 3;
+			data[curState[0]][curState[1]] = 0;
+			setCurState(curState[0]- 1, curState[1] );
+			setChanged();
+			notifyObservers();
+			return;
+		}
+		data[curState[0]-1][curState[1] ] = 1;
+		data[curState[0]][curState[1]] = 0;
+		setCurState(curState[0]- 1, curState[1] );
+		
+		setChanged();
+		notifyObservers();
 
 	}
 
 	@Override
 	public int[][] getData() {
-		// TODO Auto-generated method stub
 		return data;
 	}
 
@@ -94,11 +175,11 @@ public class ModelMaze extends Observable implements Model {
 		}
 		stepsDataHistorry.clear();
 		scoresDataHistorry.clear();
-		score=0;
+		score = 0;
 
 		inputNewNumberToData();
 		inputNewNumberToData();
-		
+
 		System.out.println("Restart");
 
 	}
@@ -117,8 +198,10 @@ public class ModelMaze extends Observable implements Model {
 
 	@Override
 	public String getMesegeString() {
-		// TODO Auto-generated method stub
-		return null;
+		String retMessage = getMessageString;
+		getMessageString = "";
+		System.out.println("retMessage= " + retMessage);
+		return retMessage;
 	}
 
 	@Override
