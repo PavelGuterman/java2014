@@ -8,12 +8,12 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
-public class Tile extends Canvas {
+public class Tile2048_OLD extends Canvas {
 
 	private HashMap<Integer, Image> tiles; 
 	private int vol;
 	
-	Tile(Composite parent, int style) {
+	Tile2048_OLD(Composite parent, int style) {
 		super(parent, style);
 		tiles = new HashMap<>();
 		vol = 0;

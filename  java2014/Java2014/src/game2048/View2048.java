@@ -25,7 +25,7 @@ import view.View;
 
 public class View2048 extends Observable implements View, Runnable {
 
-	private Board board;
+	private Board2048 board;
 	private int score = 0;
 	private int keyPresed;
 	private String messageString = "";
@@ -33,9 +33,11 @@ public class View2048 extends Observable implements View, Runnable {
 	Display display;
 	Shell shell;
 	TextLayout scoreDisplay;
+	private final int bordSize;
 
 	public View2048(int boardSize) {
 		super();
+		this.bordSize=boardSize;
 	}
 
 	private void initComponents() {
@@ -94,7 +96,7 @@ public class View2048 extends Observable implements View, Runnable {
 			}
 		});
 
-		board = new Board(shell, SWT.BORDER);
+		board = new Board2048(shell, SWT.BORDER,bordSize);
 		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 10));
 		board.addKeyListener(new KeyListener() {
 			@Override
