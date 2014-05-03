@@ -7,7 +7,6 @@ import view.Tile;
 
 public class Tile2048 extends Tile {
 	
-
 	public Tile2048(Composite parent, int style) {
 		super(parent, style);
 	}
