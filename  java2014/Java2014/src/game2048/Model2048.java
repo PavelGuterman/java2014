@@ -134,8 +134,7 @@ public class Model2048 extends Observable implements Model {
 			}
 			while (!fullIndex.isEmpty()) {
 				tmpFull = fullIndex.poll();
-				if (fullIndex.size() >= 1
-						&& data[i][tmpFull] == data[i][fullIndex.getFirst()]) {
+				if (fullIndex.size() >= 1 && data[i][tmpFull] == data[i][fullIndex.getFirst()]) {
 					data[i][tmpFull] *= 2;
 					data[i][fullIndex.getFirst()] = 0;
 					emptyIndex.add(fullIndex.poll());
