@@ -32,16 +32,18 @@ public class View2048 extends Observable implements View, Runnable {
 	private String saveFilePath;
 	Display display;
 	Shell shell;
-	TextLayout scoreDisplay;
+	private final TextLayout scoreDisplay;
 	private final int bordSize;
 
 	public View2048(int boardSize) {
 		super();
 		this.bordSize=boardSize;
+		display = new Display();
+		scoreDisplay = new TextLayout(display);
 	}
 
 	private void initComponents() {
-		display = new Display();
+		
 		shell = new Shell(display);
 		shell.setLayout(new GridLayout(2, false));
 		shell.setSize(550, 500);
@@ -58,12 +60,10 @@ public class View2048 extends Observable implements View, Runnable {
 		item.setText("Save");
 		item.setText("Load");
 
-		scoreDisplay = new TextLayout(display);
-		scoreDisplay.setText("SCORE: "+score+"$");
+		scoreDisplay.setText(getScore());
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
-				//System.out.println("event_____:::>> "+event.type);
 				switch (event.type) {
 				case SWT.Paint:
 					scoreDisplay.draw(event.gc, 0, 200);
@@ -223,8 +223,7 @@ public class View2048 extends Observable implements View, Runnable {
 						setMesegeString("");
 					}
 				}
-				System.out.println("score= " + View2048.this.score);
-				scoreDisplay.setText("Score: " + View2048.this.score);
+				
 				//board.setBoardData(data);
 				for (int i = 0; i < data.length; i++) {
 					for (int j = 0; j < data.length; j++) {
@@ -232,7 +231,8 @@ public class View2048 extends Observable implements View, Runnable {
 					}
 				}
 				
-				//board.setFocus();
+				System.out.println("score= " + View2048.this.score);
+				scoreDisplay.setText("Score: " + View2048.this.score);
 
 			}
 		});
@@ -253,7 +253,6 @@ public class View2048 extends Observable implements View, Runnable {
 		}
 
 		display.dispose();
-
 	}
 
 	public int getKeyPresed() {
@@ -287,5 +286,9 @@ public class View2048 extends Observable implements View, Runnable {
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+	
+	private String getScore(){
+		return Integer.toString(score);
 	}
 }
