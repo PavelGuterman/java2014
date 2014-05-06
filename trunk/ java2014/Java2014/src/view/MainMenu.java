@@ -8,10 +8,13 @@ import gameMaze.MazeMain;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
 import controller.Presenter;
@@ -30,8 +33,18 @@ public class MainMenu extends Thread {
 
 		shell.setText("Hello");
 
-		shell.setSize(400, 400);
-		shell.setLayout(new GridLayout(2, true));
+		shell.setSize(200, 400);
+		
+		Monitor primary = display.getPrimaryMonitor ();
+		Rectangle bounds = primary.getBounds ();
+		Rectangle rect = shell.getBounds ();
+		int x = bounds.x + (bounds.width - rect.width) / 2;
+		int y = bounds.y + (bounds.height - rect.height) / 2;
+		shell.setLocation (x, y);
+		
+		FillLayout fillLayout = new FillLayout();
+		fillLayout.type = SWT.VERTICAL;
+		shell.setLayout(fillLayout);
 
 		Button btn_game2048 = new Button(shell, SWT.PUSH);
 		btn_game2048.setText("Play 2048");

@@ -7,7 +7,11 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.TextLayout;
+import org.eclipse.swt.internal.win32.TRIVERTEX;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -18,9 +22,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import view.MainMenu;
 import view.View;
 
 public class View2048 extends Observable implements View, Runnable {
@@ -29,6 +35,7 @@ public class View2048 extends Observable implements View, Runnable {
 	private int score = 0;
 	private int keyPresed;
 	private String messageString = "";
+	private int messageType = 0;
 	private String saveFilePath;
 	Display display;
 	Shell shell;
@@ -37,18 +44,60 @@ public class View2048 extends Observable implements View, Runnable {
 
 	public View2048(int boardSize) {
 		super();
-		this.bordSize=boardSize;
+		this.bordSize = boardSize;
 		display = new Display();
 		scoreDisplay = new TextLayout(display);
 	}
 
 	private void initComponents() {
-		
+
 		shell = new Shell(display);
 		shell.setLayout(new GridLayout(2, false));
 		shell.setSize(550, 500);
+
+		Monitor primary = display.getPrimaryMonitor();
+		Rectangle bounds = primary.getBounds();
+		Rectangle rect = shell.getBounds();
+		int x = bounds.x + (bounds.width - rect.width) / 2;
+		int y = bounds.y + (bounds.height - rect.height) / 2;
+		shell.setLocation(x, y);
+
 		shell.setText("---2048---");
-		
+		shell.addShellListener(new ShellListener() {
+
+			@Override
+			public void shellIconified(ShellEvent arg0) {
+				// Auto-generated method stub
+
+			}
+
+			@Override
+			public void shellDeiconified(ShellEvent arg0) {
+				// Auto-generated method stub
+
+			}
+
+			@Override
+			public void shellDeactivated(ShellEvent arg0) {
+				// Auto-generated method stub
+
+			}
+
+			@Override
+			public void shellClosed(ShellEvent arg0) {
+				display.close();
+				MainMenu menu = new MainMenu();
+				menu.start();
+
+			}
+
+			@Override
+			public void shellActivated(ShellEvent arg0) {
+				// Auto-generated method stub
+
+			}
+
+		});
 
 		Menu bar = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(bar);
@@ -56,9 +105,44 @@ public class View2048 extends Observable implements View, Runnable {
 		fileItem.setText("&File");
 		Menu submenu = new Menu(shell, SWT.DROP_DOWN);
 		fileItem.setMenu(submenu);
-		MenuItem item = new MenuItem(submenu, SWT.PUSH);
-		item.setText("Save");
-		item.setText("Load");
+		MenuItem itemSave = new MenuItem(submenu, SWT.PUSH);
+		itemSave.setText("Save");
+		MenuItem itemLoad = new MenuItem(submenu, SWT.PUSH);
+		itemSave.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				saveGame();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		itemLoad.setText("Load");
+		itemLoad.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				ladeGame();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+		MenuItem itemExit = new MenuItem(submenu, SWT.PUSH);
+		itemExit.setText("Exit");
+		itemExit.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				display.close();
+				MainMenu menu = new MainMenu();
+				menu.start();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
 
 		scoreDisplay.setText(getScore());
 		Listener listener = new Listener() {
@@ -71,18 +155,17 @@ public class View2048 extends Observable implements View, Runnable {
 				case SWT.Resize:
 					scoreDisplay.setWidth(shell.getSize().x - 20);
 					break;
-				
+
 				}
 			}
 		};
-		
+
 		shell.addListener(SWT.Paint, listener);
 		shell.addListener(SWT.Resize, listener);
-		
+
 		Button undoButton = new Button(shell, SWT.PUSH);
 		undoButton.setText("UNDO");
-		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
-				1, 2));
+		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
 		undoButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -96,7 +179,7 @@ public class View2048 extends Observable implements View, Runnable {
 			}
 		});
 
-		board = new Board2048(shell, SWT.BORDER,bordSize);
+		board = new Board2048(shell, SWT.BORDER, bordSize);
 		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 10));
 		board.addKeyListener(new KeyListener() {
 			@Override
@@ -136,11 +219,10 @@ public class View2048 extends Observable implements View, Runnable {
 				}
 			}
 		});
-		
+
 		Button restartButton = new Button(shell, SWT.PUSH);
 		restartButton.setText("RESTART");
-		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false,
-				false, 1, 1));
+		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		restartButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -156,19 +238,12 @@ public class View2048 extends Observable implements View, Runnable {
 		});
 
 		Button loadButton = new Button(shell, SWT.PUSH);
-		loadButton.setText("LAOD");
-		loadButton.setLayoutData(new GridData(SWT.FILL, SWT.LEFT, false, false,
-				1, 1));
+		loadButton.setText("LOAD");
+		loadButton.setLayoutData(new GridData(SWT.FILL, SWT.LEFT, false, false, 1, 1));
 		loadButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				setFilePathToSave(SWT.LEAD);
-				if (saveFilePath == null || saveFilePath == "") {
-					return;
-				}
-				setKeyPresed(12);
-				setChanged();
-				notifyObservers();
+				ladeGame();
 			}
 
 			@Override
@@ -178,19 +253,11 @@ public class View2048 extends Observable implements View, Runnable {
 
 		Button saveButton = new Button(shell, SWT.PUSH);
 		saveButton.setText("SAVE");
-		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
-				1, 1));
+		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		saveButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				System.out.println("save");
-				setFilePathToSave(SWT.SAVE);
-				if (saveFilePath == null || saveFilePath == "") {
-					return;
-				}
-				setKeyPresed(13);
-				setChanged();
-				notifyObservers();
+				saveGame();
 			}
 
 			@Override
@@ -199,7 +266,6 @@ public class View2048 extends Observable implements View, Runnable {
 		});
 
 		shell.open();
-	
 
 		setKeyPresed(0);
 		setChanged();
@@ -208,13 +274,30 @@ public class View2048 extends Observable implements View, Runnable {
 
 	@Override
 	public void dispayData(final int[][] data, String message, int score) {
+		if (checkIfGameIsOver(data)) {
+			MessageBox box = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+			box.setText("Game Over");
+			box.setMessage(messageString);
+			int ret = box.open();
+			if (ret == SWT.YES) {
+				setKeyPresed(11);
+				setChanged();
+				notifyObservers();
+
+			} else {
+				display.close();
+				MainMenu menu = new MainMenu();
+				menu.start();
+			}
+			setMesegeString("");
+		}
 		setMesegeString(message);
 		setScore(score);
 		display.syncExec(new Runnable() {
 			@Override
 			public void run() {
 				if (!messageString.isEmpty()) {
-					MessageBox box = new MessageBox(shell, SWT.ICON_INFORMATION);
+					MessageBox box = new MessageBox(shell, messageType);
 					box.setText("Game");
 					box.setMessage(messageString);
 					int ret = box.open();
@@ -223,14 +306,14 @@ public class View2048 extends Observable implements View, Runnable {
 						setMesegeString("");
 					}
 				}
-				
-				//board.setBoardData(data);
+
+				// board.setBoardData(data);
 				for (int i = 0; i < data.length; i++) {
 					for (int j = 0; j < data.length; j++) {
 						board.tile[j][i].setVol(data[i][j]);
 					}
 				}
-				
+
 				System.out.println("score= " + View2048.this.score);
 				scoreDisplay.setText("Score: " + View2048.this.score);
 
@@ -265,7 +348,18 @@ public class View2048 extends Observable implements View, Runnable {
 
 	@Override
 	public void setMesegeString(String message) {
-		messageString = message;
+		if (message.indexOf("&&") > -1) {
+			String[] str = message.split("&&");
+			messageString = str[0];
+			try {
+				messageType = Integer.parseInt(str[1]);
+			} catch (Exception e) {
+				messageType = SWT.ICON_INFORMATION;
+			}
+		} else {
+			messageString = message;
+			messageType = SWT.ICON_INFORMATION;
+		}
 
 	}
 
@@ -287,8 +381,51 @@ public class View2048 extends Observable implements View, Runnable {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
-	private String getScore(){
+
+	private String getScore() {
 		return Integer.toString(score);
+	}
+
+	private void ladeGame() {
+		setFilePathToSave(SWT.LEAD);
+		if (saveFilePath == null || saveFilePath == "") {
+			return;
+		}
+		setKeyPresed(12);
+		setChanged();
+		notifyObservers();
+	}
+
+	private void saveGame() {
+		System.out.println("save");
+		setFilePathToSave(SWT.SAVE);
+		if (saveFilePath == null || saveFilePath == "") {
+			return;
+		}
+		setKeyPresed(13);
+		setChanged();
+		notifyObservers();
+	}
+
+	private boolean checkIfGameIsOver(int[][] data) {
+
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[i].length; j++) {
+				if (data[i][j] == 2048) {
+					messageString = "You Win the game !!! \n Do you whont to play again ?";
+					messageType = SWT.ICON_QUESTION;
+					return true;
+				}
+				if (data[i][j] == 0) {
+					return false;
+				}
+
+			}
+		}
+
+		// TODO set checkIfGameIsOver
+		messageString = "You lost the game !!! \n Do you whont to play again ?";
+		messageType = SWT.ICON_QUESTION;
+		return true;
 	}
 }

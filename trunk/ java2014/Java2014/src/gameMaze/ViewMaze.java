@@ -10,6 +10,9 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.TextLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -21,8 +24,10 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
+import view.MainMenu;
 import view.View;
 
 public class ViewMaze extends Observable implements View,Runnable {
@@ -32,6 +37,7 @@ public class ViewMaze extends Observable implements View,Runnable {
 	private int score = 0;
 	private int keyPresed;
 	private String messageString = "";
+	private int messageType = 0;
 	private String saveFilePath;
 	Display display;
 	Shell shell;
@@ -48,7 +54,49 @@ public class ViewMaze extends Observable implements View,Runnable {
 		shell = new Shell(display);
 		shell.setLayout(new GridLayout(2, false));
 		shell.setSize(550, 500);
+		
+		Monitor primary = display.getPrimaryMonitor ();
+		Rectangle bounds = primary.getBounds ();
+		Rectangle rect = shell.getBounds ();
+		int x = bounds.x + (bounds.width - rect.width) / 2;
+		int y = bounds.y + (bounds.height - rect.height) / 2;
+		shell.setLocation (x, y);
+		
 		shell.setText("---Maze---");
+shell.addShellListener(new ShellListener() {
+			
+			@Override
+			public void shellIconified(ShellEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void shellDeiconified(ShellEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void shellDeactivated(ShellEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void shellClosed(ShellEvent arg0) {
+				display.close();
+				MainMenu menu = new MainMenu();
+				menu.start();
+				
+			}
+			
+			@Override
+			public void shellActivated(ShellEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 
 		Menu bar = new Menu(shell, SWT.BAR);
@@ -215,7 +263,7 @@ public class ViewMaze extends Observable implements View,Runnable {
 			@Override
 			public void run() {
 				if (!messageString.isEmpty()) {
-					MessageBox box = new MessageBox(shell, SWT.ICON_INFORMATION);
+					MessageBox box = new MessageBox(shell, messageType);
 					box.setText("Game");
 					box.setMessage(messageString);
 					int ret = box.open();
@@ -262,7 +310,18 @@ public class ViewMaze extends Observable implements View,Runnable {
 
 	@Override
 	public void setMesegeString(String message) {
-		messageString = message;
+		if (message.indexOf("&&") > -1) {
+			String[] str = message.split("&&");
+			messageString = str[0];
+			try {
+				messageType = Integer.parseInt(str[1]);
+			} catch (Exception e) {
+				messageType = SWT.ICON_INFORMATION;
+			}
+		}else{
+			messageString = message;
+			messageType = SWT.ICON_INFORMATION;
+		}
 
 	}
 
