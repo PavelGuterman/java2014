@@ -3,6 +3,8 @@ package controller;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.eclipse.swt.SWT;
+
 import view.View;
 import model.Model;
 
@@ -21,7 +23,7 @@ public class Presenter implements Observer {
 			System.out.println("ui command");
 			switch (ui.getUserCommand()) {
 			case 0://start game 
-				ui.dispayData(mod.getData(),"Ready to play",mod.getScore());
+				ui.dispayData(mod.getData(),"Ready to play !"+"&&"+SWT.ICON_INFORMATION,mod.getScore());
 				break;
 			case 1:
 				mod.moveUp();
@@ -43,7 +45,7 @@ public class Presenter implements Observer {
 				break;	
 			case 11: // restart pressed
 				mod.restartgame();
-				ui.dispayData(mod.getData(),"New Game",mod.getScore());
+				ui.dispayData(mod.getData(),"New Game"+"&&"+SWT.ICON_INFORMATION,mod.getScore());
 				break;
 			case 12: // load pressed
 				mod.loadGame(ui.getFilePathToSave());

@@ -7,6 +7,8 @@ import java.util.Observable;
 import java.util.Random;
 import java.util.Stack;
 
+import org.eclipse.swt.SWT;
+
 import model.Model;
 
 public class Model2048 extends Observable implements Model {
@@ -310,7 +312,7 @@ public class Model2048 extends Observable implements Model {
 			stepsDataHistorry.pop();
 			scoresDataHistorry.pop();
 		} catch (IOException e) {
-			getMessageString = "Can't Save the game /n Error 1011";
+			getMessageString = "Can't Save the game /n Error 1011"+"&&"+SWT.ICON_ERROR;
 			e.printStackTrace();
 		}
 	}
@@ -330,7 +332,7 @@ public class Model2048 extends Observable implements Model {
 			
 			
 			if (tmpStack.isEmpty()) {
-				getMessageString = "No Save is found /n Error 1020";
+				getMessageString = "No Save is found /n Error 1020"+"&&"+SWT.ICON_ERROR;
 			} else {
 				stepsDataHistorry.clear();
 				scoresDataHistorry.clear();
@@ -341,11 +343,11 @@ public class Model2048 extends Observable implements Model {
 				}
 				data = stepsDataHistorry.pop();
 				score = scoresDataHistorry.pop();
-				getMessageString = "Loded";
+				getMessageString = "Game is Loaded"+"&&"+SWT.ICON_INFORMATION;
 			}
 
 		} catch (IOException e) {
-			getMessageString = "Can't Load the game /n Error 1010";
+			getMessageString = "Can't Load the game /n Error 1010"+"&&"+SWT.ICON_ERROR;
 			e.printStackTrace();
 			
 		}
