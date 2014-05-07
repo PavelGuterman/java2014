@@ -1,0 +1,411 @@
+r45 | pawow2@gmail.com | 2014-05-07 22:59:34 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/gameMaze/ModelMaze.java
+
+Maze Walls + 2048 Score in prev commit
+----------------------------------------------------------------------------
+r44 | pawow2@gmail.com | 2014-05-07 22:53:16 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+----------------------------------------------------------------------------
+r43 | pawow2@gmail.com | 2014-05-07 22:27:42 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+----------------------------------------------------------------------------
+r42 | pawow2@gmail.com | 2014-05-07 13:21:15 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+----------------------------------------------------------------------------
+r41 | zo.dennis | 2014-05-07 01:27:27 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/controller/Presenter.java
+	M /trunk/ java2014/Java2014/src/view/MainMenu.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	M /trunk/ java2014/Java2014/src/gameMaze/ViewMaze.java
+
+Main menu for all games
+return to main menu from games
+set "game Over"
+set in View2048 File menu
+----------------------------------------------------------------------------
+r40 | zo.dennis | 2014-05-06 23:45:35 IDT
+Changed paths:
+	A /trunk/ java2014/Java2014/src/view/MainMenu.java
+	M /trunk/ java2014/Java2014/src/game2048/Main2048.java
+	D /trunk/ java2014/Java2014/src/game2048/Tile2048_OLD.java
+	M /trunk/ java2014/Java2014/src/gameMaze/MazeMain.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+
+start menu
+----------------------------------------------------------------------------
+r39 | pawow2@gmail.com | 2014-05-03 23:26:27 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	M /trunk/ java2014/Java2014/src/game2048/SeaveAndLoadGame2048.java
+----------------------------------------------------------------------------
+r38 | pawow2@gmail.com | 2014-05-03 23:03:11 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/gameMaze/ViewMaze.java
+	M /trunk/ java2014/Java2014/src/gameMaze/ModelMaze.java
+
+Maze modify
+----------------------------------------------------------------------------
+r37 | pawow2@gmail.com | 2014-05-03 21:42:17 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/gameMaze/MazeTile.java
+	M /trunk/ java2014/Java2014/src/game2048/Tile2048.java
+	M /trunk/ java2014/Java2014/src/gameMaze/MazeMain.java
+	M /trunk/ java2014/Java2014/src/gameMaze/ModelMaze.java
+	M /trunk/ java2014/Java2014/src/controller/Presenter.java
+
+Working on Maze
+----------------------------------------------------------------------------
+r36 | pawow2@gmail.com | 2014-05-03 20:09:36 IDT
+Changed paths:
+	A /trunk/ java2014/Java2014/src/gameMaze/ModelMaze.java
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile128.jpg
+	A /trunk/ java2014/Java2014/src/resource/MazeImage/mouse.jpg
+	A /trunk/ java2014/Java2014/src/gameMaze/MazeBoard.java
+	A /trunk/ java2014/Java2014/src/resource/MazeImage/cheasse.jpg
+	A /trunk/ java2014/Java2014/src/resource/MazeImage/FreeTile.jpg
+	A /trunk/ java2014/Java2014/src/gameMaze/ViewMaze.java
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile2048.jpg
+	A /trunk/ java2014/Java2014/src/gameMaze
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile2.jpg
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile8.jpg
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile1024.jpg
+	A /trunk/ java2014/Java2014/src/resource/MazeImage
+	A /trunk/ java2014/Java2014/src/gameMaze/MazeMain.java
+	A /trunk/ java2014/Java2014/src/gameMaze/MazeTile.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile32.jpg
+	A /trunk/ java2014/Java2014/src/resource/MazeImage/coolMouse.jpg
+	D /trunk/ java2014/Java2014/src/resource/Image
+	A /trunk/ java2014/Java2014/src/resource/TileImage
+	M /trunk/ java2014/Java2014/src/game2048/Tile2048.java
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile4.jpg
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile64.jpg
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile512.jpg
+	A /trunk/ java2014/Java2014/src/resource/MazeImage/wall.jpg
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile16.jpg
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile0.jpg
+	A /trunk/ java2014/Java2014/src/resource/TileImage/Tile256.jpg
+
+Maze creation
++modify 2048 Tile location
+----------------------------------------------------------------------------
+r35 | zo.dennis | 2014-05-03 16:42:12 IDT
+Changed paths:
+	A /trunk/ java2014/Java2014/src/game2048/Tile2048_OLD.java
+	M /trunk/ java2014/Java2014/.classpath
+	D /trunk/ java2014/Java2014/src/game2048/Tile.java
+	D /trunk/ java2014/Java2014/src/game2048/Board.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	A /trunk/ java2014/Java2014/src/game2048/Tile2048.java
+	A /trunk/ java2014/Java2014/src/view/Board.java
+	A /trunk/ java2014/Java2014/src/game2048/Board2048.java
+	A /trunk/ java2014/Java2014/src/view/Tile.java
+
+create Board and Tile for all games
+Bord2048 and Tile2048 with extended to Board and Tile   
+----------------------------------------------------------------------------
+r34 | zo.dennis | 2014-05-03 12:40:23 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Tile.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+----------------------------------------------------------------------------
+r33 | zo.dennis | 2014-05-02 10:00:59 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/SeaveAndLoadGame2048.java
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+
+Repair save load and undo
+----------------------------------------------------------------------------
+r32 | pawow2@gmail.com | 2014-05-02 00:12:34 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+
+fix Tile 
+fix move bug
+----------------------------------------------------------------------------
+r31 | pawow2@gmail.com | 2014-05-01 21:21:03 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Tile.java
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+----------------------------------------------------------------------------
+r30 | zo.dennis | 2014-05-01 14:44:06 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+----------------------------------------------------------------------------
+r29 | zo.dennis | 2014-05-01 10:18:13 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/SeaveAndLoadGame2048.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+
+Small update : focus on board 
+----------------------------------------------------------------------------
+r28 | pawow2@gmail.com | 2014-05-01 00:46:12 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+
+#Make Image Tile(new Tile class)
+#change Board 
+#Tile scale 
+
+----------------------------------------------------------------------------
+r27 | pawow2@gmail.com | 2014-05-01 00:31:33 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+----------------------------------------------------------------------------
+r26 | pawow2@gmail.com | 2014-05-01 00:06:03 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+----------------------------------------------------------------------------
+r25 | pawow2@gmail.com | 2014-04-30 23:57:12 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+	M /trunk/ java2014/Java2014/src/game2048/Tile.java
+----------------------------------------------------------------------------
+r24 | pawow2@gmail.com | 2014-04-30 15:32:15 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+----------------------------------------------------------------------------
+r23 | pawow2@gmail.com | 2014-04-30 14:58:44 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Tile.java
+----------------------------------------------------------------------------
+r22 | pawow2@gmail.com | 2014-04-30 10:05:47 IDT
+Changed paths:
+	D /trunk/ java2014/Java2014/src/resource/Tile128.jpg
+	M /trunk/ java2014/Java2014/game2048.txt
+	D /trunk/ java2014/Java2014/src/resource/Tile4.jpg
+	D /trunk/ java2014/Java2014/src/resource/Tile2048.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile16.jpg
+	D /trunk/ java2014/Java2014/src/resource/Tile0.jpg
+	D /trunk/ java2014/Java2014/src/resource/Tile64.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile32.jpg
+	D /trunk/ java2014/Java2014/src/resource/Tile1024.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile64.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile512.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile256.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile2048.jpg
+	D /trunk/ java2014/Java2014/src/resource/Tile256.jpg
+	D /trunk/ java2014/Java2014/src/resource/Tile16.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile1024.jpg
+	D /trunk/ java2014/Java2014/src/resource/Tile2.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile128.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile8.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile2.jpg
+	D /trunk/ java2014/Java2014/src/resource/Tile32.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile4.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image
+	D /trunk/ java2014/Java2014/src/resource/Tile8.jpg
+	D /trunk/ java2014/Java2014/src/resource/Tile512.jpg
+	A /trunk/ java2014/Java2014/src/resource/Image/Tile0.jpg
+----------------------------------------------------------------------------
+r21 | zo.dennis | 2014-04-30 00:23:57 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/view/View.java
+	M /trunk/ java2014/Java2014/src/game2048/SeaveAndLoadGame2048.java
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	M /trunk/ java2014/Java2014/src/model/Model.java
+	M /trunk/ java2014/Java2014/src/controller/Presenter.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+
+Set score to game including save and load 
+Problem in show the score
+----------------------------------------------------------------------------
+r20 | zo.dennis | 2014-04-29 22:42:13 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+
+Improvement steps savinge and save in file
+ 
+----------------------------------------------------------------------------
+r19 | zo.dennis | 2014-04-29 19:00:31 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/view/View.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	M /trunk/ java2014/Java2014/src/game2048/SeaveAndLoadGame2048.java
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	M /trunk/ java2014/Java2014/src/model/Model.java
+	M /trunk/ java2014/Java2014/src/controller/Presenter.java
+
+save and load with FileDialog
+----------------------------------------------------------------------------
+r18 | zo.dennis | 2014-04-29 17:51:23 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/controller/Presenter.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	M /trunk/ java2014/Java2014/src/view/View.java
+
+message loder new
+----------------------------------------------------------------------------
+r17 | pawow2@gmail.com | 2014-04-29 17:16:49 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+----------------------------------------------------------------------------
+r16 | pawow2@gmail.com | 2014-04-29 17:15:27 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	M /trunk/ java2014/Java2014
+----------------------------------------------------------------------------
+r15 | zo.dennis | 2014-04-29 17:05:50 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/controller/Presenter.java
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+
+messege popap
+----------------------------------------------------------------------------
+r14 | zo.dennis | 2014-04-29 16:38:45 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/model/Model.java
+	M /trunk/ java2014/Java2014/game2048.txt
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	M /trunk/ java2014/Java2014/src/controller/Presenter.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	M /trunk/ java2014/Java2014/src/view/View.java
+
+save and load 
+----------------------------------------------------------------------------
+r13 | zo.dennis | 2014-04-29 15:24:06 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/.classpath
+	A /trunk/ java2014/Java2014/src/game2048/SeaveAndLoadGame2048.java
+	A /trunk/ java2014/Java2014/lib/org.eclipse.swt.win32.win32.x86_64_3.102.1.v20140206-1358.jar
+	A /trunk/ java2014/Java2014/game2048.txt
+	A /trunk/ java2014/Java2014/lib
+----------------------------------------------------------------------------
+r12 | pawow2@gmail.com | 2014-04-29 14:53:51 IDT
+Changed paths:
+	A /trunk/ java2014/Java2014/src/resource/Tile128.jpg
+	A /trunk/ java2014/Java2014/src/resource/Tile512.jpg
+	A /trunk/ java2014/Java2014/src/resource/Tile16.jpg
+	D /trunk/ java2014/Java2014/src/game2048/Tile2048.jpg
+	A /trunk/ java2014/Java2014/src/game2048/Tile.java
+	A /trunk/ java2014/Java2014/src/resource/Tile8.jpg
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+	D /trunk/ java2014/Java2014/src/game2048/Tile8.jpg
+	A /trunk/ java2014/Java2014/src/resource/Tile2.jpg
+	A /trunk/ java2014/Java2014/src/resource/Tile256.jpg
+	A /trunk/ java2014/Java2014/src/resource/Tile64.jpg
+	A /trunk/ java2014/Java2014/src/resource/Tile2048.jpg
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	A /trunk/ java2014/Java2014/src/resource/Tile1024.jpg
+	A /trunk/ java2014/Java2014/src/resource
+	D /trunk/ java2014/Java2014/src/game2048/Tile64.jpg
+	D /trunk/ java2014/Java2014/src/game2048/Tile1024.jpg
+	A /trunk/ java2014/Java2014/src/resource/Tile32.jpg
+	A /trunk/ java2014/Java2014/src/resource/Tile0.jpg
+	D /trunk/ java2014/Java2014/src/game2048/Tile0.jpg
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	D /trunk/ java2014/Java2014/src/game2048/Tile256.jpg
+	A /trunk/ java2014/Java2014/src/resource/Tile4.jpg
+	D /trunk/ java2014/Java2014/src/game2048/Tile2.jpg
+	D /trunk/ java2014/Java2014/src/game2048/Tile512.jpg
+	D /trunk/ java2014/Java2014/src/game2048/Tile32.jpg
+	D /trunk/ java2014/Java2014/src/game2048/Tile128.jpg
+	D /trunk/ java2014/Java2014/src/game2048/Tile4.jpg
+----------------------------------------------------------------------------
+r11 | pawow2@gmail.com | 2014-04-25 10:30:54 IDT
+Changed paths:
+	A /trunk/ java2014/Java2014/src/game2048/Tile2048.jpg
+	A /trunk/ java2014/Java2014/src/game2048/Tile8.jpg
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	M /trunk/ java2014/Java2014/.classpath
+	A /trunk/ java2014/Java2014/src/game2048/Tile256.jpg
+	A /trunk/ java2014/Java2014/src/game2048/Tile1024.jpg
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+	A /trunk/ java2014/Java2014/src/game2048/Tile64.jpg
+	A /trunk/ java2014/Java2014/src/game2048/Tile128.jpg
+	A /trunk/ java2014/Java2014/src/game2048/Tile4.jpg
+	A /trunk/ java2014/Java2014/src/game2048/Tile32.jpg
+	A /trunk/ java2014/Java2014/src/game2048/Tile0.jpg
+	A /trunk/ java2014/Java2014/src/game2048/Tile2.jpg
+	A /trunk/ java2014/Java2014/src/game2048/Tile512.jpg
+----------------------------------------------------------------------------
+r10 | zo.dennis | 2014-04-24 00:39:43 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Main2048.java
+	M /trunk/ java2014/Java2014/src/model/Model.java
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	M /trunk/ java2014/Java2014/src/controller/Presenter.java
+
+Model.java interfase -  add new methods for restart the game and for get step before/
+Model2048.java - initialize tow new methods from interfase.
+View2048.java - create new liseners: 1-load game for furst time, 2-restart the game, 3-get step before.
+
+Problem !!! in Model2048.java method inputNewNumberToData -> can't make the copy of data arry, because of by reference copy.      
+----------------------------------------------------------------------------
+r9 | zo.dennis | 2014-04-23 18:31:28 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+
+inputNewNumberToData in Model2048.java
+----------------------------------------------------------------------------
+r8 | zo.dennis | 2014-04-23 01:04:01 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	M /trunk/ java2014/Java2014/src/game2048/Main2048.java
+	M /trunk/ java2014/Java2014/src/controller/Presenter.java
+----------------------------------------------------------------------------
+r7 | zo.dennis | 2014-04-22 23:48:49 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+----------------------------------------------------------------------------
+r6 | zo.dennis | 2014-04-22 23:46:21 IDT
+Changed paths:
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+----------------------------------------------------------------------------
+r5 | zo.dennis | 2014-04-22 23:36:56 IDT
+Changed paths:
+	A /trunk/ java2014/Java2014/src/game2048/Main2048.java
+	M /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	D /trunk/ java2014/Java2014/src/game2048/Test.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+	M /trunk/ java2014/Java2014/.classpath
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+	M /trunk/ java2014/Java2014/src/controller/Presenter.java
+----------------------------------------------------------------------------
+r4 | pawow2@gmail.com | 2014-04-22 17:11:12 IDT
+Changed paths:
+	A /trunk/ java2014/Java2014/src/game2048/Test.java
+	M /trunk/ java2014/Java2014/src/game2048/Board.java
+	M /trunk/ java2014/Java2014/src/game2048/View2048.java
+----------------------------------------------------------------------------
+r3 | pawow2@gmail.com | 2014-04-22 16:40:01 IDT
+Changed paths:
+	A /trunk/ java2014/Java2014/src/view/View.java
+	A /trunk/ java2014/Java2014/src
+	A /trunk/ java2014/Java2014/.settings
+	A /trunk/ java2014/Java2014/src/controller/Presenter.java
+	A /trunk/ java2014/Java2014/src/view
+	A /trunk/ java2014/Java2014/src/controller
+	A /trunk/ java2014/Java2014/.classpath
+	A /trunk/ java2014/Java2014/.project
+	A /trunk/ java2014/Java2014/src/game2048/Model2048.java
+	A /trunk/ java2014/Java2014/src/model
+	A /trunk/ java2014/Java2014/src/game2048/View2048.java
+	A /trunk/ java2014/Java2014/.settings/org.eclipse.jdt.core.prefs
+	A /trunk/ java2014/Java2014/src/game2048/Board.java
+	A /trunk/ java2014/Java2014/src/game2048
+	A /trunk/ java2014/Java2014/src/model/Model.java
+----------------------------------------------------------------------------
+r2 | pawow2@gmail.com | 2014-04-17 22:02:25 IDT
+Changed paths:
+	A /trunk/ java2014
+	A /trunk/ java2014/Java2014
+
+Initial import.
+----------------------------------------------------------------------------
