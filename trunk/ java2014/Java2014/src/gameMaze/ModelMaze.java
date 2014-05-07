@@ -43,7 +43,11 @@ public class ModelMaze extends Observable implements Model {
 		data[3][3] = 1;
 		setCurState(3, 3);
 		data[0][0] = 2;
-
+		data[1][0] = -1;
+		data[1][2] = -1;
+		data[1][3] = -1;
+		data[3][2] = -1;
+		
 	}
 
 	public int[] getCurState() {
