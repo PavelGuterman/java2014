@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -39,14 +40,13 @@ public class View2048 extends Observable implements View, Runnable {
 	private String saveFilePath;
 	Display display;
 	Shell shell;
-	private final TextLayout scoreDisplay;
+	private Label sD; 
 	private final int bordSize;
 
 	public View2048(int boardSize) {
 		super();
 		this.bordSize = boardSize;
 		display = new Display();
-		scoreDisplay = new TextLayout(display);
 	}
 
 	private void initComponents() {
@@ -144,24 +144,6 @@ public class View2048 extends Observable implements View, Runnable {
 			}
 		});
 
-		scoreDisplay.setText(getScore());
-		Listener listener = new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				switch (event.type) {
-				case SWT.Paint:
-					scoreDisplay.draw(event.gc, 0, 200);
-					break;
-				case SWT.Resize:
-					scoreDisplay.setWidth(shell.getSize().x - 20);
-					break;
-
-				}
-			}
-		};
-
-		shell.addListener(SWT.Paint, listener);
-		shell.addListener(SWT.Resize, listener);
 
 		Button undoButton = new Button(shell, SWT.PUSH);
 		undoButton.setText("UNDO");
@@ -265,6 +247,17 @@ public class View2048 extends Observable implements View, Runnable {
 			}
 		});
 
+		sD = new Label(shell, SWT.TITLE);
+		sD.setText(getScore());
+		sD.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
+		Listener listenerSD = new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+					sD.redraw();
+				
+			}
+		};
+
 		shell.open();
 
 		setKeyPresed(0);
@@ -315,8 +308,7 @@ public class View2048 extends Observable implements View, Runnable {
 				}
 
 				System.out.println("score= " + View2048.this.score);
-				scoreDisplay.setText("Score: " + View2048.this.score);
-
+				sD.setText("Score: " + View2048.this.score);
 			}
 		});
 	}
