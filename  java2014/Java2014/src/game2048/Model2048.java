@@ -109,8 +109,6 @@ public class Model2048 extends Observable implements Model {
 		}
 		if (getMoveFlag()) {
 			inputNewNumberToData();
-			// TODO PASHA set score += ? !
-			score += 2;
 			setMoveFlag(false);
 		}
 		setChanged();
@@ -153,8 +151,6 @@ public class Model2048 extends Observable implements Model {
 		}
 		if (getMoveFlag()) {
 			inputNewNumberToData();
-			// TODO PASHA set score += ? !
-			score += 4;
 			setMoveFlag(false);
 		}
 		setChanged();
