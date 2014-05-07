@@ -250,13 +250,8 @@ public class View2048 extends Observable implements View, Runnable {
 		sD = new Label(shell, SWT.TITLE);
 		sD.setText(getScore());
 		sD.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
-		Listener listenerSD = new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-					sD.redraw();
-				
-			}
-		};
+		
+		
 
 		shell.open();
 
