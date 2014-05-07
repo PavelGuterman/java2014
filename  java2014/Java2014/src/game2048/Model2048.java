@@ -63,15 +63,127 @@ public class Model2048 extends Observable implements Model {
 			}
 		}
 		stepsDataHistorry.push(tmpHistory);
-		
+
 		/*
 		 * Score
 		 */
-		//Integer tmpScore=new Integer(score);
+		// Integer tmpScore=new Integer(score);
 		scoresDataHistorry.add(new Integer(score));
-		
+
 	}
 
+	
+
+	@Override
+	public int[][] getData() {
+		return data;
+	}
+
+	@Override
+	public int[][] popStepBefore() {
+		if (stepsDataHistorry.size() > 0) {
+			score = scoresDataHistorry.pop();
+			data = stepsDataHistorry.pop();
+			return data;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public void restartgame() {
+		for (int i = 0; i < boardSize; i++) {
+			for (int j = 0; j < boardSize; j++) {
+				data[i][j] = 0;
+			}
+		}
+		stepsDataHistorry.clear();
+		scoresDataHistorry.clear();
+		score = 0;
+
+		inputNewNumberToData();
+		inputNewNumberToData();
+
+		System.out.println("Restart");
+
+	}
+
+	public boolean isEmpty(int volue) {
+		if (volue == 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public void setMoveFlag(boolean is_moved) {
+		flag = is_moved;
+	}
+
+	public boolean getMoveFlag() {
+		return flag;
+	}
+
+	@Override
+	public void saveGame(String fileName) {
+		try {
+			SeaveAndLoadGame2048 saveGame2048 = new SeaveAndLoadGame2048(
+					fileName);
+			stepsDataHistorry.push(data);
+			scoresDataHistorry.push(score);
+
+			saveGame2048.SaveGame(stepsDataHistorry, scoresDataHistorry);
+
+			stepsDataHistorry.pop();
+			scoresDataHistorry.pop();
+		} catch (IOException e) {
+			getMessageString = "Can't Save the game /n Error 1011" + "&&"
+					+ SWT.ICON_ERROR;
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void loadGame(String fileName) {
+		try {
+			Stack<int[][]> tmpStack = new Stack<int[][]>();
+			Stack<int[][]> tmpScore = new Stack<int[][]>();
+
+			SeaveAndLoadGame2048 loadGame2048 = new SeaveAndLoadGame2048(
+					fileName);
+			ArrayList<Stack<int[][]>> arrList = loadGame2048.LoadGame();
+
+			tmpStack = arrList.get(0);
+			tmpScore = arrList.get(1);
+
+			if (tmpStack.isEmpty()) {
+				getMessageString = "No Save is found /n Error 1020" + "&&"
+						+ SWT.ICON_ERROR;
+			} else {
+				stepsDataHistorry.clear();
+				scoresDataHistorry.clear();
+				stepsDataHistorry = tmpStack;
+				// scoresDataHistorry = tmpScore[0][0];
+				for (int i = 0; i < tmpScore.size(); i++) {
+					scoresDataHistorry.push(tmpScore.get(i)[0][0]);
+				}
+				data = stepsDataHistorry.pop();
+				score = scoresDataHistorry.pop();
+				getMessageString = "Game is Loaded" + "&&"
+						+ SWT.ICON_INFORMATION;
+			}
+
+		} catch (IOException e) {
+			getMessageString = "Can't Load the game /n Error 1010" + "&&"
+					+ SWT.ICON_ERROR;
+			e.printStackTrace();
+
+		}
+
+		setChanged();
+		notifyObservers();
+
+	}
+	
 	@Override
 	public void moveUp() {
 		setGameStepsStackAndScore();
@@ -91,9 +203,12 @@ public class Model2048 extends Observable implements Model {
 			}
 			while (!fullIndex.isEmpty()) {
 				tmpFull = fullIndex.poll();
+				int localScore = data[i][tmpFull];
 				if (fullIndex.size() >= 1
 						&& data[i][tmpFull] == data[i][fullIndex.getFirst()]) {
-					data[i][tmpFull] *= 2;
+					localScore *= 2;
+					data[i][tmpFull] = localScore;
+					score += localScore;
 					data[i][fullIndex.getFirst()] = 0;
 					emptyIndex.add(fullIndex.poll());
 					setMoveFlag(true);
@@ -134,8 +249,12 @@ public class Model2048 extends Observable implements Model {
 			}
 			while (!fullIndex.isEmpty()) {
 				tmpFull = fullIndex.poll();
-				if (fullIndex.size() >= 1 && data[i][tmpFull] == data[i][fullIndex.getFirst()]) {
-					data[i][tmpFull] *= 2;
+				int localScore = data[i][tmpFull];
+				if (fullIndex.size() >= 1
+						&& data[i][tmpFull] == data[i][fullIndex.getFirst()]) {
+					localScore *= 2;
+					data[i][tmpFull] = localScore;
+					score += localScore;
 					data[i][fullIndex.getFirst()] = 0;
 					emptyIndex.add(fullIndex.poll());
 					setMoveFlag(true);
@@ -176,9 +295,12 @@ public class Model2048 extends Observable implements Model {
 			}
 			while (!fullIndex.isEmpty()) {
 				tmpFull = fullIndex.poll();
+				int localScore = data[tmpFull][i];
 				if (fullIndex.size() >= 1
 						&& data[tmpFull][i] == data[fullIndex.getFirst()][i]) {
-					data[tmpFull][i] *= 2;
+					localScore *= 2;
+					data[tmpFull][i] = localScore;
+					score += localScore;
 					data[fullIndex.getFirst()][i] = 0;
 					emptyIndex.add(fullIndex.poll());
 					setMoveFlag(true);
@@ -224,8 +346,8 @@ public class Model2048 extends Observable implements Model {
 						&& data[tmpFull][i] == data[fullIndex.getFirst()][i]) {
 					localScore *= 2;
 					data[tmpFull][i] = localScore;
-					data[fullIndex.getFirst()][i] = 0;
 					score += localScore;
+					data[fullIndex.getFirst()][i] = 0;
 					emptyIndex.add(fullIndex.poll());
 					setMoveFlag(true);
 				}
@@ -243,114 +365,6 @@ public class Model2048 extends Observable implements Model {
 		}
 		setChanged();
 		notifyObservers();
-	}
-
-	@Override
-	public int[][] getData() {
-		return data;
-	}
-
-	@Override
-	public int[][] popStepBefore() {
-		if (stepsDataHistorry.size() > 0) {
-			score=scoresDataHistorry.pop();
-			data=stepsDataHistorry.pop();
-			return data;
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public void restartgame() {
-		for (int i = 0; i < boardSize; i++) {
-			for (int j = 0; j < boardSize; j++) {
-				data[i][j] = 0;
-			}
-		}
-		stepsDataHistorry.clear();
-		scoresDataHistorry.clear();
-		score=0;
-
-		inputNewNumberToData();
-		inputNewNumberToData();
-		
-		System.out.println("Restart");
-
-	}
-
-	public boolean isEmpty(int volue) {
-		if (volue == 0) {
-			return true;
-		}
-		return false;
-	}
-
-
-	public void setMoveFlag(boolean is_moved) {
-		flag = is_moved;
-	}
-
-	public boolean getMoveFlag() {
-		return flag;
-	}
-
-	@Override
-	public void saveGame(String fileName) {
-		try {
-			SeaveAndLoadGame2048 saveGame2048 = new SeaveAndLoadGame2048(
-					fileName);
-			stepsDataHistorry.push(data);
-			scoresDataHistorry.push(score);
-			
-			saveGame2048.SaveGame(stepsDataHistorry,scoresDataHistorry);
-			
-			stepsDataHistorry.pop();
-			scoresDataHistorry.pop();
-		} catch (IOException e) {
-			getMessageString = "Can't Save the game /n Error 1011"+"&&"+SWT.ICON_ERROR;
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void loadGame(String fileName) {
-		try {
-			Stack<int[][]> tmpStack = new Stack<int[][]>();
-			Stack<int[][]> tmpScore = new Stack<int[][]>();
-
-			SeaveAndLoadGame2048 loadGame2048 = new SeaveAndLoadGame2048(
-					fileName);
-			ArrayList<Stack<int[][]>> arrList = loadGame2048.LoadGame();
-			
-			tmpStack=arrList.get(0);
-			tmpScore=arrList.get(1);
-			
-			
-			if (tmpStack.isEmpty()) {
-				getMessageString = "No Save is found /n Error 1020"+"&&"+SWT.ICON_ERROR;
-			} else {
-				stepsDataHistorry.clear();
-				scoresDataHistorry.clear();
-				stepsDataHistorry = tmpStack;
-				//scoresDataHistorry = tmpScore[0][0];
-				for (int i = 0; i < tmpScore.size(); i++) {
-					scoresDataHistorry.push(tmpScore.get(i)[0][0]);
-				}
-				data = stepsDataHistorry.pop();
-				score = scoresDataHistorry.pop();
-				getMessageString = "Game is Loaded"+"&&"+SWT.ICON_INFORMATION;
-			}
-
-		} catch (IOException e) {
-			getMessageString = "Can't Load the game /n Error 1010"+"&&"+SWT.ICON_ERROR;
-			e.printStackTrace();
-			
-		}
-		
-		setChanged();
-		notifyObservers();
-
 	}
 
 	@Override
