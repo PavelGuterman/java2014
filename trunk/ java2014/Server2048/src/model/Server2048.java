@@ -12,7 +12,7 @@ public class Server2048 extends Thread {
 	boolean stop;
 	ClienHandler ch;
 	
-	public Server2048(int port , ClienHandler ch){
+	public Server2048(int port, ClienHandler ch){
 		this.port = port;
 		stop = false;
 		this.ch = ch; 
@@ -21,13 +21,16 @@ public class Server2048 extends Thread {
 	public void run(){
 		try {
 			server = new ServerSocket(port);
+			server.setSoTimeout(60*1000);
 			Socket client = server.accept();
+			System.out.println("got it");
 			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			ch.handleClient(inFromClient);
 			inFromClient.close();
 			client.close();
 			server.close();
 		} catch (IOException e) {
+			System.out.println("tiered of waiting for connection");
 			e.printStackTrace();
 		}
 	}
