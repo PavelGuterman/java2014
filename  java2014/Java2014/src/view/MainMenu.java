@@ -1,5 +1,10 @@
 package view;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 import game2048.Main2048;
 import game2048.Model2048;
 import game2048.View2048;
@@ -105,7 +110,15 @@ public class MainMenu extends Thread {
 
 	public static void main(String[] args) {
 		MainMenu menu = new MainMenu();
-		
 		menu.start();
+		
+		try {
+			InetAddress address =InetAddress.getLocalHost() ;
+			System.out.println(address.toString());
+			Socket server = new Socket(InetAddress.getLocalHost(), 6951);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
