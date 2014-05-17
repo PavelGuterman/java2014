@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Text;
 
 import view.View;
 
-public class Hint2048 extends Thread{
+public class Hint2048 implements Runnable{
 	
 	Display hintDisplay;
 	Shell hintShell;
