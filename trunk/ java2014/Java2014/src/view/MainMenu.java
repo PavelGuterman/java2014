@@ -1,8 +1,11 @@
 package view;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -118,11 +121,16 @@ public class MainMenu extends Thread {
 			InetAddress address =InetAddress.getLocalHost() ;
 			System.out.println(address.toString());
 			Socket server = new Socket(InetAddress.getLocalHost(), 6951);
-			BufferedWriter toServer = new BufferedWriter(new OutputStreamWriter(server.getOutputStream()));
-			toServer.write("hello");
+			BufferedReader fromUser  = new BufferedReader(new InputStreamReader(System.in));
+			PrintWriter toServer = new PrintWriter(new OutputStreamWriter(server.getOutputStream()));
+			String line;
+			while(!((line= fromUser.readLine()).equals("exit"))){
+				toServer.println(line);
+				toServer.flush();
+			}
+			server.close();fromUser.close();toServer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }
