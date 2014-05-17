@@ -249,8 +249,8 @@ public class View2048 extends Observable implements View, Runnable {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				display.close();
-				Hint2048 hint = new Hint2048();
-				hint.run();
+				hitn();
+				
 			}
 			
 			@Override
@@ -272,6 +272,7 @@ public class View2048 extends Observable implements View, Runnable {
 		setChanged();
 		notifyObservers();
 	}
+
 
 	@Override
 	public void dispayData(final int[][] data, String message, int score) {
@@ -405,6 +406,12 @@ public class View2048 extends Observable implements View, Runnable {
 		setKeyPresed(13);
 		setChanged();
 		notifyObservers();
+	}
+
+	protected void hitn() {
+		Hint2048 h = new Hint2048();
+		h.run();
+		
 	}
 
 	private boolean checkIfGameIsOver(int[][] data) {
