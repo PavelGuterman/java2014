@@ -1,6 +1,8 @@
 package view;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -116,6 +118,8 @@ public class MainMenu extends Thread {
 			InetAddress address =InetAddress.getLocalHost() ;
 			System.out.println(address.toString());
 			Socket server = new Socket(InetAddress.getLocalHost(), 6951);
+			BufferedWriter toServer = new BufferedWriter(new OutputStreamWriter(server.getOutputStream()));
+			toServer.write("hello");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
