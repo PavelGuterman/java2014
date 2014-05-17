@@ -25,6 +25,7 @@ public class Server2048 extends Thread {
 			Socket client = server.accept();
 			System.out.println("got it");
 			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			System.out.println(inFromClient.readLine());
 			ch.handleClient(inFromClient);
 			inFromClient.close();
 			client.close();
