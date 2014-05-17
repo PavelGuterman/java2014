@@ -241,6 +241,25 @@ public class View2048 extends Observable implements View, Runnable {
 			}
 		});
 
+		Button hintButton = new Button(shell, SWT.PUSH);
+		hintButton.setText("HINT");
+		hintButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
+		hintButton.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				display.close();
+				Hint2048 hint = new Hint2048();
+				hint.run();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		sD = new Label(shell, SWT.TITLE);
 		sD.setText(getScore());
 		sD.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
