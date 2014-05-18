@@ -2,6 +2,7 @@ package game2048;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Random;
@@ -188,38 +189,27 @@ public class Model2048 extends Observable implements Model {
 	public void moveUp() {
 		setGameStepsStackAndScore();
 		for (int i = 0; i < data.length; i++) {
-			LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
-			LinkedList<Integer> fullIndex = new LinkedList<Integer>();
-			int tmpFull = 0;
+			LinkedList<Integer> newLine = new LinkedList<Integer>();
+			int[] newData = new int[data.length];
 			for (int j = 0; j < data.length; j++) {
-				if (isEmpty(data[i][j])) {
-					emptyIndex.add(j);
-					continue;
+				if (!isEmpty(data[i][j])) {
+					newLine.add(data[i][j]);
 				}
-				fullIndex.add(j);
 			}
-			if (emptyIndex.size() == data.length) {
-				continue;
+			if(newLine.size() ==0){continue;}
+			for (int k = 0; k < data.length && !newLine.isEmpty(); k++) {
+				int tmp = newLine.poll();
+				int num = tmp;
+				if(newLine.size()>=1 && tmp == newLine.getFirst() && num!=0){
+					num*=2;
+					score += num;
+					newLine.pop();
+				}
+				newData[k] = num;
 			}
-			while (!fullIndex.isEmpty()) {
-				tmpFull = fullIndex.poll();
-				int localScore = data[i][tmpFull];
-				if (fullIndex.size() >= 1
-						&& data[i][tmpFull] == data[i][fullIndex.getFirst()]) {
-					localScore *= 2;
-					data[i][tmpFull] = localScore;
-					score += localScore;
-					data[i][fullIndex.getFirst()] = 0;
-					emptyIndex.add(fullIndex.poll());
-					setMoveFlag(true);
-				}
-				if (!emptyIndex.isEmpty() && emptyIndex.getFirst() < tmpFull) {
-					data[i][emptyIndex.poll()] = data[i][tmpFull];
-					data[i][tmpFull] = 0;
-					emptyIndex.add(tmpFull);
-					setMoveFlag(true);
-				}
-
+			if(!Arrays.equals(newData, data[i])){
+				setMoveFlag(true);				
+				System.arraycopy(newData, 0, data[i], 0, data.length);
 			}
 		}
 		if (getMoveFlag()) {
@@ -234,38 +224,26 @@ public class Model2048 extends Observable implements Model {
 	public void moveDown() {
 		setGameStepsStackAndScore();
 		for (int i = 0; i < data.length; i++) {
-			LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
-			LinkedList<Integer> fullIndex = new LinkedList<Integer>();
-			int tmpFull = 0;
+			LinkedList<Integer> newLine = new LinkedList<Integer>();
+			int[] newData = new int[data.length];
 			for (int j = data.length - 1; j >= 0; j--) {
-				if (isEmpty(data[i][j])) {
-					emptyIndex.add(j);
-					continue;
+				if (!isEmpty(data[i][j])) {
+					newLine.add(data[i][j]);
 				}
-				fullIndex.add(j);
 			}
-			if (emptyIndex.size() == data.length) {
-				continue;
+			if(newLine.size() ==0){continue;}
+			for (int k = data.length-1; k >=0 && !newLine.isEmpty(); k--) {
+				int tmp = newLine.poll();
+				int num = tmp;
+				if(newLine.size()>=1 && tmp == newLine.getFirst() && num!=0){
+					num*=2;
+					score += num;
+				}
+				newData[k] = num;
 			}
-			while (!fullIndex.isEmpty()) {
-				tmpFull = fullIndex.poll();
-				int localScore = data[i][tmpFull];
-				if (fullIndex.size() >= 1
-						&& data[i][tmpFull] == data[i][fullIndex.getFirst()]) {
-					localScore *= 2;
-					data[i][tmpFull] = localScore;
-					score += localScore;
-					data[i][fullIndex.getFirst()] = 0;
-					emptyIndex.add(fullIndex.poll());
-					setMoveFlag(true);
-				}
-				if (!emptyIndex.isEmpty() && emptyIndex.getFirst() > tmpFull) {
-					data[i][emptyIndex.poll()] = data[i][tmpFull];
-					data[i][tmpFull] = 0;
-					emptyIndex.add(tmpFull);
-					setMoveFlag(true);
-				}
-
+			if(!Arrays.equals(newData, data[i])){
+				setMoveFlag(true);				
+				System.arraycopy(newData, 0, data[i], 0, data.length);
 			}
 		}
 		if (getMoveFlag()) {
@@ -279,40 +257,34 @@ public class Model2048 extends Observable implements Model {
 	@Override
 	public void moveRight() {
 		setGameStepsStackAndScore();
+		int[][] newData = new int[data.length][data.length];
 		for (int i = 0; i < data.length; i++) {
-			LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
-			LinkedList<Integer> fullIndex = new LinkedList<Integer>();
-			int tmpFull = 0;
+			LinkedList<Integer> newLine = new LinkedList<Integer>();
 			for (int j = data.length - 1; j >= 0; j--) {
-				if (isEmpty(data[j][i])) {
-					emptyIndex.add(j);
-					continue;
+				if (!isEmpty(data[j][i])) {
+					newLine.add(data[j][i]);
 				}
-				fullIndex.add(j);
 			}
-			if (emptyIndex.size() == data.length) {
-				continue;
-			}
-			while (!fullIndex.isEmpty()) {
-				tmpFull = fullIndex.poll();
-				int localScore = data[tmpFull][i];
-				if (fullIndex.size() >= 1
-						&& data[tmpFull][i] == data[fullIndex.getFirst()][i]) {
-					localScore *= 2;
-					data[tmpFull][i] = localScore;
-					score += localScore;
-					data[fullIndex.getFirst()][i] = 0;
-					emptyIndex.add(fullIndex.poll());
-					setMoveFlag(true);
+			if(newLine.size() ==0){continue;}
+			for (int k = data.length-1; k >=0 && !newLine.isEmpty(); k--) {
+				int tmp = newLine.poll();
+				int num = tmp;
+				if(newLine.size()>=1 && tmp == newLine.getFirst() && num!=0){
+					num*=2;
+					score = num;
+					newLine.pop();
 				}
-				if (!emptyIndex.isEmpty() && emptyIndex.getFirst() > tmpFull) {
-					data[emptyIndex.poll()][i] = data[tmpFull][i];
-					data[tmpFull][i] = 0;
-					emptyIndex.add(tmpFull);
-					setMoveFlag(true);
-				}
+				newData[k][i] = num;
 			}
 		}
+			for (int i = 0; i < newData.length; i++) {
+				if(!Arrays.equals(newData[i], data[i])){
+					setMoveFlag(true);
+					System.arraycopy(newData[i], 0, data[i], 0, data.length);
+				}
+				
+			}
+		
 		if (getMoveFlag()) {
 			inputNewNumberToData();
 			setMoveFlag(false);
@@ -325,40 +297,35 @@ public class Model2048 extends Observable implements Model {
 	@Override
 	public void moveLeft() {
 		setGameStepsStackAndScore();
+		int[][] newData = new int[data.length][data.length];
 		for (int i = 0; i < data.length; i++) {
-			LinkedList<Integer> emptyIndex = new LinkedList<Integer>();
-			LinkedList<Integer> fullIndex = new LinkedList<Integer>();
-			int tmpFull = 0;
+			LinkedList<Integer> newLine = new LinkedList<Integer>();
 			for (int j = 0; j < data.length; j++) {
-				if (isEmpty(data[j][i])) {
-					emptyIndex.add(j);
-					continue;
+				if (!isEmpty(data[j][i])) {
+					newLine.add(data[j][i]);
 				}
-				fullIndex.add(j);
 			}
-			if (emptyIndex.size() == data.length) {
-				continue;
-			}
-			while (!fullIndex.isEmpty()) {
-				tmpFull = fullIndex.poll();
-				int localScore = data[tmpFull][i];
-				if (fullIndex.size() >= 1
-						&& data[tmpFull][i] == data[fullIndex.getFirst()][i]) {
-					localScore *= 2;
-					data[tmpFull][i] = localScore;
-					score += localScore;
-					data[fullIndex.getFirst()][i] = 0;
-					emptyIndex.add(fullIndex.poll());
-					setMoveFlag(true);
+			if(newLine.size() ==0){continue;}
+			for (int k = 0; k < data.length && !newLine.isEmpty(); k++) {
+				int tmp = newLine.poll();
+				int num = tmp;
+				if(newLine.size()>=1 && tmp == newLine.getFirst() && num!=0){
+					num*=2;
+					score = num;
+					newLine.pop();
 				}
-				if (!emptyIndex.isEmpty() && emptyIndex.getFirst() < tmpFull) {
-					data[emptyIndex.poll()][i] = data[tmpFull][i];
-					data[tmpFull][i] = 0;
-					emptyIndex.add(tmpFull);
-					setMoveFlag(true);
-				}
+				newData[k][i] = num;
 			}
 		}
+		
+		for (int i = 0; i < newData.length; i++) {
+			if(!Arrays.equals(newData[i], data[i])){
+				setMoveFlag(true);
+				System.arraycopy(newData[i], 0, data[i], 0, data.length);
+			}
+			
+		}
+		
 		if (getMoveFlag()) {
 			inputNewNumberToData();
 			setMoveFlag(false);
