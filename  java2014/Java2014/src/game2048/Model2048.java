@@ -271,7 +271,7 @@ public class Model2048 extends Observable implements Model {
 				int num = tmp;
 				if(newLine.size()>=1 && tmp == newLine.getFirst() && num!=0){
 					num*=2;
-					score = num;
+					score += num;
 					newLine.pop();
 				}
 				newData[k][i] = num;
@@ -311,7 +311,7 @@ public class Model2048 extends Observable implements Model {
 				int num = tmp;
 				if(newLine.size()>=1 && tmp == newLine.getFirst() && num!=0){
 					num*=2;
-					score = num;
+					score += num;
 					newLine.pop();
 				}
 				newData[k][i] = num;
