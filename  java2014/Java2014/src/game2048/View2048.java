@@ -410,8 +410,8 @@ public class View2048 extends Observable implements View, Runnable {
 
 	protected void hint() {
 		
-//		Hint2048 h = new Hint2048();
-//		h.run();
+		Hint2048 h = new Hint2048(display);
+		h.run();
 		
 	}
 
