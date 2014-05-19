@@ -19,8 +19,8 @@ public class Hint2048 implements Runnable{
 	Display hintDisplay;
 	Shell hintShell;
 	
-	public Hint2048() {
-		this.hintDisplay = new Display();
+	public Hint2048(Display display) {
+		this.hintDisplay = display;
 	}
 	
 	
