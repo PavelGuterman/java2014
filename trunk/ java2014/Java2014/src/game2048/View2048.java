@@ -248,8 +248,8 @@ public class View2048 extends Observable implements View, Runnable {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				display.close();
-				hitn();
+				//display.wait();
+				hint();
 				
 			}
 			
@@ -408,9 +408,10 @@ public class View2048 extends Observable implements View, Runnable {
 		notifyObservers();
 	}
 
-	protected void hitn() {
-		Hint2048 h = new Hint2048();
-		h.run();
+	protected void hint() {
+		
+//		Hint2048 h = new Hint2048();
+//		h.run();
 		
 	}
 
