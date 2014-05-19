@@ -1,14 +1,14 @@
 package controller;
 
-import java.io.BufferedReader;
-import model.ClienHandler;
+import solver.Solver;
 import model.Server2048;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-	Server2048 s = new Server2048(6951, new ClienHandler() {
-			
+		Solver solver = new Solver();
+	Server2048 s = new Server2048(6951, solver); 
+	/*new ClienHandler() {
 			@Override
 			public void handleClient(BufferedReader inFromClient) {
 				String line;
@@ -20,7 +20,7 @@ public class Main {
 					e.printStackTrace();
 				}
 			}
-		});
+		})*/
 	
 	s.start();
 	Thread.sleep(60*1000);
