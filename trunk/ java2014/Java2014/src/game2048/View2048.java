@@ -33,12 +33,15 @@ public class View2048 extends Observable implements View, Runnable {
 	private int messageType = 0;
 	private String saveFilePath;
 	Shell shell;
+	Shell perentShell;
 	private Label sD; 
 	private final int bordSize;
 
-	public View2048(int boardSize) {
+
+	public View2048(int boardSize,Shell perentShell) {
 		super();
 		this.bordSize = boardSize;
+		this.perentShell = perentShell;
 	}
 
 	private void initComponents() {
@@ -77,10 +80,8 @@ public class View2048 extends Observable implements View, Runnable {
 
 			@Override
 			public void shellClosed(ShellEvent arg0) {
-				Display.getDefault().close();
-				MainMenu menu = new MainMenu();
-				menu.start();
-
+				shell.setEnabled(false);
+				perentShell.setVisible(true);
 			}
 
 			@Override
@@ -127,8 +128,7 @@ public class View2048 extends Observable implements View, Runnable {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				shell.setEnabled(false);
-				MainMenu menu = new MainMenu();
-				menu.start();
+				perentShell.setVisible(true);
 			}
 
 			@Override
@@ -286,6 +286,7 @@ public class View2048 extends Observable implements View, Runnable {
 
 			} else {
 				shell.setEnabled(false);
+				perentShell.setVisible(true);
 			}
 			setMesegeString("");
 		}
@@ -401,6 +402,7 @@ public class View2048 extends Observable implements View, Runnable {
 		
 		Hint2048 h = new Hint2048(shell);
 		h.openWIn();
+		shell.setEnabled(false);;
 		
 	}
 
