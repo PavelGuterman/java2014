@@ -28,7 +28,12 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
 import controller.Presenter;
-
+/**
+ * 
+ * Main menu. start program ! 
+ * Shows menu of games.
+ * 
+ */
 public class MainMenu extends Thread {
 	Display display;
 	Shell shell;
@@ -36,7 +41,12 @@ public class MainMenu extends Thread {
 	public MainMenu() {
 		
 	}
-
+	
+	/**
+	 * view menu.
+	 * Game2048
+	 * mazeGame
+	 */
 	private void initComponents() {
 		display = new Display();
 		shell = new Shell(display);
@@ -69,8 +79,10 @@ public class MainMenu extends Thread {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				display.close();
+				//display.close();
+				shell.setVisible(false);
 				Main2048.startGame2048();
+				shell.setVisible(true);
 				
 			}
 
@@ -98,12 +110,13 @@ public class MainMenu extends Thread {
 
 		shell.open();
 	}
-
+	/**
+	 * Runnable method to view window.
+	 */
 	public void run() {
 		initComponents();
 
 		while (!shell.isDisposed()) {
-
 			if (!display.readAndDispatch()) {
 				display.sleep();
 

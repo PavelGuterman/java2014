@@ -12,8 +12,14 @@ import org.eclipse.swt.SWT;
 
 import model.Model;
 
+/**
+ * nlskdnfl adad
+ * @see	Observable
+ * @see Model
+ */
 public class Model2048 extends Observable implements Model {
 
+	/** **/
 	private int[][] data;
 	private Stack<int[][]> stepsDataHistorry;
 	private final int boardSize;
@@ -22,7 +28,10 @@ public class Model2048 extends Observable implements Model {
 	boolean flag;
 
 	private String getMessageString = "";
-
+	/**
+	 * 
+	 * @param boardSize		
+	 */
 	public Model2048(int boardSize) {
 		super();
 		this.boardSize = boardSize;
