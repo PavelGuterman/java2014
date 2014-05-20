@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -135,7 +136,11 @@ public class MainMenu extends Thread {
 				toServer.flush();
 			}
 			server.close();fromUser.close();toServer.close();
-		} catch (IOException e) {
+		}
+		catch (ConnectException ce){
+			System.err.println("No connection to HINT server ");
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
