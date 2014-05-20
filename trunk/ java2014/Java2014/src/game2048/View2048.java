@@ -32,7 +32,6 @@ public class View2048 extends Observable implements View, Runnable {
 	private String messageString = "";
 	private int messageType = 0;
 	private String saveFilePath;
-	Display display;
 	Shell shell;
 	private Label sD; 
 	private final int bordSize;
@@ -40,16 +39,15 @@ public class View2048 extends Observable implements View, Runnable {
 	public View2048(int boardSize) {
 		super();
 		this.bordSize = boardSize;
-		display = new Display();
 	}
 
 	private void initComponents() {
 
-		shell = new Shell(display);
+		shell = new Shell(Display.getDefault());
 		shell.setLayout(new GridLayout(2, false));
 		shell.setSize(550, 500);
 
-		Monitor primary = display.getPrimaryMonitor();
+		Monitor primary = Display.getDefault().getPrimaryMonitor();
 		Rectangle bounds = primary.getBounds();
 		Rectangle rect = shell.getBounds();
 		int x = bounds.x + (bounds.width - rect.width) / 2;
@@ -79,7 +77,7 @@ public class View2048 extends Observable implements View, Runnable {
 
 			@Override
 			public void shellClosed(ShellEvent arg0) {
-				display.close();
+				Display.getDefault().close();
 				MainMenu menu = new MainMenu();
 				menu.start();
 
@@ -128,7 +126,7 @@ public class View2048 extends Observable implements View, Runnable {
 		itemExit.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				display.close();
+				shell.setEnabled(false);
 				MainMenu menu = new MainMenu();
 				menu.start();
 			}
@@ -287,15 +285,13 @@ public class View2048 extends Observable implements View, Runnable {
 				notifyObservers();
 
 			} else {
-				display.close();
-				MainMenu menu = new MainMenu();
-				menu.start();
+				shell.setEnabled(false);
 			}
 			setMesegeString("");
 		}
 		setMesegeString(message);
 		setScore(score);
-		display.syncExec(new Runnable() {
+		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				if (!messageString.isEmpty()) {
@@ -330,13 +326,6 @@ public class View2048 extends Observable implements View, Runnable {
 	@Override
 	public void run() {
 		initComponents();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-
-		display.dispose();
 	}
 
 	public int getKeyPresed() {
@@ -410,8 +399,8 @@ public class View2048 extends Observable implements View, Runnable {
 
 	protected void hint() {
 		
-		Hint2048 h = new Hint2048(display);
-		h.run();
+		Hint2048 h = new Hint2048(shell);
+		h.openWIn();
 		
 	}
 
