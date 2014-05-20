@@ -81,8 +81,8 @@ public class MainMenu extends Thread {
 			public void widgetSelected(SelectionEvent e) {
 				//display.close();
 				shell.setVisible(false);
-				Main2048.startGame2048();
-				shell.setVisible(true);
+				Main2048.startGame2048(shell);
+				//shell.setVisible(true);
 				
 			}
 
@@ -112,6 +112,7 @@ public class MainMenu extends Thread {
 	}
 	/**
 	 * Runnable method to view window.
+	 * include while to display
 	 */
 	public void run() {
 		initComponents();

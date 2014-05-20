@@ -28,7 +28,6 @@ public class Hint2048 {
 		hintShell=new Shell(Display.getDefault());
 		hintShell.pack();
 		this.perentShell=perentShell;
-		Display.getDefault().getActiveShell();
 	}
 	
 	
@@ -82,18 +81,9 @@ public class Hint2048 {
 			
 			@Override
 			public void shellClosed(ShellEvent arg0) {
-				//shell.setEnabled(true);
-				//shell.setActive();
-				//shell.pack();
 				System.out.println("sdsds ");
 				hintShell.setEnabled(false);
 				perentShell.setEnabled(true);
-				//System.out.println(Display.getDefault().getShells());
-				//Display.getDefault().getActiveShell().setEnabled(true);
-				
-				//hintShell.pack();
-				
-				
 			}
 			
 			@Override
