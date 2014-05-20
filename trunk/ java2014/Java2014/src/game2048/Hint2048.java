@@ -5,17 +5,16 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.events.ShellListener;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
-import view.MainMenu;
-import view.View;
 
 public class Hint2048 {
 	
@@ -36,6 +35,15 @@ public class Hint2048 {
 		hintShell.setLayout(new GridLayout(2, false));
 		hintShell.setSize(155,150);
 		hintShell.setLayout(new GridLayout());
+		
+		//location to center
+		Monitor primary = Display.getDefault().getPrimaryMonitor();
+		Rectangle bounds = primary.getBounds();
+		Rectangle rect = hintShell.getBounds();
+		int x = bounds.x + (bounds.width - rect.width) / 2;
+		int y = bounds.y + (bounds.height - rect.height) / 2;
+		hintShell.setLocation(x, y);
+		
 		
 		new Label(hintShell, SWT.NONE).setText("Choose number of Moves");
 		String[] moveOption = "1_move 2_moves 3_moves 4_moves solve".split(" ");
