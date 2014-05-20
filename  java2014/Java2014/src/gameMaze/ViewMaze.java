@@ -2,9 +2,6 @@ package gameMaze;
 
 import java.util.Observable;
 
-import game2048.Board2048;
-import game2048.View2048;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -27,11 +24,9 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
-import view.MainMenu;
 import view.View;
 
-public class ViewMaze extends Observable implements View,Runnable {
-	
+public class ViewMaze extends Observable implements View, Runnable {
 
 	private MazeBoard board;
 	private int score = 0;
@@ -39,65 +34,63 @@ public class ViewMaze extends Observable implements View,Runnable {
 	private String messageString = "";
 	private int messageType = 0;
 	private String saveFilePath;
-	Display display;
 	Shell shell;
+	Shell perentShell;
 	TextLayout scoreDisplay;
 	private final int bordSize;
 
-	public ViewMaze(int boardSize) {
+	public ViewMaze(int boardSize, Shell perentShell) {
 		super();
-		this.bordSize=boardSize;
+		this.bordSize = boardSize;
+		this.perentShell = perentShell;
 	}
 
 	private void initComponents() {
-		display = new Display();
-		shell = new Shell(display);
+		shell = new Shell(Display.getDefault());
 		shell.setLayout(new GridLayout(2, false));
 		shell.setSize(550, 500);
-		
-		Monitor primary = display.getPrimaryMonitor ();
-		Rectangle bounds = primary.getBounds ();
-		Rectangle rect = shell.getBounds ();
+
+		Monitor primary = Display.getDefault().getPrimaryMonitor();
+		Rectangle bounds = primary.getBounds();
+		Rectangle rect = shell.getBounds();
 		int x = bounds.x + (bounds.width - rect.width) / 2;
 		int y = bounds.y + (bounds.height - rect.height) / 2;
-		shell.setLocation (x, y);
-		
+		shell.setLocation(x, y);
+
 		shell.setText("---Maze---");
-shell.addShellListener(new ShellListener() {
-			
+		shell.addShellListener(new ShellListener() {
+
 			@Override
 			public void shellIconified(ShellEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void shellDeiconified(ShellEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void shellDeactivated(ShellEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void shellClosed(ShellEvent arg0) {
-				display.close();
-				MainMenu menu = new MainMenu();
-				menu.start();
-				
+				shell.setEnabled(false);
+				perentShell.setVisible(true);
+				perentShell.setFocus();
 			}
-			
+
 			@Override
 			public void shellActivated(ShellEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
 
 		Menu bar = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(bar);
@@ -109,8 +102,8 @@ shell.addShellListener(new ShellListener() {
 		item.setText("Save");
 		item.setText("Load");
 
-		scoreDisplay = new TextLayout(display);
-		scoreDisplay.setText("SCORE: "+score+"$");
+		scoreDisplay = new TextLayout(Display.getDefault());
+		scoreDisplay.setText("SCORE: " + score + "$");
 		Listener listener = new Listener() {
 			@Override
 			public void handleEvent(Event event) {
@@ -121,18 +114,17 @@ shell.addShellListener(new ShellListener() {
 				case SWT.Resize:
 					scoreDisplay.setWidth(shell.getSize().x - 20);
 					break;
-				
+
 				}
 			}
 		};
-		
+
 		shell.addListener(SWT.Paint, listener);
 		shell.addListener(SWT.Resize, listener);
-		
+
 		Button undoButton = new Button(shell, SWT.PUSH);
 		undoButton.setText("UNDO");
-		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
-				1, 2));
+		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
 		undoButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -146,7 +138,7 @@ shell.addShellListener(new ShellListener() {
 			}
 		});
 
-		board = new MazeBoard(shell, SWT.BORDER,bordSize);
+		board = new MazeBoard(shell, SWT.BORDER, bordSize);
 		board.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 10));
 		board.addKeyListener(new KeyListener() {
 			@Override
@@ -185,11 +177,10 @@ shell.addShellListener(new ShellListener() {
 				}
 			}
 		});
-		
+
 		Button restartButton = new Button(shell, SWT.PUSH);
 		restartButton.setText("RESTART");
-		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false,
-				false, 1, 1));
+		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		restartButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -206,8 +197,7 @@ shell.addShellListener(new ShellListener() {
 
 		Button loadButton = new Button(shell, SWT.PUSH);
 		loadButton.setText("LAOD");
-		loadButton.setLayoutData(new GridData(SWT.FILL, SWT.LEFT, false, false,
-				1, 1));
+		loadButton.setLayoutData(new GridData(SWT.FILL, SWT.LEFT, false, false, 1, 1));
 		loadButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -227,8 +217,7 @@ shell.addShellListener(new ShellListener() {
 
 		Button saveButton = new Button(shell, SWT.PUSH);
 		saveButton.setText("SAVE");
-		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
-				1, 1));
+		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		saveButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -248,18 +237,17 @@ shell.addShellListener(new ShellListener() {
 		});
 
 		shell.open();
-	
 
 		setKeyPresed(0);
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	@Override
 	public void dispayData(final int[][] data, String message, int score) {
 		setMesegeString(message);
 		setScore(score);
-		display.syncExec(new Runnable() {
+		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				if (!messageString.isEmpty()) {
@@ -274,31 +262,25 @@ shell.addShellListener(new ShellListener() {
 				}
 				System.out.println("score= " + ViewMaze.this.score);
 				scoreDisplay.setText("Score: " + ViewMaze.this.score);
-				//board.setBoardData(data);
+				// board.setBoardData(data);
 				for (int i = 0; i < data.length; i++) {
 					for (int j = 0; j < data.length; j++) {
 						board.tile[j][i].setVol(data[i][j]);
 					}
 				}
-				
-				//board.setFocus();
+
+				// board.setFocus();
 
 			}
 		});
 
 	}
-	
+
 	@Override
 	public void run() {
 		initComponents();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
 	}
-	
+
 	public void setKeyPresed(int keyPresed) {
 		this.keyPresed = keyPresed;
 	}
@@ -318,7 +300,7 @@ shell.addShellListener(new ShellListener() {
 			} catch (Exception e) {
 				messageType = SWT.ICON_INFORMATION;
 			}
-		}else{
+		} else {
 			messageString = message;
 			messageType = SWT.ICON_INFORMATION;
 		}
@@ -340,7 +322,7 @@ shell.addShellListener(new ShellListener() {
 		saveFilePath = fd.open();
 
 	}
-	
+
 	public void setScore(int score) {
 		this.score = score;
 	}

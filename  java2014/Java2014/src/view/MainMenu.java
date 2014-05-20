@@ -1,18 +1,14 @@
 package view;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import game2048.Main2048;
-import game2048.Model2048;
-import game2048.View2048;
 import gameMaze.MazeMain;
 
 import org.eclipse.swt.SWT;
@@ -21,13 +17,11 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
-import controller.Presenter;
 /**
  * 
  * Main menu. start program ! 
@@ -79,10 +73,8 @@ public class MainMenu extends Thread {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//display.close();
 				shell.setVisible(false);
 				Main2048.startGame2048(shell);
-				//shell.setVisible(true);
 				
 			}
 
@@ -97,8 +89,8 @@ public class MainMenu extends Thread {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				display.close();
-				MazeMain.startGameMaze();
+				shell.setVisible(false);
+				MazeMain.startGameMaze(shell);
 			}
 
 			@Override

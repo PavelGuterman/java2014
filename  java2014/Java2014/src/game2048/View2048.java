@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
-import view.MainMenu;
 import view.View;
 
 public class View2048 extends Observable implements View, Runnable {
@@ -49,7 +48,8 @@ public class View2048 extends Observable implements View, Runnable {
 		shell = new Shell(Display.getDefault());
 		shell.setLayout(new GridLayout(2, false));
 		shell.setSize(550, 500);
-
+		
+		//location to center
 		Monitor primary = Display.getDefault().getPrimaryMonitor();
 		Rectangle bounds = primary.getBounds();
 		Rectangle rect = shell.getBounds();
@@ -82,6 +82,7 @@ public class View2048 extends Observable implements View, Runnable {
 			public void shellClosed(ShellEvent arg0) {
 				shell.setEnabled(false);
 				perentShell.setVisible(true);
+				perentShell.setFocus();
 			}
 
 			@Override
