@@ -1,5 +1,13 @@
 package game2048;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.ConnectException;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.Observable;
 
 import org.eclipse.swt.SWT;
@@ -21,6 +29,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
+
 import view.View;
 
 public class View2048 extends Observable implements View, Runnable {
@@ -403,7 +412,30 @@ public class View2048 extends Observable implements View, Runnable {
 		
 		Hint2048 h = new Hint2048(shell);
 		h.openWIn();
-		shell.setEnabled(false);;
+		shell.setEnabled(false);
+		for (int i = 0; i < h.n_moves; i++) {
+			try {
+				InetAddress address =InetAddress.getLocalHost() ;
+				System.out.println(address.toString());
+				Socket server = new Socket(InetAddress.getLocalHost(), 6951);
+				BufferedReader fromUser  = new BufferedReader(new InputStreamReader(System.in));
+				PrintWriter toServer = new PrintWriter(new OutputStreamWriter(server.getOutputStream()));
+				String line;
+				while(!((line= fromUser.readLine()).equals("exit"))){
+					toServer.println(line);
+					toServer.flush();
+				}
+				server.close();
+				fromUser.close();
+				toServer.close();
+			}
+			catch (ConnectException ce){
+				System.err.println("No connection to HINT server ");
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
