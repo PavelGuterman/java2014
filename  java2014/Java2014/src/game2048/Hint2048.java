@@ -21,6 +21,7 @@ public class Hint2048 {
 	Shell hintShell;
 	View2048 view2048;
 	Shell perentShell;
+	int n_moves;
 	
 	public Hint2048(Shell perentShell) {
 		
@@ -46,10 +47,11 @@ public class Hint2048 {
 		
 		
 		new Label(hintShell, SWT.NONE).setText("Choose number of Moves");
-		String[] moveOption = "1_move 2_moves 3_moves 4_moves solve".split(" ");
+		String[] moveOption = "1 2 3 4 5 solve".split(" ");
 		
 		final Combo combo = new Combo(hintShell, SWT.DROP_DOWN);
 		combo.setItems(moveOption);
+		System.out.println(combo.getData());
  
 		Button executeButton = new Button(hintShell, SWT.PUSH);
 		executeButton.setText("GO");
@@ -59,7 +61,7 @@ public class Hint2048 {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				System.out.println(combo.getItem(combo.getSelectionIndex()));
-				
+				n_moves = (int) combo.getData();
 			}
 			
 			@Override
