@@ -1,5 +1,8 @@
 package game2048;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -11,9 +14,12 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
 public class HintDialog extends Dialog {
-	int n_moves;
+	
+	private int n_moves;
+	private String serverAddresText;
 
 	/**
 	 * @param parent
@@ -36,14 +42,31 @@ public class HintDialog extends Dialog {
 	 * @return
 	 */
 	public int open() {
+		try {
+			serverAddresText=InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e1) {
+			serverAddresText="localhost";
+			e1.printStackTrace();
+		}
 		Shell parent = getParent();
 		final Shell shell = new Shell(parent, SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL);
 		shell.setText("Number of steps");
 
 		shell.setLayout(new GridLayout(2, true));
 
-		Label label = new Label(shell, SWT.NULL);
-		label.setText("Choose number of Moves - ");
+		Label label1 = new Label(shell, SWT.NULL);
+		label1.setText("Server addres: ");
+		final Text serverAddres = new Text(shell, SWT.SINGLE | SWT.BORDER);
+		serverAddres.setText(serverAddresText);
+		
+		serverAddres.addListener(SWT.FocusOut, new Listener() {
+			public void handleEvent(Event e) {
+				serverAddresText=serverAddres.getText();
+			}
+		});
+
+		Label label2 = new Label(shell, SWT.NULL);
+		label2.setText("Choose number of Moves;  ");
 
 		String[] moveOption = " 1 2 3 4 5 solve".split(" ");
 		final Combo combo = new Combo(shell, SWT.DROP_DOWN);
@@ -57,6 +80,11 @@ public class HintDialog extends Dialog {
 
 		combo.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(Event event) {
+
+				if (serverAddres.getText().length() < 2) {
+					serverAddres.setFocus();
+					return;
+				}
 				try {
 					n_moves = Integer.parseInt(combo.getItem(combo.getSelectionIndex()));
 					buttonOK.setEnabled(true);
@@ -73,7 +101,7 @@ public class HintDialog extends Dialog {
 					buttonOK.setEnabled(false);
 					n_moves = -3;
 				}
-				//System.out.println("select in dialog:" + n_moves);
+				// System.out.println("select in dialog:" + n_moves);
 			}
 		});
 
@@ -106,13 +134,18 @@ public class HintDialog extends Dialog {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
-
 		return n_moves;
 	}
 
-//	public static void main(String[] args) {
-//		Shell shell = new Shell();
-//		HintDialog dialog = new HintDialog(shell);
-//		System.out.println(dialog.open());
-//	}
+	
+	public String getServerAddresText() {
+		return serverAddresText;
+	}
+	
+	
+	// public static void main(String[] args) {
+	// Shell shell = new Shell();
+	// HintDialog dialog = new HintDialog(shell);
+	// System.out.println(dialog.open());
+	// }
 }

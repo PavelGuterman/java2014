@@ -1,6 +1,11 @@
 package game2048;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ConnectException;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -14,7 +19,8 @@ import model.Model;
 
 /**
  * nlskdnfl adad
- * @see	Observable
+ * 
+ * @see Observable
  * @see Model
  */
 public class Model2048 extends Observable implements Model {
@@ -28,9 +34,10 @@ public class Model2048 extends Observable implements Model {
 	boolean flag;
 
 	private String getMessageString = "";
+
 	/**
 	 * 
-	 * @param boardSize		
+	 * @param boardSize
 	 */
 	public Model2048(int boardSize) {
 		super();
@@ -81,8 +88,6 @@ public class Model2048 extends Observable implements Model {
 		scoresDataHistorry.add(new Integer(score));
 
 	}
-
-	
 
 	@Override
 	public int[][] getData() {
@@ -136,8 +141,7 @@ public class Model2048 extends Observable implements Model {
 	@Override
 	public void saveGame(String fileName) {
 		try {
-			SeaveAndLoadGame2048 saveGame2048 = new SeaveAndLoadGame2048(
-					fileName);
+			SeaveAndLoadGame2048 saveGame2048 = new SeaveAndLoadGame2048(fileName);
 			stepsDataHistorry.push(data);
 			scoresDataHistorry.push(score);
 
@@ -146,8 +150,7 @@ public class Model2048 extends Observable implements Model {
 			stepsDataHistorry.pop();
 			scoresDataHistorry.pop();
 		} catch (IOException e) {
-			getMessageString = "Can't Save the game /n Error 1011" + "&&"
-					+ SWT.ICON_ERROR;
+			getMessageString = "Can't Save the game /n Error 1011" + "&&" + SWT.ICON_ERROR;
 			e.printStackTrace();
 		}
 	}
@@ -158,16 +161,14 @@ public class Model2048 extends Observable implements Model {
 			Stack<int[][]> tmpStack = new Stack<int[][]>();
 			Stack<int[][]> tmpScore = new Stack<int[][]>();
 
-			SeaveAndLoadGame2048 loadGame2048 = new SeaveAndLoadGame2048(
-					fileName);
+			SeaveAndLoadGame2048 loadGame2048 = new SeaveAndLoadGame2048(fileName);
 			ArrayList<Stack<int[][]>> arrList = loadGame2048.LoadGame();
 
 			tmpStack = arrList.get(0);
 			tmpScore = arrList.get(1);
 
 			if (tmpStack.isEmpty()) {
-				getMessageString = "No Save is found /n Error 1020" + "&&"
-						+ SWT.ICON_ERROR;
+				getMessageString = "No Save is found /n Error 1020" + "&&" + SWT.ICON_ERROR;
 			} else {
 				stepsDataHistorry.clear();
 				scoresDataHistorry.clear();
@@ -178,13 +179,11 @@ public class Model2048 extends Observable implements Model {
 				}
 				data = stepsDataHistorry.pop();
 				score = scoresDataHistorry.pop();
-				getMessageString = "Game is Loaded" + "&&"
-						+ SWT.ICON_INFORMATION;
+				getMessageString = "Game is Loaded" + "&&" + SWT.ICON_INFORMATION;
 			}
 
 		} catch (IOException e) {
-			getMessageString = "Can't Load the game /n Error 1010" + "&&"
-					+ SWT.ICON_ERROR;
+			getMessageString = "Can't Load the game /n Error 1010" + "&&" + SWT.ICON_ERROR;
 			e.printStackTrace();
 
 		}
@@ -193,7 +192,7 @@ public class Model2048 extends Observable implements Model {
 		notifyObservers();
 
 	}
-	
+
 	@Override
 	public void moveUp() {
 		setGameStepsStackAndScore();
@@ -205,19 +204,21 @@ public class Model2048 extends Observable implements Model {
 					newLine.add(data[i][j]);
 				}
 			}
-			if(newLine.size() ==0){continue;}
+			if (newLine.size() == 0) {
+				continue;
+			}
 			for (int k = 0; k < data.length && !newLine.isEmpty(); k++) {
 				int tmp = newLine.poll();
 				int num = tmp;
-				if(newLine.size()>=1 && tmp == newLine.getFirst() && num!=0){
-					num*=2;
+				if (newLine.size() >= 1 && tmp == newLine.getFirst() && num != 0) {
+					num *= 2;
 					score += num;
 					newLine.pop();
 				}
 				newData[k] = num;
 			}
-			if(!Arrays.equals(newData, data[i])){
-				setMoveFlag(true);				
+			if (!Arrays.equals(newData, data[i])) {
+				setMoveFlag(true);
 				System.arraycopy(newData, 0, data[i], 0, data.length);
 			}
 		}
@@ -240,18 +241,20 @@ public class Model2048 extends Observable implements Model {
 					newLine.add(data[i][j]);
 				}
 			}
-			if(newLine.size() ==0){continue;}
-			for (int k = data.length-1; k >=0 && !newLine.isEmpty(); k--) {
+			if (newLine.size() == 0) {
+				continue;
+			}
+			for (int k = data.length - 1; k >= 0 && !newLine.isEmpty(); k--) {
 				int tmp = newLine.poll();
 				int num = tmp;
-				if(newLine.size()>=1 && tmp == newLine.getFirst() && num!=0){
-					num*=2;
+				if (newLine.size() >= 1 && tmp == newLine.getFirst() && num != 0) {
+					num *= 2;
 					score += num;
 				}
 				newData[k] = num;
 			}
-			if(!Arrays.equals(newData, data[i])){
-				setMoveFlag(true);				
+			if (!Arrays.equals(newData, data[i])) {
+				setMoveFlag(true);
 				System.arraycopy(newData, 0, data[i], 0, data.length);
 			}
 		}
@@ -274,26 +277,28 @@ public class Model2048 extends Observable implements Model {
 					newLine.add(data[j][i]);
 				}
 			}
-			if(newLine.size() ==0){continue;}
-			for (int k = data.length-1; k >=0 && !newLine.isEmpty(); k--) {
+			if (newLine.size() == 0) {
+				continue;
+			}
+			for (int k = data.length - 1; k >= 0 && !newLine.isEmpty(); k--) {
 				int tmp = newLine.poll();
 				int num = tmp;
-				if(newLine.size()>=1 && tmp == newLine.getFirst() && num!=0){
-					num*=2;
+				if (newLine.size() >= 1 && tmp == newLine.getFirst() && num != 0) {
+					num *= 2;
 					score += num;
 					newLine.pop();
 				}
 				newData[k][i] = num;
 			}
 		}
-			for (int i = 0; i < newData.length; i++) {
-				if(!Arrays.equals(newData[i], data[i])){
-					setMoveFlag(true);
-					System.arraycopy(newData[i], 0, data[i], 0, data.length);
-				}
-				
+		for (int i = 0; i < newData.length; i++) {
+			if (!Arrays.equals(newData[i], data[i])) {
+				setMoveFlag(true);
+				System.arraycopy(newData[i], 0, data[i], 0, data.length);
 			}
-		
+
+		}
+
 		if (getMoveFlag()) {
 			inputNewNumberToData();
 			setMoveFlag(false);
@@ -314,27 +319,29 @@ public class Model2048 extends Observable implements Model {
 					newLine.add(data[j][i]);
 				}
 			}
-			if(newLine.size() ==0){continue;}
+			if (newLine.size() == 0) {
+				continue;
+			}
 			for (int k = 0; k < data.length && !newLine.isEmpty(); k++) {
 				int tmp = newLine.poll();
 				int num = tmp;
-				if(newLine.size()>=1 && tmp == newLine.getFirst() && num!=0){
-					num*=2;
+				if (newLine.size() >= 1 && tmp == newLine.getFirst() && num != 0) {
+					num *= 2;
 					score += num;
 					newLine.pop();
 				}
 				newData[k][i] = num;
 			}
 		}
-		
+
 		for (int i = 0; i < newData.length; i++) {
-			if(!Arrays.equals(newData[i], data[i])){
+			if (!Arrays.equals(newData[i], data[i])) {
 				setMoveFlag(true);
 				System.arraycopy(newData[i], 0, data[i], 0, data.length);
 			}
-			
+
 		}
-		
+
 		if (getMoveFlag()) {
 			inputNewNumberToData();
 			setMoveFlag(false);
@@ -354,5 +361,92 @@ public class Model2048 extends Observable implements Model {
 	@Override
 	public int getScore() {
 		return score;
+	}
+
+	/**
+	 * Open connection to Hint resolve server send to server parameters Expect
+	 * from server integer of move
+	 * 
+	 * @param deep
+	 *            - size of resorts
+	 * @param address
+	 *            - adders of server
+	 * @see model.Model
+	 */
+	@Override
+	public void connectToHintServerAndSendParameters(int deep, String address) {
+		try {
+			for (int i = 0; i < deep; i++) {
+				int step = 1;
+
+				InetAddress netAddress = InetAddress.getByName(address);
+				Socket socket = new Socket(netAddress, 6951);
+
+				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
+				writer.writeObject(new SendDataHint(getScore(), data, "game2048")); // send
+				// object
+				// of
+				// state
+
+				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
+				step = (int) reader.readObject();
+
+				socket.close();
+
+				System.out.println("auto Move is " + step);
+				setSteapFromServerHint(step);
+
+				if (i < deep - 1) {
+					Thread.sleep(3000);
+				}
+
+			}// end of for
+
+			/*
+			 * all catches from server connection or answer
+			 */
+		} catch (ConnectException ce) {
+			System.err.println("No connection to HINT server ");
+			return;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		} catch (ClassNotFoundException e) {
+			System.err.println("No Anser from srver ");
+			return;
+			// e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return;
+		}
+	}
+
+	/**
+	 * Generate move from integer 1-up,2-down,3-left,4-right
+	 * 
+	 * @param stepNo
+	 *            - int step number
+	 */
+	private boolean setSteapFromServerHint(int stepNo) {
+		if (0 < stepNo && stepNo < 5) {
+			switch (stepNo) {
+			case 1:
+				moveUp();
+				break;
+			case 2:
+				moveDown();
+				break;
+			case 3:
+				moveLeft();
+				break;
+			case 4:
+				moveRight();
+				break;
+			}
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 }
