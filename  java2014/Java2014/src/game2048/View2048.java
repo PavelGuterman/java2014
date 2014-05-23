@@ -40,6 +40,7 @@ public class View2048 extends Observable implements View, Runnable {
 	private String messageString = "";
 	private int messageType = 0;
 	private String saveFilePath;
+	private int[][] dataState;
 	Shell shell;
 	Shell perentShell;
 	private Label sD; 
@@ -50,6 +51,7 @@ public class View2048 extends Observable implements View, Runnable {
 		super();
 		this.bordSize = boardSize;
 		this.perentShell = perentShell;
+		dataState=new int[boardSize][boardSize];
 	}
 
 	private void initComponents() {
@@ -410,10 +412,13 @@ public class View2048 extends Observable implements View, Runnable {
 
 	protected void hint() {
 		
-		Hint2048 h = new Hint2048(shell);
-		h.openWIn();
-		shell.setEnabled(false);
-		for (int i = 0; i < h.n_moves; i++) {
+		
+		
+		setKeyPresed(50);
+		setChanged();
+		notifyObservers();
+		/*
+		for (int i = 0; i < n_moves; i++) {
 			try {
 				InetAddress address =InetAddress.getLocalHost() ;
 				System.out.println(address.toString());
@@ -436,27 +441,31 @@ public class View2048 extends Observable implements View, Runnable {
 				e.printStackTrace();
 			}
 		}
-		
+		*/
 	}
-
+	
+	public int[][] getdataState() {
+		return dataState;
+	}
+	
 	private boolean checkIfGameIsOver(int[][] data) {
-
+		
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < data[i].length; j++) {
-				if (data[i][j] == 2048) {
+				if (data[i][j] == 2048) {//the game is over, win
 					messageString = "You Win the game !!! \n Do you whont to play again ?";
 					messageType = SWT.ICON_QUESTION;
 					return true;
 				}
-				if (data[i][j] == 0) {
+				if (data[i][j] == 0) { // if data have empty please
+					dataState=data;
 					return false;
 				}
 
 			}
 		}
 
-		// TODO set checkIfGameIsOver
-		messageString = "You lost the game !!! \n Do you whont to play again ?";
+		messageString = "You lost the game !!! \n Do you whont to play again ?"; //game is over, lost
 		messageType = SWT.ICON_QUESTION;
 		return true;
 	}

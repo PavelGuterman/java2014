@@ -1,9 +1,12 @@
 package controller;
 
+import game2048.HintDialog;
+
 import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Shell;
 
 import view.View;
 import model.Model;
@@ -52,7 +55,13 @@ public class Presenter implements Observer {
 				break;
 			case 13: // save pressed
 				mod.saveGame(ui.getFilePathToSave());
-				break;		
+				break;
+			case 50: //connect to Hint server
+				Shell shell = new Shell();
+				HintDialog dialog = new HintDialog(shell);
+				int n_moves=dialog.open();
+				System.out.println("return to move: "+n_moves);
+				break;
 			default:
 				break;
 			}

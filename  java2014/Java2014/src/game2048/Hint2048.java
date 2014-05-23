@@ -51,7 +51,6 @@ public class Hint2048 {
 		
 		final Combo combo = new Combo(hintShell, SWT.DROP_DOWN);
 		combo.setItems(moveOption);
-		System.out.println(combo.getData());
  
 		Button executeButton = new Button(hintShell, SWT.PUSH);
 		executeButton.setText("GO");
@@ -60,8 +59,22 @@ public class Hint2048 {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				System.out.println(combo.getItem(combo.getSelectionIndex()));
-				n_moves = (int) combo.getData();
+				try {
+					n_moves = Integer.parseInt(combo.getItem(combo.getSelectionIndex())); 
+				} catch (NumberFormatException e) {
+					String inp = combo.getItem(combo.getSelectionIndex());
+					if(inp.equals("solve")){
+						n_moves=0;
+					}else{
+						n_moves=-1;
+					}
+				}catch (IllegalArgumentException e) {
+					n_moves=-1;
+				}
+				
+				System.out.println(n_moves);
+				
+				
 			}
 			
 			@Override
