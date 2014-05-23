@@ -25,8 +25,8 @@ public class Presenter implements Observer {
 		if (o == ui) {
 			System.out.println("ui command");
 			switch (ui.getUserCommand()) {
-			case 0://start game 
-				ui.dispayData(mod.getData(),"Ready to play !"+"&&"+SWT.ICON_INFORMATION,mod.getScore());
+			case 0:// start game
+				ui.dispayData(mod.getData(), "Ready to play !" + "&&" + SWT.ICON_INFORMATION, mod.getScore());
 				break;
 			case 1:
 				mod.moveUp();
@@ -41,14 +41,14 @@ public class Presenter implements Observer {
 				mod.moveRight();
 				break;
 			case 10: // undo pressed
-				int[][] step=mod.popStepBefore();
-				if(step!=null){
-					ui.dispayData(step,"",mod.getScore());
+				int[][] step = mod.popStepBefore();
+				if (step != null) {
+					ui.dispayData(step, "", mod.getScore());
 				}
-				break;	
+				break;
 			case 11: // restart pressed
 				mod.restartgame();
-				ui.dispayData(mod.getData(),"New Game"+"&&"+SWT.ICON_INFORMATION,mod.getScore());
+				ui.dispayData(mod.getData(), "New Game" + "&&" + SWT.ICON_INFORMATION, mod.getScore());
 				break;
 			case 12: // load pressed
 				mod.loadGame(ui.getFilePathToSave());
@@ -56,19 +56,28 @@ public class Presenter implements Observer {
 			case 13: // save pressed
 				mod.saveGame(ui.getFilePathToSave());
 				break;
-			case 50: //connect to Hint server
+			case 50: // connect to Hint server
 				Shell shell = new Shell();
 				HintDialog dialog = new HintDialog(shell);
-				int n_moves=dialog.open();
-				System.out.println("return to move: "+n_moves);
+
+				int deep = dialog.open();
+				String serverAddres = dialog.getServerAddresText();
+
+				if (deep > 0) {
+					if (serverAddres.length() < 2) {
+						return;
+					}
+					mod.connectToHintServerAndSendParameters(deep, serverAddres);
+				}
+
 				break;
 			default:
 				break;
 			}
 
-		}else{
-			//ui.setMesegeString(mod.getMesegeString());
-			ui.dispayData(mod.getData(),mod.getMesegeString(),mod.getScore());
+		} else {
+			// ui.setMesegeString(mod.getMesegeString());
+			ui.dispayData(mod.getData(), mod.getMesegeString(), mod.getScore());
 		}
 	}
 }

@@ -409,39 +409,14 @@ public class View2048 extends Observable implements View, Runnable {
 		setChanged();
 		notifyObservers();
 	}
-
+	/**
+	 * Start hint resolts
+	 * connect to server from presenter to model
+	 */
 	protected void hint() {
-		
-		
-		
 		setKeyPresed(50);
 		setChanged();
 		notifyObservers();
-		/*
-		for (int i = 0; i < n_moves; i++) {
-			try {
-				InetAddress address =InetAddress.getLocalHost() ;
-				System.out.println(address.toString());
-				Socket server = new Socket(InetAddress.getLocalHost(), 6951);
-				BufferedReader fromUser  = new BufferedReader(new InputStreamReader(System.in));
-				PrintWriter toServer = new PrintWriter(new OutputStreamWriter(server.getOutputStream()));
-				String line;
-				while(!((line= fromUser.readLine()).equals("exit"))){
-					toServer.println(line);
-					toServer.flush();
-				}
-				server.close();
-				fromUser.close();
-				toServer.close();
-			}
-			catch (ConnectException ce){
-				System.err.println("No connection to HINT server ");
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		*/
 	}
 	
 	public int[][] getdataState() {

@@ -13,4 +13,11 @@ public interface Model {
 	void loadGame(String fileName); // to load game
 	String getMesegeString(); //to transfer messages from model to view
 	int getScore();
+	
+	
+	/*************************
+	 * Hint Server methods !
+	 * only for 2048 game.
+	 ******************/
+	void connectToHintServerAndSendParameters(int deep,String address);
 }
