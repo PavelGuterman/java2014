@@ -374,9 +374,9 @@ public class Model2048 extends Observable implements Model {
 	 * @see model.Model
 	 */
 	@Override
-	public void connectToHintServerAndSendParameters(int deep, String address) {
+	public void connectToHintServerAndSendParameters(int move2run,/*int deep,*/ String address) {
 		try {
-			for (int i = 0; i < deep; i++) {
+			for (int i = 0; i < move2run; i++) {
 				int step = 1;
 
 				InetAddress netAddress = InetAddress.getByName(address);
