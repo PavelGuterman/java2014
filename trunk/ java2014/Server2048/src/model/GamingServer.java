@@ -18,7 +18,7 @@ public class GamingServer extends Thread {
 	ClienHandler ch;
 	int n_client;
 
-	public GamingServer(int port,int n_client, ClienHandler ch) {
+	public GamingServer(int port, int n_client, ClienHandler ch) {
 		this.port = port;
 		this.n_client = n_client;
 		stop = false;
@@ -28,17 +28,20 @@ public class GamingServer extends Thread {
 	public void run() {
 		try {
 			server = new ServerSocket(port);
-			server.setSoTimeout(60 * 1000);
+			server.setSoTimeout( 1000);
 			ExecutorService thredPool = Executors.newFixedThreadPool(n_client);
-			try {
-				while (!stop) {
+			while (!stop) {
+				try {
+					System.out.println("waiting for somebody");
 					final Socket client = server.accept();
 					System.out.println("got it");
-					final ObjectInputStream inFromClient = new ObjectInputStream(client.getInputStream());
-					final ObjectOutputStream outToClient = new ObjectOutputStream(client.getOutputStream());
-					
+					final ObjectInputStream inFromClient = new ObjectInputStream(
+							client.getInputStream());
+					final ObjectOutputStream outToClient = new ObjectOutputStream(
+							client.getOutputStream());
+
 					thredPool.execute(new Runnable() {
-					
+
 						@Override
 						public void run() {
 							try {
@@ -51,10 +54,10 @@ public class GamingServer extends Thread {
 							}
 						}
 					});
+				} catch (SocketTimeoutException e) {
+					System.out.println("tiered of waiting for connection");
 				}
-			} catch (SocketTimeoutException e) {
-				System.out.println("tiered of waiting for connection");
-			}
+			}//end of while
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
