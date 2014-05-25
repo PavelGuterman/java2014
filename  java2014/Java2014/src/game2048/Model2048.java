@@ -435,7 +435,6 @@ public class Model2048 extends Observable implements Model {
 			InetAddress netAddress = InetAddress.getByName(address);
 			Socket socket = new Socket(netAddress, 6951);
 			for (int i = 0; i < steps; i++) {
-				int step = 1;
 
 				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
 				writer.writeObject(new SendDataHint(getScore(), data, depth, "game2048")); // send
@@ -445,12 +444,12 @@ public class Model2048 extends Observable implements Model {
 				writer.flush();
 
 				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
-				step = (int) reader.read();
-				System.out.println("et from server: " + step);
+				steps = (int) reader.read();
+				System.out.println("et from server: " + steps);
 				writer.close();
 
-				System.out.println("auto Move is " + step);
-				setSteapFromServerHint(step);
+				System.out.println("auto Move is " + steps);
+				setSteapFromServerHint(steps);
 
 				if (i < steps - 1) {
 					Thread.sleep(3000);
