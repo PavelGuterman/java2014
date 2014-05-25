@@ -433,9 +433,9 @@ public class Model2048 extends Observable implements Model {
 				+ address);
 		try {
 			InetAddress netAddress = InetAddress.getByName(address);
-			Socket socket = new Socket(netAddress, 6951);
 			for (int i = 0; i < steps; i++) {
 
+				Socket socket = new Socket(netAddress, 6951);
 				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
 				writer.writeObject(new SendDataHint(getScore(), data, depth, "game2048")); // send
 				// object
@@ -457,7 +457,7 @@ public class Model2048 extends Observable implements Model {
 
 			}// end of for
 
-			socket.close();
+			//socket.close();
 			/*
 			 * all catches from server connection or answer
 			 */
