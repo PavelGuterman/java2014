@@ -4,13 +4,14 @@ import java.io.Serializable;
 
 public class SendDataHint implements Serializable{
 	
-	int score;
+	int score,depth;
 	int[][] data;
 	String gameName;
-	
-	public SendDataHint(int score, int[][] data,String gameName) {
+
+	public SendDataHint(int score, int[][] data, int depth, String gameName) {
 		this.score = score;
 		this.data = data;
+		this.depth = depth;
 		this.gameName = gameName;
 	}
 
@@ -26,5 +27,7 @@ public class SendDataHint implements Serializable{
 		return gameName;
 	}
 	
-	
+	public int getDepth() {
+		return depth;
+	}
 }

@@ -1,6 +1,8 @@
 package game2048;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
@@ -374,7 +376,7 @@ public class Model2048 extends Observable implements Model {
 	 * @see model.Model
 	 */
 	@Override
-	public void connectToHintServerAndSendParameters(int move2run,/*int deep,*/ String address) {
+	public void connectToHintServerAndSendParameters(int move2run,/*int depth,*/ String address) {
 		try {
 			for (int i = 0; i < move2run; i++) {
 				int step = 1;
@@ -383,20 +385,20 @@ public class Model2048 extends Observable implements Model {
 				Socket socket = new Socket(netAddress, 6951);
 
 				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
-				writer.writeObject(new SendDataHint(getScore(), data, "game2048")); // send
+				writer.writeObject(new SendDataHint(getScore(), data, 7, "game2048")); // send
 				// object 
 				// of
 				// state
 
 				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
-				step = (int) reader.readObject();
-
+				step = (Integer) reader.readInt();
+				System.out.println(step);
 				socket.close();
 
 				System.out.println("auto Move is " + step);
 				setSteapFromServerHint(step);
 
-				if (i < deep - 1) {
+				if (i < move2run - 1) {
 					Thread.sleep(3000);
 				}
 
@@ -411,10 +413,6 @@ public class Model2048 extends Observable implements Model {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
-		} catch (ClassNotFoundException e) {
-			System.err.println("No Anser from srver ");
-			return;
-			// e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return;
@@ -422,7 +420,7 @@ public class Model2048 extends Observable implements Model {
 	}
 
 	/**
-	 * Generate move from integer 1-up,2-down,3-left,4-right
+	 * Generate move from integer 0-up,1-right,2-down,3-left
 	 * 
 	 * @param stepNo
 	 *            - int step number
@@ -430,17 +428,17 @@ public class Model2048 extends Observable implements Model {
 	private boolean setSteapFromServerHint(int stepNo) {
 		if (0 < stepNo && stepNo < 5) {
 			switch (stepNo) {
-			case 1:
+			case 0:
 				moveUp();
+				break;
+			case 1:
+				moveRight();
 				break;
 			case 2:
 				moveDown();
 				break;
 			case 3:
 				moveLeft();
-				break;
-			case 4:
-				moveRight();
 				break;
 			}
 			return true;
