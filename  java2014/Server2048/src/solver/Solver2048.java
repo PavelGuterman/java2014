@@ -11,7 +11,7 @@ public class Solver2048 {
 		this.depth = depth;
 	}
 	
-	public int getBestMove() throws CloneNotSupportedException {
+	public Integer getBestMove() throws CloneNotSupportedException {
 		Board board = new Board(data, score);
 		Direction bestMove = AIsolver.findBestMove(board, depth);
 		return bestMove.getCode();
