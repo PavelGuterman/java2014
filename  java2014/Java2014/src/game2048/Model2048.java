@@ -380,10 +380,10 @@ public class Model2048 extends Observable implements Model {
 				int step = 1;
 
 				InetAddress netAddress = InetAddress.getByName(address);
-				Socket socket = new Socket(netAddress, 6951);
+				Socket socket = new Socket(InetAddress.getLocalHost(), 6951);
 
 				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
-				writer.writeObject(new SendDataHint(getScore(), data, "game2048")); // send
+				writer.writeObject(new SendDataHint(getScore(), data)); // send
 				// object
 				// of
 				// state
