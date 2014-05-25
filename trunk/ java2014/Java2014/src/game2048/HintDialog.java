@@ -19,7 +19,7 @@ import org.eclipse.swt.widgets.Text;
 public class HintDialog extends Dialog {
 
 	private int n_steps;
-	private int n_deep;
+	private int n_depth;
 	private String serverAddresText;
 
 	/**
@@ -27,7 +27,7 @@ public class HintDialog extends Dialog {
 	 */
 	public HintDialog(Shell parent) {
 		super(parent);
-	}
+	} 
 
 	/**
 	 * @param parent
@@ -72,9 +72,9 @@ public class HintDialog extends Dialog {
 		label2.setText("Choose the deep: ");
 
 		String[] moveOption = "1 2 3 4 5 6 7 8 9 10".split(" ");
-		final Combo cmb_Deep = new Combo(shell, SWT.DROP_DOWN);
-		cmb_Deep.setItems(moveOption);
-		cmb_Deep.select(1);
+		final Combo cmb_Depth = new Combo(shell, SWT.DROP_DOWN);
+		cmb_Depth.setItems(moveOption);
+		cmb_Depth.select(1);
 
 		// Steps
 		Label label3 = new Label(shell, SWT.NULL);
@@ -83,9 +83,11 @@ public class HintDialog extends Dialog {
 		final Text inp_Steps = new Text(shell, SWT.SINGLE | SWT.BORDER);
 		inp_Steps.setTextLimit(2);
 		inp_Steps.setText("1");
+		n_steps=1;
 		inp_Steps.selectAll();
 		inp_Steps.addListener(SWT.Verify, new Listener() {
 			public void handleEvent(Event e) {
+				System.out.println("sdsdsssssss");
 				String string = e.text;
 				char[] chars = new char[string.length()];
 				string.getChars(0, chars.length, chars, 0);
@@ -94,11 +96,9 @@ public class HintDialog extends Dialog {
 						e.doit = false;
 						return;
 					}
-				}
-				
+				}	
 				n_steps = Integer.parseInt(inp_Steps.getText());
 			}
-
 			
 		});
 
@@ -109,7 +109,7 @@ public class HintDialog extends Dialog {
 		Button btn_Cancel = new Button(shell, SWT.PUSH);
 		btn_Cancel.setText("Cancel");
 
-		cmb_Deep.addListener(SWT.Modify, new Listener() {
+		cmb_Depth.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(Event event) {
 
 				if (inp_ServerAddres.getText().length() < 2) {
@@ -117,14 +117,14 @@ public class HintDialog extends Dialog {
 					return;
 				}
 				try {
-					n_deep = Integer.parseInt(cmb_Deep.getItem(cmb_Deep.getSelectionIndex()));
+					n_depth = Integer.parseInt(cmb_Depth.getItem(cmb_Depth.getSelectionIndex()));
 					btn_OK.setEnabled(true);
 				} catch (NumberFormatException e) {
-					n_deep = -1;
+					n_depth = -1;
 					btn_OK.setEnabled(false);
 				} catch (IllegalArgumentException e) {
 					btn_OK.setEnabled(false);
-					n_deep = -3;
+					n_depth = -3;
 				}
 			}
 		});
@@ -137,7 +137,7 @@ public class HintDialog extends Dialog {
 
 		btn_Cancel.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				n_deep = -1;
+				n_depth = -1;
 				shell.dispose();
 			}
 		});
@@ -149,7 +149,7 @@ public class HintDialog extends Dialog {
 			}
 		});
 
-		cmb_Deep.setText("");
+		cmb_Depth.setText("");
 		shell.pack();
 		shell.open();
 
@@ -158,7 +158,7 @@ public class HintDialog extends Dialog {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
-		return n_deep;
+		return n_depth;
 	}
 
 	public String getServerAddresText() {
