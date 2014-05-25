@@ -433,7 +433,6 @@ public class Model2048 extends Observable implements Model {
 		if (-1 < stepNo && stepNo < 4) {
 			switch (stepNo) {
 			case 0:
-				System.out.println("up");
 				moveUp();
 				break;
 			case 1:
