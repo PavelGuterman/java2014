@@ -97,7 +97,7 @@ public class HintDialog extends Dialog {
 						return;
 					}
 				}	
-				n_steps = Integer.parseInt(inp_Steps.getText());
+				n_steps = Integer.parseInt(string);
 			}
 			
 		});

@@ -437,7 +437,6 @@ public class Model2048 extends Observable implements Model {
 			for (int i = 0; i < steps; i++) {
 				int step = 1;
 
-
 				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
 				writer.writeObject(new SendDataHint(getScore(), data, depth, "game2048")); // send
 				// object
