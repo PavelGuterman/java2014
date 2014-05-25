@@ -29,8 +29,10 @@ public class Main {
 			case "game2048":
 				Solver2048 s_2048 = new Solver2048( dataHint.getScore(),dataHint.getData(), dataHint.getDepth());
 				try {
-					System.out.println(s_2048.getBestMove());
-					out2Client.write(s_2048.getBestMove());
+					Integer answer = s_2048.getBestMove();
+					System.out.println(answer);
+					out2Client.write(answer);
+					out2Client.flush();
 				} catch (CloneNotSupportedException e) {
 					System.out.println("The Object you try to work with is not Clonable ");
 					e.printStackTrace();
