@@ -19,5 +19,5 @@ public interface Model {
 	 * Hint Server methods !
 	 * only for 2048 game.
 	 ******************/
-	void connectToHintServerAndSendParameters(int deep,String address);
+	void connectToHintServerAndSendParameters(int steps,int deep, String address);
 }

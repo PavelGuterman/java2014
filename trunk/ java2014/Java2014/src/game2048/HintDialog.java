@@ -17,8 +17,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 public class HintDialog extends Dialog {
-	
-	private int n_moves;
+
+	private int n_steps;
+	private int n_deep;
 	private String serverAddresText;
 
 	/**
@@ -43,9 +44,9 @@ public class HintDialog extends Dialog {
 	 */
 	public int open() {
 		try {
-			serverAddresText=InetAddress.getLocalHost().getHostAddress();
+			serverAddresText = InetAddress.getLocalHost().getHostAddress();
 		} catch (UnknownHostException e1) {
-			serverAddresText="localhost";
+			serverAddresText = "localhost";
 			e1.printStackTrace();
 		}
 		Shell parent = getParent();
@@ -54,66 +55,89 @@ public class HintDialog extends Dialog {
 
 		shell.setLayout(new GridLayout(2, true));
 
+		// server adders
 		Label label1 = new Label(shell, SWT.NULL);
 		label1.setText("Server addres: ");
-		final Text serverAddres = new Text(shell, SWT.SINGLE | SWT.BORDER);
-		serverAddres.setText(serverAddresText);
-		
-		serverAddres.addListener(SWT.FocusOut, new Listener() {
+		final Text inp_ServerAddres = new Text(shell, SWT.SINGLE | SWT.BORDER);
+		inp_ServerAddres.setText(serverAddresText);
+
+		inp_ServerAddres.addListener(SWT.FocusOut, new Listener() {
 			public void handleEvent(Event e) {
-				serverAddresText=serverAddres.getText();
+				serverAddresText = inp_ServerAddres.getText();
 			}
 		});
 
+		// deep
 		Label label2 = new Label(shell, SWT.NULL);
-		label2.setText("Choose number of Moves;  ");
+		label2.setText("Choose the deep: ");
 
-		String[] moveOption = " 1 2 3 4 5 solve".split(" ");
-		final Combo combo = new Combo(shell, SWT.DROP_DOWN);
-		combo.setItems(moveOption);
+		String[] moveOption = "1 2 3 4 5 6 7 8 9 10".split(" ");
+		final Combo cmb_Deep = new Combo(shell, SWT.DROP_DOWN);
+		cmb_Deep.setItems(moveOption);
+		cmb_Deep.select(1);
 
-		final Button buttonOK = new Button(shell, SWT.PUSH);
-		buttonOK.setText("Ok");
-		buttonOK.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
-		Button buttonCancel = new Button(shell, SWT.PUSH);
-		buttonCancel.setText("Cancel");
+		// Steps
+		Label label3 = new Label(shell, SWT.NULL);
+		label3.setText("Number of steps: ");
 
-		combo.addListener(SWT.Modify, new Listener() {
+		final Text inp_Steps = new Text(shell, SWT.SINGLE | SWT.BORDER);
+		inp_Steps.setTextLimit(2);
+		inp_Steps.setText("1");
+		inp_Steps.selectAll();
+		inp_Steps.addListener(SWT.Verify, new Listener() {
+			public void handleEvent(Event e) {
+				String string = e.text;
+				char[] chars = new char[string.length()];
+				string.getChars(0, chars.length, chars, 0);
+				for (int i = 0; i < chars.length; i++) {
+					if (!('0' <= chars[i] && chars[i] <= '9')) {
+						e.doit = false;
+						return;
+					}
+				}
+				
+				n_steps = Integer.parseInt(inp_Steps.getText());
+			}
+
+			
+		});
+
+		// buttons
+		final Button btn_OK = new Button(shell, SWT.PUSH);
+		btn_OK.setText("Ok");
+		btn_OK.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
+		Button btn_Cancel = new Button(shell, SWT.PUSH);
+		btn_Cancel.setText("Cancel");
+
+		cmb_Deep.addListener(SWT.Modify, new Listener() {
 			public void handleEvent(Event event) {
 
-				if (serverAddres.getText().length() < 2) {
-					serverAddres.setFocus();
+				if (inp_ServerAddres.getText().length() < 2) {
+					inp_ServerAddres.setFocus();
 					return;
 				}
 				try {
-					n_moves = Integer.parseInt(combo.getItem(combo.getSelectionIndex()));
-					buttonOK.setEnabled(true);
+					n_deep = Integer.parseInt(cmb_Deep.getItem(cmb_Deep.getSelectionIndex()));
+					btn_OK.setEnabled(true);
 				} catch (NumberFormatException e) {
-					String inp = combo.getItem(combo.getSelectionIndex());
-					buttonOK.setEnabled(true);
-					if (inp.equals("solve")) {
-						n_moves = 0;
-					} else {
-						n_moves = -1;
-						buttonOK.setEnabled(false);
-					}
+					n_deep = -1;
+					btn_OK.setEnabled(false);
 				} catch (IllegalArgumentException e) {
-					buttonOK.setEnabled(false);
-					n_moves = -3;
+					btn_OK.setEnabled(false);
+					n_deep = -3;
 				}
-				// System.out.println("select in dialog:" + n_moves);
 			}
 		});
 
-		buttonOK.addListener(SWT.Selection, new Listener() {
+		btn_OK.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				shell.dispose();
 			}
 		});
 
-		buttonCancel.addListener(SWT.Selection, new Listener() {
+		btn_Cancel.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				n_moves = -1;
+				n_deep = -1;
 				shell.dispose();
 			}
 		});
@@ -125,7 +149,7 @@ public class HintDialog extends Dialog {
 			}
 		});
 
-		combo.setText("");
+		cmb_Deep.setText("");
 		shell.pack();
 		shell.open();
 
@@ -134,18 +158,20 @@ public class HintDialog extends Dialog {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
-		return n_moves;
+		return n_deep;
 	}
 
-	
 	public String getServerAddresText() {
 		return serverAddresText;
 	}
 	
-	
-	// public static void main(String[] args) {
-	// Shell shell = new Shell();
-	// HintDialog dialog = new HintDialog(shell);
-	// System.out.println(dialog.open());
-	// }
+	public int getSteps() {
+		return n_steps;
+	}
+
+//	public static void main(String[] args) {
+//		Shell shell = new Shell();
+//		HintDialog dialog = new HintDialog(shell);
+//		System.out.println(dialog.open());
+//	}
 }

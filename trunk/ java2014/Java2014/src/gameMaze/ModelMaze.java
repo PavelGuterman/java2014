@@ -214,4 +214,10 @@ public class ModelMaze extends Observable implements Model {
 		return 0;
 	}
 
+	@Override
+	public void connectToHintServerAndSendParameters(int steps,int deep, String address) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
