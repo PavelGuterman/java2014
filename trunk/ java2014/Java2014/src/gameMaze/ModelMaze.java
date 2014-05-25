@@ -21,7 +21,7 @@ public class ModelMaze extends Observable implements Model {
 
 	public ModelMaze() {
 		super();
-		data = new int[coloms][rows];
+		data = new int[rows][coloms];
 		stepsDataHistorry = new Stack<int[][]>();
 		scoresDataHistorry = new Stack<Integer>();
 
@@ -34,8 +34,8 @@ public class ModelMaze extends Observable implements Model {
 		 */
 		// set new
 		Stack<String> stack = new Stack<String>();
-		for (int i = 0; i < coloms; i++) {
-			for (int j = 0; j < rows; j++) {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < coloms; j++) {
 				data[i][j] = 0;
 			}
 			System.out.println("");
@@ -49,6 +49,7 @@ public class ModelMaze extends Observable implements Model {
 		}
 		data[5][0] = 2;
 		data[7][0] = 1;
+		setCurState(7, 0);
 //		for (int i = 0; i < 4; i++) {
 //			for (int j = 0; j < 4; j++) {
 //				if (data[i][j] == 0) {
@@ -102,7 +103,7 @@ public class ModelMaze extends Observable implements Model {
 
 	@Override
 	public void moveDown() {
-		if (curState[1] == 3) {
+		if (curState[1] == 9) {
 			return;
 		}
 		if (data[curState[0]][curState[1] + 1] == -1) {
@@ -127,7 +128,7 @@ public class ModelMaze extends Observable implements Model {
 
 	@Override
 	public void moveRight() {
-		if (curState[0] == 3) {
+		if (curState[0] == 9) {
 			return;
 		}
 		if (data[curState[0] +1][curState[1] ] == -1) {
@@ -188,8 +189,8 @@ public class ModelMaze extends Observable implements Model {
 
 	@Override
 	public void restartgame() {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < coloms; j++) {
 				data[i][j] = 0;
 			}
 		}
