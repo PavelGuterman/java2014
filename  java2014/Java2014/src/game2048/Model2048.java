@@ -376,8 +376,8 @@ public class Model2048 extends Observable implements Model {
 	 * @see model.Model
 	 */
 	@Override
-	public void connectToHintServerAndSendParameters(int steps, int deep, String address) {
-
+	public void connectToHintServerAndSendParameters(int steps, int depth, String address) {
+		System.out.println("connectToHintServerAndSendParameters: steps= "+steps+" dephh= "+depth+" address= "+address);
 		try {
 			for (int i = 0; i < steps; i++) {
 				int step = 1;
@@ -386,7 +386,7 @@ public class Model2048 extends Observable implements Model {
 				Socket socket = new Socket(netAddress, 6951);
 
 				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
-				writer.writeObject(new SendDataHint(getScore(), data, 7, "game2048")); // send
+				writer.writeObject(new SendDataHint(getScore(), data, depth, "game2048")); // send
 				// object
 				// of
 				// state
