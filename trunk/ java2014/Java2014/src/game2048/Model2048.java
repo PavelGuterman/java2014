@@ -432,11 +432,11 @@ public class Model2048 extends Observable implements Model {
 		System.out.println("connectToHintServerAndSendParameters: steps= " + steps + " dephh= " + depth + " address= "
 				+ address);
 		try {
+			InetAddress netAddress = InetAddress.getByName(address);
+			Socket socket = new Socket(netAddress, 6951);
 			for (int i = 0; i < steps; i++) {
 				int step = 1;
 
-				InetAddress netAddress = InetAddress.getByName(address);
-				Socket socket = new Socket(netAddress, 6951);
 
 				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
 				writer.writeObject(new SendDataHint(getScore(), data, depth, "game2048")); // send
@@ -448,9 +448,7 @@ public class Model2048 extends Observable implements Model {
 				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
 				step = (int) reader.read();
 				System.out.println("et from server: " + step);
-				reader.close();
 				writer.close();
-				socket.close();
 
 				System.out.println("auto Move is " + step);
 				setSteapFromServerHint(step);
@@ -461,6 +459,7 @@ public class Model2048 extends Observable implements Model {
 
 			}// end of for
 
+			socket.close();
 			/*
 			 * all catches from server connection or answer
 			 */
