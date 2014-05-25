@@ -21,7 +21,7 @@ public class Hint2048 {
 	Shell hintShell;
 	View2048 view2048;
 	Shell perentShell;
-	int n_moves;
+	int n_moves=0;
 	
 	public Hint2048(Shell perentShell) {
 		
@@ -59,6 +59,9 @@ public class Hint2048 {
 			
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				n_moves = combo.getSelectionIndex()+1;
+				System.out.println(n_moves);
+				System.out.println(combo.getItem(combo.getSelectionIndex()));
 				try {
 					n_moves = Integer.parseInt(combo.getItem(combo.getSelectionIndex())); 
 				} catch (NumberFormatException e) {

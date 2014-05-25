@@ -3,13 +3,13 @@ package game2048;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Observable;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -43,11 +43,11 @@ public class View2048 extends Observable implements View, Runnable {
 	private int[][] dataState;
 	Shell shell;
 	Shell perentShell;
-	private Label sD; 
+	private Label sD;
 	private final int bordSize;
+	private int n_hint = 0;
 
-
-	public View2048(int boardSize,Shell perentShell) {
+	public View2048(int boardSize, Shell perentShell) {
 		super();
 		this.bordSize = boardSize;
 		this.perentShell = perentShell;
@@ -59,8 +59,8 @@ public class View2048 extends Observable implements View, Runnable {
 		shell = new Shell(Display.getDefault());
 		shell.setLayout(new GridLayout(2, false));
 		shell.setSize(550, 500);
-		
-		//location to center
+
+		// location to center
 		Monitor primary = Display.getDefault().getPrimaryMonitor();
 		Rectangle bounds = primary.getBounds();
 		Rectangle rect = shell.getBounds();
@@ -148,10 +148,10 @@ public class View2048 extends Observable implements View, Runnable {
 			}
 		});
 
-
 		Button undoButton = new Button(shell, SWT.PUSH);
 		undoButton.setText("UNDO");
-		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
+		undoButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
+				1, 2));
 		undoButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -208,7 +208,8 @@ public class View2048 extends Observable implements View, Runnable {
 
 		Button restartButton = new Button(shell, SWT.PUSH);
 		restartButton.setText("RESTART");
-		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
+		restartButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false,
+				false, 1, 1));
 		restartButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -225,7 +226,8 @@ public class View2048 extends Observable implements View, Runnable {
 
 		Button loadButton = new Button(shell, SWT.PUSH);
 		loadButton.setText("LOAD");
-		loadButton.setLayoutData(new GridData(SWT.FILL, SWT.LEFT, false, false, 1, 1));
+		loadButton.setLayoutData(new GridData(SWT.FILL, SWT.LEFT, false, false,
+				1, 1));
 		loadButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -239,7 +241,8 @@ public class View2048 extends Observable implements View, Runnable {
 
 		Button saveButton = new Button(shell, SWT.PUSH);
 		saveButton.setText("SAVE");
-		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
+		saveButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
+				1, 1));
 		saveButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
@@ -253,28 +256,27 @@ public class View2048 extends Observable implements View, Runnable {
 
 		Button hintButton = new Button(shell, SWT.PUSH);
 		hintButton.setText("HINT");
-		hintButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
+		hintButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false,
+				1, 2));
 		hintButton.addSelectionListener(new SelectionListener() {
-			
+
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				//display.wait();
+				// display.wait();
 				hint();
-				
+
 			}
-			
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		sD = new Label(shell, SWT.TITLE);
 		sD.setText(getScore());
 		sD.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
-		
-		
 
 		shell.open();
 
@@ -283,11 +285,11 @@ public class View2048 extends Observable implements View, Runnable {
 		notifyObservers();
 	}
 
-
 	@Override
 	public void dispayData(final int[][] data, String message, int score) {
 		if (checkIfGameIsOver(data)) {
-			MessageBox box = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+			MessageBox box = new MessageBox(shell, SWT.ICON_QUESTION | SWT.YES
+					| SWT.NO);
 			box.setText("Game Over");
 			box.setMessage(messageString);
 			int ret = box.open();
@@ -317,14 +319,13 @@ public class View2048 extends Observable implements View, Runnable {
 						setMesegeString("");
 					}
 				}
-
-				// board.setBoardData(data);
-				for (int i = 0; i < data.length; i++) {
-					for (int j = 0; j < data.length; j++) {
-						board.tile[j][i].setVol(data[i][j]);
+				 
+					for (int i = 0; i < data.length; i++) {
+						for (int j = 0; j < data.length; j++) {
+							board.tile[j][i].setVol(data[i][j]);
+						}
 					}
-				}
-
+				
 				System.out.println("score= " + View2048.this.score);
 				sD.setText("Score: " + View2048.this.score);
 			}
@@ -414,6 +415,39 @@ public class View2048 extends Observable implements View, Runnable {
 	 * connect to server from presenter to model
 	 */
 	protected void hint() {
+
+
+		//Hint2048 h = new Hint2048(shell);
+		//h.openWIn();
+		//shell.setEnabled(false);
+//		if (n_hint != 0) {
+//			for (int i = 0; i < n_hint; i++) {
+//				try {
+//					InetAddress address = InetAddress.getLocalHost();
+//					System.out.println(address.toString());
+//					Socket server = new Socket(InetAddress.getLocalHost(), 6951);
+//					BufferedReader fromUser = new BufferedReader(
+//							new InputStreamReader(System.in));
+//					PrintWriter toServer = new PrintWriter(new OutputStreamWriter(
+//							server.getOutputStream()));
+//					String line;
+//					while (!((line = fromUser.readLine()).equals("exit"))) {
+//						toServer.println(line);
+//						toServer.flush();
+//					}
+//					server.close();
+//					fromUser.close();
+//					toServer.close();
+//				} catch (ConnectException ce) {
+//					System.err.println("No connection to HINT server ");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			
+//		} 
+
+
 		setKeyPresed(50);
 		setChanged();
 		notifyObservers();
