@@ -2,7 +2,6 @@ package controller;
 
 import game2048.SendDataHint;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -48,12 +47,9 @@ public class Main {
 		}
 	}); 
 	
-		
-	
 	s.start();
 	Thread.sleep(60*1000);
 	s.close();
-
 	}
 
 }
