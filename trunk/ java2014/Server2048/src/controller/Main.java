@@ -16,7 +16,7 @@ public class Main {
 		@Override
 		public void handleClient(ObjectInputStream inFromClient ,ObjectOutputStream outToClient) throws ClassNotFoundException, IOException {
 			System.out.println("start the Solver");
-			SendDataHint
+			SendDataHint dataFronClient = (SendDataHint) inFromClient.readObject();
 			System.out.println(inFromClient);
 			
 		}
