@@ -392,8 +392,8 @@ public class Model2048 extends Observable implements Model {
 				// state
 
 				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
-				step = (Integer) reader.readInt();
-				System.out.println(step);
+				step =  (int)reader.read();
+				System.out.println("et from server: "+step);
 				socket.close();
 
 				System.out.println("auto Move is " + step);
@@ -417,7 +417,7 @@ public class Model2048 extends Observable implements Model {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return;
-		}
+		} 
 	}
 
 	/**
