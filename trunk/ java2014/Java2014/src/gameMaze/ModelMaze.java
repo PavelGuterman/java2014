@@ -9,6 +9,7 @@ import model.Model;
 public class ModelMaze extends Observable implements Model {
 
 	private int[][] data;
+	private int coloms=10,rows=10;
 	private int[] curState = new int[2];
 	private Stack<int[][]> stepsDataHistorry;
 	private int score = 0;
@@ -20,7 +21,7 @@ public class ModelMaze extends Observable implements Model {
 
 	public ModelMaze() {
 		super();
-		data = new int[4][4];
+		data = new int[coloms][rows];
 		stepsDataHistorry = new Stack<int[][]>();
 		scoresDataHistorry = new Stack<Integer>();
 
@@ -33,20 +34,35 @@ public class ModelMaze extends Observable implements Model {
 		 */
 		// set new
 		Stack<String> stack = new Stack<String>();
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				if (data[i][j] == 0) {
-					stack.push(i + "," + j);
-				}
+		for (int i = 0; i < coloms; i++) {
+			for (int j = 0; j < rows; j++) {
+				data[i][j] = 0;
 			}
+			System.out.println("");
 		}
-		data[3][3] = 1;
-		setCurState(3, 3);
-		data[0][0] = 2;
-		data[1][0] = -1;
-		data[1][2] = -1;
-		data[1][3] = -1;
-		data[3][2] = -1;
+		
+		for(int i = 0; i < 9; i++){
+			data[8][i] = -1;
+			data[6][i] = -1;
+			data[4][i] = -1;
+			
+		}
+		data[5][0] = 2;
+		data[7][0] = 1;
+//		for (int i = 0; i < 4; i++) {
+//			for (int j = 0; j < 4; j++) {
+//				if (data[i][j] == 0) {
+//					stack.push(i + "," + j);
+//				}
+//			}
+//		}
+//		data[3][3] = 1;
+//		setCurState(3, 3);
+//		data[0][0] = 2;
+//		data[1][0] = -1;
+//		data[1][2] = -1;
+//		data[1][3] = -1;
+//		data[3][2] = -1;
 		
 	}
 
