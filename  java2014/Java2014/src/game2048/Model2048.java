@@ -1,8 +1,6 @@
 package game2048;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
@@ -369,16 +367,19 @@ public class Model2048 extends Observable implements Model {
 	 * Open connection to Hint resolve server send to server parameters Expect
 	 * from server integer of move
 	 * 
-	 * @param deep
+	 * @param steps
 	 *            - size of resorts
 	 * @param address
 	 *            - adders of server
+	 * @param deep
+	 *            - the deep of answer
 	 * @see model.Model
 	 */
 	@Override
-	public void connectToHintServerAndSendParameters(int move2run,/*int depth,*/ String address) {
+	public void connectToHintServerAndSendParameters(int steps, int deep, String address) {
+
 		try {
-			for (int i = 0; i < move2run; i++) {
+			for (int i = 0; i < steps; i++) {
 				int step = 1;
 
 				InetAddress netAddress = InetAddress.getByName(address);
@@ -386,7 +387,7 @@ public class Model2048 extends Observable implements Model {
 
 				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
 				writer.writeObject(new SendDataHint(getScore(), data, 7, "game2048")); // send
-				// object 
+				// object
 				// of
 				// state
 
@@ -398,7 +399,7 @@ public class Model2048 extends Observable implements Model {
 				System.out.println("auto Move is " + step);
 				setSteapFromServerHint(step);
 
-				if (i < move2run - 1) {
+				if (i < steps - 1) {
 					Thread.sleep(3000);
 				}
 
