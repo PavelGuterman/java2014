@@ -390,10 +390,13 @@ public class Model2048 extends Observable implements Model {
 				// object
 				// of
 				// state
-
+				writer.flush();
+				
 				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
 				step =  (int)reader.read();
 				System.out.println("et from server: "+step);
+				reader.close();
+				writer.close();
 				socket.close();
 
 				System.out.println("auto Move is " + step);
