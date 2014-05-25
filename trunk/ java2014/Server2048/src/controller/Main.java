@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import solver.SendDataHint;
 import model.ClienHandler;
 import model.Server2048;
 public class Main {
@@ -15,6 +16,7 @@ public class Main {
 		@Override
 		public void handleClient(ObjectInputStream inFromClient ,ObjectOutputStream outToClient) throws ClassNotFoundException, IOException {
 			System.out.println("start the Solver");
+			SendDataHint
 			System.out.println(inFromClient);
 			
 		}
