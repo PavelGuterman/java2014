@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Board {
+public class Board implements Cloneable{
 	  public static final int BOARD_SIZE = 4;
 	    
 	    /**
@@ -25,7 +25,7 @@ public class Board {
 	    /**
 	     * The board values
 	     */
-	    private int[][] boardArray;
+	    public int[][] boardArray;
 	    
 	    /**
 	     * Random Generator which is used in the creation of random cells
@@ -40,13 +40,23 @@ public class Board {
 	    /**
 	     * Constructor without arguments. It initializes randomly the Board
 	     */
-	    public Board(int[][] data) {
-	        boardArray = data;
-	        randomGenerator = new Random(System.currentTimeMillis());
-	        
-	        //addRandomCell();
-	        //addRandomCell();
-	        
+//	    public Board() {
+//	        boardArray = new int[BOARD_SIZE][BOARD_SIZE];
+//	        randomGenerator = new Random(System.currentTimeMillis());
+//	        addRandomCell();
+//	        addRandomCell();
+//	        
+//	    }
+	    
+	    public Board(int[][] data, int score){
+	    	boardArray = new int[BOARD_SIZE][BOARD_SIZE];
+	    	randomGenerator = new Random(System.currentTimeMillis());
+	    	for (int i=0; i < BOARD_SIZE; i++) {
+	    		for (int j=0; j < BOARD_SIZE; j++) {
+	    			boardArray[i][j] = data[i][j];  
+	    		}
+	    	}
+	    	this.score = score;
 	    }
 	    
 	    /**
