@@ -1,14 +1,5 @@
 package game2048;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.ConnectException;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.util.Observable;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -45,7 +36,6 @@ public class View2048 extends Observable implements View, Runnable {
 	Shell perentShell;
 	private Label sD;
 	private final int bordSize;
-	private int n_hint = 0;
 
 	public View2048(int boardSize, Shell perentShell) {
 		super();
