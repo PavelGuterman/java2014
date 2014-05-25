@@ -1,6 +1,8 @@
 package model;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -9,15 +11,16 @@ import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server2048 extends Thread {
+public class GamingServer extends Thread {
 	int port;
 	ServerSocket server;
 	boolean stop;
 	ClienHandler ch;
 	int n_client;
 
-	public Server2048(int port, ClienHandler ch) {
+	public GamingServer(int port,int n_client, ClienHandler ch) {
 		this.port = port;
+		this.n_client = n_client;
 		stop = false;
 		this.ch = ch;
 	}
@@ -60,5 +63,4 @@ public class Server2048 extends Thread {
 	public void close() {
 		stop = true;
 	}
-
 }
