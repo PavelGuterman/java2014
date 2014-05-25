@@ -11,8 +11,19 @@ public class SendDataHint implements Serializable{
 	public SendDataHint(int score, int[][] data,String gameName) {
 		this.score = score;
 		this.data = data;
-		
 		this.gameName = gameName;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public int[][] getData() {
+		return data;
+	}
+
+	public String getGameName() {
+		return gameName;
 	}
 	
 	
