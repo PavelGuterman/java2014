@@ -9,7 +9,7 @@ public class MazeMain {
 	
 	public static void startGameMaze(Shell shell) {
 		ModelMaze modelMaze = new ModelMaze();
-		ViewMaze viewMaze = new ViewMaze(4,shell);
+		ViewMaze viewMaze = new ViewMaze(10,shell);
 		
 		Presenter presenter=new Presenter(modelMaze, viewMaze);
 		
