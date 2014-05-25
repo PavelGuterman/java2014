@@ -28,7 +28,7 @@ public class GamingServer extends Thread {
 	public void run() {
 		try {
 			server = new ServerSocket(port);
-			server.setSoTimeout(5*1000);
+			server.setSoTimeout(1000);
 			ExecutorService thredPool = Executors.newFixedThreadPool(n_client);
 			while (!stop) {
 				try {
@@ -50,6 +50,7 @@ public class GamingServer extends Thread {
 								outToClient.close();
 								client.close();
 							} catch (Exception e) {
+								e.printStackTrace();
 							}
 						}
 					});
@@ -58,7 +59,15 @@ public class GamingServer extends Thread {
 				}
 			}//end of while
 			server.close();
+			thredPool.shutdown();
 		} catch (IOException e) {
+			try {
+				server.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			//thredPool.shutdown();
 			e.printStackTrace();
 		}
 	}
