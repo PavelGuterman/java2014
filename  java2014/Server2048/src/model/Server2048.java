@@ -2,6 +2,8 @@ package model;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -24,14 +26,20 @@ public class Server2048 extends Thread {
 			server.setSoTimeout(60*1000);
 			Socket client = server.accept();
 			System.out.println("got it");
-			BufferedReader inFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			System.out.println(inFromClient.readLine());
-			ch.handleClient(inFromClient);
+			ObjectInputStream inFromClient = new ObjectInputStream(client.getInputStream());
+			ObjectOutputStream outToClient = new ObjectOutputStream(client.getOutputStream());
+			//BufferedReader inFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			//System.out.println(inFromClient.readLine());
+			ch.handleClient(inFromClient, outToClient);
 			inFromClient.close();
+			outToClient.close();
 			client.close();
 			server.close();
 		} catch (IOException e) {
 			System.out.println("tiered of waiting for connection");
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

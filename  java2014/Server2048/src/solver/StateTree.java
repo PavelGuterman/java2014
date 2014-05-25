@@ -15,9 +15,7 @@ public class StateTree {
 		this.score = score;
 	}
 
-	public addChild(){
-		
-	}
+	
 
 
 }

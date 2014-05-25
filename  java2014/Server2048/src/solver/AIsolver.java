@@ -1,12 +1,14 @@
 package solver;
 
 import java.io.BufferedReader;
+import java.io.ObjectInputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import model.ClienHandler;
 
-public class AIsolver implements ClienHandler{
+public class AIsolver{
 	 public enum Player {
 	        /**
 	         * Computer
@@ -18,16 +20,6 @@ public class AIsolver implements ClienHandler{
 	         */
 	        USER
 	    }
-	 
-	 private static int depth;
-	  // TODO change from static
-	 
-	 
-	 @Override
-	 public void handleClient(BufferedReader inFromClient) {
-		 // TODO Auto-generated method stub
-		 
-	 }
 
 	 
 	 /**
@@ -38,9 +30,8 @@ public class AIsolver implements ClienHandler{
 	     * @return
 	     * @throws CloneNotSupportedException 
 	     */
-	    public static Direction findBestMove(Board theBoard) throws CloneNotSupportedException {
+	    public static Direction findBestMove(Board theBoard, int depth) throws CloneNotSupportedException {
 	        //Map<String, Object> result = minimax(theBoard, depth, Player.USER);
-	        depth = 7;
 	        Map<String, Object> result = alphabeta(theBoard, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, Player.USER);
 	        
 	        return (Direction)result.get("Direction");

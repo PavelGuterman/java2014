@@ -1,12 +1,11 @@
 package controller;
 
-import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-import solver.Board;
-import solver.Solver;
 import model.ClienHandler;
 import model.Server2048;
-import solver.AIsolver;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
@@ -14,18 +13,9 @@ public class Main {
 	Server2048 s = new Server2048(6951, new ClienHandler() {
 		
 		@Override
-		public void handleClient(BufferedReader inFromClient) {
-			// TODO Auto-generated method stub
+		public void handleClient(ObjectInputStream inFromClient ,ObjectOutputStream outToClient) throws ClassNotFoundException, IOException {
 			System.out.println("start the Solver");
-			Board board = inFromClient;
-			String line;
-			try {
-				while(!((line= inFromClient.readLine()).equals("exit"))){
-					System.out.println(line);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			System.out.println(inFromClient);
 			
 		}
 	}); 
