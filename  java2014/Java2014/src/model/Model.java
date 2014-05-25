@@ -1,5 +1,10 @@
 package model;
-
+/*******************************
+ * 
+ * Model interface for all games 
+ * 
+ *
+ *********************************/
 public interface Model {
 	void moveUp();
 	void moveDown();

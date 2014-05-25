@@ -18,7 +18,8 @@ import org.eclipse.swt.SWT;
 import model.Model;
 
 /**
- * nlskdnfl adad
+ * for Game 2014 
+ * 
  * 
  * @see Observable
  * @see Model
@@ -49,10 +50,11 @@ public class Model2048 extends Observable implements Model {
 		restartgame();
 	}
 
+	/**
+	 * Draw Location and number
+	 * 
+	 */
 	public void inputNewNumberToData() {
-		/*
-		 * // Draw Location and number
-		 */
 		// set new
 		Stack<String> stack = new Stack<String>();
 		for (int i = 0; i < boardSize; i++) {
@@ -71,6 +73,9 @@ public class Model2048 extends Observable implements Model {
 		data[strAnser[0]][strAnser[1]] = Math.random() < 0.9 ? 2 : 4;
 	}
 
+	/**
+	 * set new data of steps and score
+	 */
 	private void setGameStepsStackAndScore() {
 		int[][] tmpHistory = new int[boardSize][boardSize]; // create new temper
 		// System.arraycopy(data, 0, tmpHistory, 0, boardSize);//Not work
@@ -89,11 +94,21 @@ public class Model2048 extends Observable implements Model {
 
 	}
 
+	/*
+	 * get the data that now
+	 * 
+	 * @see model.Model#getData()
+	 */
 	@Override
 	public int[][] getData() {
 		return data;
 	}
 
+	/*
+	 * one step beafore
+	 * 
+	 * @see model.Model#popStepBefore()
+	 */
 	@Override
 	public int[][] popStepBefore() {
 		if (stepsDataHistorry.size() > 0) {
@@ -105,6 +120,11 @@ public class Model2048 extends Observable implements Model {
 		}
 	}
 
+	/*
+	 * New game
+	 * 
+	 * @see model.Model#restartgame()
+	 */
 	@Override
 	public void restartgame() {
 		for (int i = 0; i < boardSize; i++) {
@@ -123,21 +143,34 @@ public class Model2048 extends Observable implements Model {
 
 	}
 
+	/**
+	 * is empty property
+	 */
 	public boolean isEmpty(int volue) {
 		if (volue == 0) {
 			return true;
 		}
 		return false;
 	}
-
+	
+	/**
+	 * flag property
+	 */
 	public void setMoveFlag(boolean is_moved) {
 		flag = is_moved;
 	}
-
+	/**
+	 * flag property
+	 */
 	public boolean getMoveFlag() {
 		return flag;
 	}
-
+/*
+ * to save game
+ * saving all steps and score in text file.
+ * 
+ * @see model.Model#saveGame(java.lang.String)
+ */
 	@Override
 	public void saveGame(String fileName) {
 		try {
@@ -154,7 +187,11 @@ public class Model2048 extends Observable implements Model {
 			e.printStackTrace();
 		}
 	}
-
+/*
+ * load game 
+ * get from text file all steps before 
+ * @see model.Model#loadGame(java.lang.String)
+ */
 	@Override
 	public void loadGame(String fileName) {
 		try {
@@ -192,7 +229,10 @@ public class Model2048 extends Observable implements Model {
 		notifyObservers();
 
 	}
-
+	/*
+	 * go up
+	 * @see model.Model#moveUp()
+	 */
 	@Override
 	public void moveUp() {
 		setGameStepsStackAndScore();
@@ -229,7 +269,10 @@ public class Model2048 extends Observable implements Model {
 		setChanged();
 		notifyObservers();
 	}
-
+/*
+ * Go down
+ * @see model.Model#moveDown()
+ */
 	@Override
 	public void moveDown() {
 		setGameStepsStackAndScore();
@@ -265,7 +308,10 @@ public class Model2048 extends Observable implements Model {
 		setChanged();
 		notifyObservers();
 	}
-
+/*
+ * go Rightt
+ * @see model.Model#moveRight()
+ */
 	@Override
 	public void moveRight() {
 		setGameStepsStackAndScore();
@@ -307,7 +353,10 @@ public class Model2048 extends Observable implements Model {
 		notifyObservers();
 
 	}
-
+/*
+ * go left
+ * @see model.Model#moveLeft()
+ */
 	@Override
 	public void moveLeft() {
 		setGameStepsStackAndScore();
@@ -349,7 +398,10 @@ public class Model2048 extends Observable implements Model {
 		setChanged();
 		notifyObservers();
 	}
-
+/*
+ * return message for error or warning.
+ * @see model.Model#getMesegeString()
+ */
 	@Override
 	public String getMesegeString() {
 		String retMessage = getMessageString;
@@ -377,7 +429,8 @@ public class Model2048 extends Observable implements Model {
 	 */
 	@Override
 	public void connectToHintServerAndSendParameters(int steps, int depth, String address) {
-		System.out.println("connectToHintServerAndSendParameters: steps= "+steps+" dephh= "+depth+" address= "+address);
+		System.out.println("connectToHintServerAndSendParameters: steps= " + steps + " dephh= " + depth + " address= "
+				+ address);
 		try {
 			for (int i = 0; i < steps; i++) {
 				int step = 1;
@@ -391,10 +444,10 @@ public class Model2048 extends Observable implements Model {
 				// of
 				// state
 				writer.flush();
-				
+
 				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
-				step =  (int)reader.read();
-				System.out.println("et from server: "+step);
+				step = (int) reader.read();
+				System.out.println("et from server: " + step);
 				reader.close();
 				writer.close();
 				socket.close();
@@ -420,7 +473,7 @@ public class Model2048 extends Observable implements Model {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			return;
-		} 
+		}
 	}
 
 	/**

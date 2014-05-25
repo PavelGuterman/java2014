@@ -15,30 +15,11 @@ public class SeaveAndLoadGame2048 {
 
 	private final File saveFile;
 
-	// public static void main(String[] args) throws IOException {
-	// int[][] tmp = { { 0, 0, 0, 2 }, { 0, 0, 4, 0 }, { 4, 36, 2, 0 },
-	// { 0, 0, 0, 0 } };
-	// int[][] tmp2 = { { 0, 4, 0, 2 }, { 0, 0, 4, 36 }, { 4, 36, 2, 0 },
-	// { 0, 0, 0, 0 } };
-	// int[][] tmp3 = { { 0, 2, 0, 2 }, { 0, 8, 4, 0 }, { 4, 36, 2, 0 },
-	// { 0, 126, 0, 0 } };
-	//
-	// Stack<int[][]> tmpStack = new Stack<int[][]>();
-	//
-	// tmpStack.add(tmp);
-	// tmpStack.add(tmp2);
-	// tmpStack.add(tmp3);
-	//
-	// SeaveAndLoadGame2048 game2048 = new SeaveAndLoadGame2048();
-	// //game2048.SaveGame(tmpStack);
-	//
-	// tmpStack.empty();
-	//
-	// tmpStack=game2048.LoadGame();
-	// System.out.println(tmpStack.isEmpty());
-	// System.out.println("End");
-	// }
-
+	/****
+	 *  save all steps before include corant
+	 * @param strFileName
+	 * @throws IOException
+	 */
 	public SeaveAndLoadGame2048(String strFileName) throws IOException { // to
 																			// load
 																			// game
@@ -68,7 +49,12 @@ public class SeaveAndLoadGame2048 {
 		}
 		outputStream.close();
 	}
-
+	/***
+	 * 
+	 *  load all steps before include corant
+	 * @return
+	 * @throws FileNotFoundException
+	 */
 	public ArrayList<Stack<int[][]>> LoadGame() throws FileNotFoundException {// Stack<int[][]>
 		ArrayList<Stack<int[][]>> arrList = new ArrayList<Stack<int[][]>>();
 
@@ -117,7 +103,12 @@ public class SeaveAndLoadGame2048 {
 
 		return arrList;
 	}
-
+/****
+ * create file to save
+ * @param fileString
+ * @return
+ * @throws IOException
+ */
 	private File setFile(String fileString) throws IOException {
 		File file = new File(fileString);
 		if (file.exists()) {

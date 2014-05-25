@@ -19,7 +19,11 @@ public class Presenter implements Observer {
 		this.mod = mod;
 		this.ui = ui;
 	}
-
+/**
+ * Presenter contriver
+ * @param o - object that is Observable
+ * @param arg - object of argumant
+ */
 	@Override
 	public void update(Observable o, Object arg) {
 		if (o == ui) {
