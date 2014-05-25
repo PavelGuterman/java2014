@@ -22,7 +22,10 @@ import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
 import view.View;
-
+/****
+ * View of game 2048 
+ *@see View
+ */
 public class View2048 extends Observable implements View, Runnable {
 
 	private Board2048 board;
@@ -36,14 +39,20 @@ public class View2048 extends Observable implements View, Runnable {
 	Shell perentShell;
 	private Label sD;
 	private final int bordSize;
-
+/****
+ * Constructor 
+ * @param boardSize
+ * @param perentShell
+ */
 	public View2048(int boardSize, Shell perentShell) {
 		super();
 		this.bordSize = boardSize;
 		this.perentShell = perentShell;
 		dataState=new int[boardSize][boardSize];
 	}
-
+	/****
+	 * start UI
+	 */
 	private void initComponents() {
 
 		shell = new Shell(Display.getDefault());
@@ -274,7 +283,10 @@ public class View2048 extends Observable implements View, Runnable {
 		setChanged();
 		notifyObservers();
 	}
-
+/*
+ * dispayDataui data display
+ * @see view.View#dispayData(int[][], java.lang.String, int)
+ */
 	@Override
 	public void dispayData(final int[][] data, String message, int score) {
 		if (checkIfGameIsOver(data)) {
@@ -339,7 +351,10 @@ public class View2048 extends Observable implements View, Runnable {
 	public void setKeyPresed(int keyPresed) {
 		this.keyPresed = keyPresed;
 	}
-
+	/*
+	 * create massage from model
+	 * @see view.View#setMesegeString(java.lang.String)
+	 */
 	@Override
 	public void setMesegeString(String message) {
 		if (message.indexOf("&&") > -1) {
@@ -361,7 +376,10 @@ public class View2048 extends Observable implements View, Runnable {
 	public String getFilePathToSave() {
 		return saveFilePath;
 	}
-
+/*
+ * file path
+ * @see view.View#setFilePathToSave(int)
+ */
 	@Override
 	public void setFilePathToSave(int type) {
 		FileDialog fd = new FileDialog(shell, type);
@@ -405,39 +423,6 @@ public class View2048 extends Observable implements View, Runnable {
 	 * connect to server from presenter to model
 	 */
 	protected void hint() {
-
-
-		//Hint2048 h = new Hint2048(shell);
-		//h.openWIn();
-		//shell.setEnabled(false);
-//		if (n_hint != 0) {
-//			for (int i = 0; i < n_hint; i++) {
-//				try {
-//					InetAddress address = InetAddress.getLocalHost();
-//					System.out.println(address.toString());
-//					Socket server = new Socket(InetAddress.getLocalHost(), 6951);
-//					BufferedReader fromUser = new BufferedReader(
-//							new InputStreamReader(System.in));
-//					PrintWriter toServer = new PrintWriter(new OutputStreamWriter(
-//							server.getOutputStream()));
-//					String line;
-//					while (!((line = fromUser.readLine()).equals("exit"))) {
-//						toServer.println(line);
-//						toServer.flush();
-//					}
-//					server.close();
-//					fromUser.close();
-//					toServer.close();
-//				} catch (ConnectException ce) {
-//					System.err.println("No connection to HINT server ");
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			
-//		} 
-
-
 		setKeyPresed(50);
 		setChanged();
 		notifyObservers();
@@ -446,7 +431,9 @@ public class View2048 extends Observable implements View, Runnable {
 	public int[][] getdataState() {
 		return dataState;
 	}
-	
+	/***
+	 * to now if game is over
+	 */
 	private boolean checkIfGameIsOver(int[][] data) {
 		
 		for (int i = 0; i < data.length; i++) {

@@ -22,7 +22,10 @@ public class Main2048 {
 //		
 //		
 //	}
-	
+	/**
+	 * Start game2048
+	 * @param perentShell 
+	 */
 	public static void startGame2048(Shell perentShell) {
 		Model2048 model2048 = new Model2048(4);
 		View2048 view2048 = new View2048(4,perentShell);
