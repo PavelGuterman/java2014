@@ -26,7 +26,7 @@ public class GamingServer extends Thread {
 	public void run() {
 		try {
 			server = new ServerSocket(port);
-			server.setSoTimeout(60*1000);
+			server.setSoTimeout(1000);
 			ExecutorService thredPool = Executors.newFixedThreadPool(n_client);
 			while (!stop) {
 				try {
