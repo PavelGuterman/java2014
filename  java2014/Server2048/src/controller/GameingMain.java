@@ -12,7 +12,7 @@ import model.GamingServer;
 
 
 
-public class Main {
+public class GameingMain {
 
 	public static void main(String[] args) throws Exception {
 		
