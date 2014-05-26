@@ -1,6 +1,7 @@
 package game2048;
 
 import java.util.Observable;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -21,6 +22,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
+import controller.Constants;
 import view.View;
 /****
  * View of game 2048 
@@ -177,25 +179,25 @@ public class View2048 extends Observable implements View, Runnable {
 				switch (key.keyCode) {
 				case 16777217:
 					System.out.println("UP");
-					setKeyPresed(1);
+					setKeyPresed(Constants.MUVE_UP);
 					setChanged();
 					notifyObservers();
 					break;
 				case 16777218:
 					System.out.println("Down");
-					setKeyPresed(2);
+					setKeyPresed(Constants.MUVE_DOWN);
 					setChanged();
 					notifyObservers();
 					break;
 				case 16777219:
 					System.out.println("Left");
-					setKeyPresed(3);
+					setKeyPresed(Constants.MUVE_LEFT);
 					setChanged();
 					notifyObservers();
 					break;
 				case 16777220:
 					System.out.println("Ritgh");
-					setKeyPresed(4);
+					setKeyPresed(Constants.MUVE_RIGHT);
 					setChanged();
 					notifyObservers();
 					break;
@@ -213,7 +215,7 @@ public class View2048 extends Observable implements View, Runnable {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				System.out.println("restart");
-				setKeyPresed(11);
+				setKeyPresed(Constants.RESTART);
 				setChanged();
 				notifyObservers();
 			}
@@ -279,7 +281,7 @@ public class View2048 extends Observable implements View, Runnable {
 
 		shell.open();
 
-		setKeyPresed(0);
+		setKeyPresed(Constants.START_GAME);
 		setChanged();
 		notifyObservers();
 	}
@@ -296,7 +298,7 @@ public class View2048 extends Observable implements View, Runnable {
 			box.setMessage(messageString);
 			int ret = box.open();
 			if (ret == SWT.YES) {
-				setKeyPresed(11);
+				setKeyPresed(Constants.RESTART);
 				setChanged();
 				notifyObservers();
 
@@ -357,8 +359,8 @@ public class View2048 extends Observable implements View, Runnable {
 	 */
 	@Override
 	public void setMesegeString(String message) {
-		if (message.indexOf("&&") > -1) {
-			String[] str = message.split("&&");
+		if (message.indexOf(Constants.MESAGE_DIVIDE) > -1) {
+			String[] str = message.split(Constants.MESAGE_DIVIDE);
 			messageString = str[0];
 			try {
 				messageType = Integer.parseInt(str[1]);
@@ -403,7 +405,7 @@ public class View2048 extends Observable implements View, Runnable {
 		if (saveFilePath == null || saveFilePath == "") {
 			return;
 		}
-		setKeyPresed(12);
+		setKeyPresed(Constants.LOAD_GAME);
 		setChanged();
 		notifyObservers();
 	}
@@ -414,7 +416,7 @@ public class View2048 extends Observable implements View, Runnable {
 		if (saveFilePath == null || saveFilePath == "") {
 			return;
 		}
-		setKeyPresed(13);
+		setKeyPresed(Constants.SAVE_GAME);
 		setChanged();
 		notifyObservers();
 	}

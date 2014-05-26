@@ -7,6 +7,7 @@ import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import controller.Constants;
 import model.Model;
 
 /****
@@ -48,7 +49,7 @@ public class Hint2048 extends Thread {
 			InetAddress netAddress = InetAddress.getByName(address);
 			for (int i = 0; i < steps; i++) {
 
-				Socket socket = new Socket(netAddress, 6951);
+				Socket socket = new Socket(netAddress, Constants.HINT_PORT);
 				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
 				writer.writeObject(new SendDataHint(model.getScore(), model.getData(), depth, "game2048")); // send
 				// object
