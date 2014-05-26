@@ -1,12 +1,8 @@
 package solver;
 
-import java.io.BufferedReader;
-import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import model.ClienHandler;
 
 public class AIsolver{
 	 public enum Player {
