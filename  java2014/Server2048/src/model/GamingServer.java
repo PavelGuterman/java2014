@@ -1,8 +1,6 @@
 package model;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -28,7 +26,7 @@ public class GamingServer extends Thread {
 	public void run() {
 		try {
 			server = new ServerSocket(port);
-			server.setSoTimeout(1000);
+			server.setSoTimeout(5*1000);
 			ExecutorService thredPool = Executors.newFixedThreadPool(n_client);
 			while (!stop) {
 				try {
