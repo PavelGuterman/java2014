@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
+import controller.Constants;
+
 public class SeaveAndLoadGame2048 {
 
 	private final File saveFile;
@@ -42,10 +44,10 @@ public class SeaveAndLoadGame2048 {
 					}
 				}
 				if (j < arry.length - 1) {
-					outputStream.print("@@");
+					outputStream.print(Constants.DIVIDE);
 				}
 			}
-			outputStream.print("&&" + num + "\n");
+			outputStream.print(Constants.MESAGE_DIVIDE + num + "\n");
 		}
 		outputStream.close();
 	}
@@ -70,7 +72,7 @@ public class SeaveAndLoadGame2048 {
 			String line = myScaner.next();
 			System.out.println(line);
 
-			String[] lineArr = line.split("&&");
+			String[] lineArr = line.split(Constants.MESAGE_DIVIDE);
 			int[][] tmpScore = new int[1][1];
 			try {
 				tmpScore[0][0] = Integer.parseInt(lineArr[1]);
@@ -83,7 +85,7 @@ public class SeaveAndLoadGame2048 {
 				loadScore.add(tmpScore);
 			}
 
-			String[] srt_colum = lineArr[0].split("@@");
+			String[] srt_colum = lineArr[0].split(Constants.DIVIDE);
 			int[][] arr = new int[srt_colum.length][srt_colum.length];
 			for (int i = 0; i < srt_colum.length; i++) {
 				String[] str_line = srt_colum[i].split(",");

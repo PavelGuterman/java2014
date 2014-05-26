@@ -32,35 +32,35 @@ public class Presenter implements Observer {
 			case 0:// start game
 				ui.dispayData(mod.getData(), "Ready to play !" + "&&" + SWT.ICON_INFORMATION, mod.getScore());
 				break;
-			case 1:
+			case Constants.MUVE_UP:
 				mod.moveUp();
 				break;
-			case 2:
+			case Constants.MUVE_DOWN:
 				mod.moveDown();
 				break;
-			case 3:
+			case Constants.MUVE_LEFT:
 				mod.moveLeft();
 				break;
-			case 4:
+			case Constants.MUVE_RIGHT:
 				mod.moveRight();
 				break;
-			case 10: // undo pressed
+			case Constants.UNDO: // undo pressed
 				int[][] step = mod.popStepBefore();
 				if (step != null) {
 					ui.dispayData(step, "", mod.getScore());
 				}
 				break;
-			case 11: // restart pressed
+			case Constants.RESTART: // restart pressed
 				mod.restartgame();
 				ui.dispayData(mod.getData(), "New Game" + "&&" + SWT.ICON_INFORMATION, mod.getScore());
 				break;
-			case 12: // load pressed
+			case Constants.LOAD_GAME: // load pressed
 				mod.loadGame(ui.getFilePathToSave());
 				break;
-			case 13: // save pressed
+			case Constants.SAVE_GAME: // save pressed
 				mod.saveGame(ui.getFilePathToSave());
 				break;
-			case 50: // connect to Hint server
+			case Constants.HINT_GAME: // connect to Hint server
 				Shell shell = new Shell();
 				HintDialog dialog = new HintDialog(shell);
 
