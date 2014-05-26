@@ -326,5 +326,13 @@ public class ViewMaze extends Observable implements View, Runnable {
 	public void setScore(int score) {
 		this.score = score;
 	}
+	/**
+	 * @see view.View#getShell()
+	 */
+	@Override
+	public Shell getShell() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

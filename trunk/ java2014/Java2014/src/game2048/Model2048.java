@@ -429,76 +429,8 @@ public class Model2048 extends Observable implements Model {
 	 */
 	@Override
 	public void connectToHintServerAndSendParameters(int steps, int depth, String address) {
-		System.out.println("connectToHintServerAndSendParameters: steps= " + steps + " dephh= " + depth + " address= "
-				+ address);
-		int move2make = -1;
-		try {
-			InetAddress netAddress = InetAddress.getByName(address);
-			for (int i = 0; i < steps; i++) {
-
-				Socket socket = new Socket(netAddress, 6951);
-				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
-				writer.writeObject(new SendDataHint(getScore(), data, depth, "game2048")); // send
-				// object
-				// of
-				// state
-				writer.flush();
-				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
-				move2make = (int) reader.read();
-				System.out.println("et from server: " + move2make);
-				writer.close();
-
-				System.out.println("auto Move is " + move2make);
-				setSteapFromServerHint(move2make);
-
-				if (i < steps - 1) {
-					Thread.sleep(3000);
-				}
-
-			}// end of for
-
-			//socket.close();
-			/*
-			 * all catches from server connection or answer
-			 */
-		} catch (ConnectException ce) {
-			System.err.println("No connection to HINT server ");
-			return;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			return;
-		}
+		Hint2048 hint2048 = new Hint2048(steps, depth, address, this);
+		hint2048.start();
 	}
-
-	/**
-	 * Generate move from integer 0-up,1-right,2-down,3-left
-	 * 
-	 * @param stepNo
-	 *            - int step number
-	 */
-	private boolean setSteapFromServerHint(int stepNo) {
-		if (-1 < stepNo && stepNo < 4) {
-			switch (stepNo) {
-			case 0:
-				moveUp();
-				break;
-			case 1:
-				moveRight();
-				break;
-			case 2:
-				moveDown();
-				break;
-			case 3:
-				moveLeft();
-				break;
-			}
-			return true;
-		} else {
-			return false;
-		}
-
-	}
+	
 }

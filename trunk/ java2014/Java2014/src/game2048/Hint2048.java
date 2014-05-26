@@ -1,130 +1,115 @@
 package game2048;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.events.ShellEvent;
-import org.eclipse.swt.events.ShellListener;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Monitor;
-import org.eclipse.swt.widgets.Shell;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.ConnectException;
+import java.net.InetAddress;
+import java.net.Socket;
 
+import model.Model;
 
-public class Hint2048 {
-	
-	Shell hintShell;
-	View2048 view2048;
-	Shell perentShell;
-	int n_moves=0;
-	
-	public Hint2048(Shell perentShell) {
-		
-		hintShell=new Shell(Display.getDefault());
-		hintShell.pack();
-		this.perentShell=perentShell;
+/****
+ * 
+ * connect to server hint
+ * 
+ */
+public class Hint2048 extends Thread {
+	private int steps, depth;
+	private String address;
+	private Model model;
+
+	public Hint2048(int steps, int depth, String address, Model model) {
+		super();
+		this.steps = steps;
+		this.depth = depth;
+		this.address = address;
+		this.model = model;
 	}
+
 	
+	/**
+	 * Open connection to Hint resolve server send to server parameters Expect
+	 * from server integer of move
+	 * 
+	 * @param steps
+	 *            - size of resorts
+	 * @param address
+	 *            - adders of server
+	 * @param deep
+	 *            - the deep of answer
+	 * @see model.Model
+	 */
 	
-	private void initComponents() {
-		//hintShell = new Shell(hintDisplay);
-		hintShell.setLayout(new GridLayout(2, false));
-		hintShell.setSize(155,150);
-		hintShell.setLayout(new GridLayout());
-		
-		//location to center
-		Monitor primary = Display.getDefault().getPrimaryMonitor();
-		Rectangle bounds = primary.getBounds();
-		Rectangle rect = hintShell.getBounds();
-		int x = bounds.x + (bounds.width - rect.width) / 2;
-		int y = bounds.y + (bounds.height - rect.height) / 2;
-		hintShell.setLocation(x, y);
-		
-		
-		new Label(hintShell, SWT.NONE).setText("Choose number of Moves");
-		String[] moveOption = "1 2 3 4 5 solve".split(" ");
-		
-		final Combo combo = new Combo(hintShell, SWT.DROP_DOWN);
-		combo.setItems(moveOption);
- 
-		Button executeButton = new Button(hintShell, SWT.PUSH);
-		executeButton.setText("GO");
-		executeButton.setLayoutData(new GridData());
-		executeButton.addSelectionListener(new SelectionListener() {
-			
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				n_moves = combo.getSelectionIndex()+1;
-				System.out.println(n_moves);
-				System.out.println(combo.getItem(combo.getSelectionIndex()));
-				try {
-					n_moves = Integer.parseInt(combo.getItem(combo.getSelectionIndex())); 
-				} catch (NumberFormatException e) {
-					String inp = combo.getItem(combo.getSelectionIndex());
-					if(inp.equals("solve")){
-						n_moves=0;
-					}else{
-						n_moves=-1;
-					}
-				}catch (IllegalArgumentException e) {
-					n_moves=-1;
+	public void run() {
+		System.out.println("start Hint2048 ");
+		int move2make = -1;
+		try {
+			InetAddress netAddress = InetAddress.getByName(address);
+			for (int i = 0; i < steps; i++) {
+
+				Socket socket = new Socket(netAddress, 6951);
+				ObjectOutputStream writer = new ObjectOutputStream(socket.getOutputStream());
+				writer.writeObject(new SendDataHint(model.getScore(), model.getData(), depth, "game2048")); // send
+				// object
+				// of
+				// state
+				writer.flush();
+				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
+				move2make = (int) reader.read();
+				System.out.println("et from server: " + move2make);
+				writer.close();
+
+				System.out.println("auto Move is " + move2make);
+				setSteapFromServerHint(move2make);
+
+				if (i < steps - 1) {
+					Thread.sleep(2000);
 				}
-				
-				System.out.println(n_moves);
-				
-				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				
-			}
-		});
-		hintShell.addShellListener(new ShellListener() {
-			
-			@Override
-			public void shellIconified(ShellEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void shellDeiconified(ShellEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void shellDeactivated(ShellEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void shellClosed(ShellEvent arg0) {
-				System.out.println("sdsds ");
-				hintShell.setEnabled(false);
-				perentShell.setEnabled(true);
-			}
-			
-			@Override
-			public void shellActivated(ShellEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		
-		
-		hintShell.open();
-		
+				socket.close();
+			}// end of for
+
+			/*
+			 * all catches from server connection or answer
+			 */
+		} catch (ConnectException ce) {
+			System.err.println("No connection to HINT server ");
+			return;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void openWIn(){
-		initComponents();
+	/**
+	 * Generate move from integer 0-up,1-right,2-down,3-left
+	 * 
+	 * @param stepNo
+	 *            - int step number
+	 */
+	private boolean setSteapFromServerHint(int stepNo) {
+		if (-1 < stepNo && stepNo < 4) {
+			switch (stepNo) {
+			case 0:
+				model.moveUp();
+				break;
+			case 1:
+				model.moveRight();
+				break;
+			case 2:
+				model.moveDown();
+				break;
+			case 3:
+				model.moveLeft();
+				break;
+			}
+			return true;
+		} else {
+			return false;
+		}
+
 	}
+
 }
