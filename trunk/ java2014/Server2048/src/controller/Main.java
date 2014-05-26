@@ -50,7 +50,7 @@ public class Main {
 	}); 
 	
 	s.start();
-	Thread.sleep(3*60*1000);
+	//Thread.sleep(2*1000);
 	s.close();
 	}
 
