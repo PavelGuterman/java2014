@@ -51,7 +51,7 @@ public class HintDialog extends Dialog {
 		}
 		Shell parent = getParent();
 		final Shell shell = new Shell(parent, SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL);
-		shell.setText("Number of steps");
+		shell.setText("Server Query");
 
 		shell.setLayout(new GridLayout(2, true));
 

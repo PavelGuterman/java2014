@@ -455,4 +455,12 @@ public class View2048 extends Observable implements View, Runnable {
 		messageType = SWT.ICON_QUESTION;
 		return true;
 	}
+	
+	/*
+	 * @see view.View#getShell()
+	 */
+	@Override
+	public Shell getShell() {
+		return shell;
+	}
 }

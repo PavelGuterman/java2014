@@ -71,8 +71,10 @@ public class Presenter implements Observer {
 					if (serverAddres.length() < 2) {
 						return;
 					}
-					int steps = dialog.getSteps(); 	
+					int steps = dialog.getSteps();
+					
 					mod.connectToHintServerAndSendParameters(steps, deep, serverAddres);
+					
 				}
 
 				break;
