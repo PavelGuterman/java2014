@@ -431,6 +431,7 @@ public class Model2048 extends Observable implements Model {
 	public void connectToHintServerAndSendParameters(int steps, int depth, String address) {
 		System.out.println("connectToHintServerAndSendParameters: steps= " + steps + " dephh= " + depth + " address= "
 				+ address);
+		int move2make = -1;
 		try {
 			InetAddress netAddress = InetAddress.getByName(address);
 			for (int i = 0; i < steps; i++) {
@@ -444,12 +445,12 @@ public class Model2048 extends Observable implements Model {
 				writer.flush();
 
 				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
-				steps = (int) reader.read();
+				move2make = (int) reader.read();
 				System.out.println("et from server: " + steps);
 				writer.close();
 
 				System.out.println("auto Move is " + steps);
-				setSteapFromServerHint(steps);
+				setSteapFromServerHint(move2make);
 
 				if (i < steps - 1) {
 					Thread.sleep(3000);
