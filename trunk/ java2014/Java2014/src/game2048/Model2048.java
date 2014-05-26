@@ -443,13 +443,12 @@ public class Model2048 extends Observable implements Model {
 				// of
 				// state
 				writer.flush();
-
 				ObjectInputStream reader = new ObjectInputStream(socket.getInputStream());
 				move2make = (int) reader.read();
-				System.out.println("et from server: " + steps);
+				System.out.println("et from server: " + move2make);
 				writer.close();
 
-				System.out.println("auto Move is " + steps);
+				System.out.println("auto Move is " + move2make);
 				setSteapFromServerHint(move2make);
 
 				if (i < steps - 1) {
