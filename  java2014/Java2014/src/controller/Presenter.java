@@ -22,7 +22,7 @@ public class Presenter implements Observer {
 /**
  * Presenter contriver
  * @param o - object that is Observable
- * @param arg - object of argumant
+ * @param arg - object of argument
  */
 	@Override
 	public void update(Observable o, Object arg) {
