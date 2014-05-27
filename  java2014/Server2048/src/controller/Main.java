@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import solver.MazeSolver;
 import solver.Solver2048;
 import model.ClienHandler;
 import model.GamingServer;
@@ -39,7 +40,8 @@ public class Main {
 				}
 				break;
 			case "gameMaze":
-				
+				MazeSolver s_maze = new MazeSolver(dataHint.getData());
+				//out2Client.write(s_maze.getTheCheese());
 				break;
 			default:
 				break;
