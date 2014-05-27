@@ -140,8 +140,9 @@ public class View2048 extends Observable implements View, Runnable {
 		itemExit.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				shell.setEnabled(false);
+				shell.dispose();
 				perentShell.setVisible(true);
+				perentShell.setFocus();
 			}
 
 			@Override
