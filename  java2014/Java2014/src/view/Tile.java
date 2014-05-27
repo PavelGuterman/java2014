@@ -44,7 +44,7 @@ public class Tile extends Canvas {
 	 * set tiles to new has map
 	 **/
 	protected void inishilizeHashMap(){
-		tiles = new HashMap<>();
+		tiles = new HashMap<Integer, Image>();
 		
 	}
 	
