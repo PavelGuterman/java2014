@@ -11,7 +11,5 @@ public class TmpSolver {
 		this.dataS  = dataS;
 		dataList = new LinkedList<>();
 		this.nom = nom;
-		
-	
 	}
 }
