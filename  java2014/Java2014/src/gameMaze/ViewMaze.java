@@ -265,7 +265,7 @@ public class ViewMaze extends Observable implements View, Runnable {
 				// board.setBoardData(data);
 				for (int i = 0; i < data.length; i++) {
 					for (int j = 0; j < data.length; j++) {
-						board.tile[j][i].setVol(data[i][j]);
+						board.tile[i][j].setVol(data[i][j]);
 					}
 				}
 
