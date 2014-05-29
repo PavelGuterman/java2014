@@ -27,7 +27,8 @@ public class Model2048 extends Observable implements Model {
 	private final int boardSize;
 	private int score = 0;
 	private Stack<Integer> scoresDataHistorry;
-	boolean flag;
+	boolean flag, checkingMove;
+	public static final int win_score = 2048;
 
 	private String getMessageString = "";
 
@@ -146,6 +147,18 @@ public class Model2048 extends Observable implements Model {
 			return true;
 		}
 		return false;
+	}
+	
+	public int getAllEmpty(){
+		int counter = 0;
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data.length; j++) {
+				if(isEmpty(data[i][j])){
+					counter++;
+				}
+			}
+		}
+		return counter;
 	}
 	
 	/**
@@ -386,13 +399,37 @@ public class Model2048 extends Observable implements Model {
 
 		}
 
-		if (getMoveFlag()) {
+		if (getMoveFlag() && !isCheckingMove()) {
 			inputNewNumberToData();
 			setMoveFlag(false);
 		}
-		setChanged();
-		notifyObservers();
+		if(!isCheckingMove()){
+			notifyTheObsorver();
+		}
 	}
+	
+	public boolean winTheGame(){
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data.length; j++) {
+				if(data[i][j] == win_score){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+//	public boolean youLose(){
+//		setCheckingMove(true);
+//		if(getAllEmpty() == 0){
+//			int[][] copyOfData = data.clone();
+//			this.moveDown();this.moveLeft();this.moveRight();this.moveUp();
+//			if (loserFlag){
+//				return true;
+//			}
+//		}
+//	}
+	
 /*
  * return message for error or warning.
  * @see model.Model#getMesegeString()
@@ -428,4 +465,16 @@ public class Model2048 extends Observable implements Model {
 		hint2048.start();
 	}
 	
+	public void notifyTheObsorver(){
+		setChanged();
+		notifyObservers();
+	}
+
+	public boolean isCheckingMove() {
+		return checkingMove;
+	}
+
+	public void setCheckingMove(boolean checkingMove) {
+		this.checkingMove = checkingMove;
+	}
 }
